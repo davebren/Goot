@@ -5,13 +5,12 @@
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="14"/>
     <application android:label="@string/app_name">
-        <activity android:name="Home"
+        <activity android:name="com.project.gutenberg.Home"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Home"/>
     </application>
 </manifest> 

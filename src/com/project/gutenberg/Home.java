@@ -21,7 +21,7 @@ public class Home extends RootActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialize_app();
-                 //    /
+                 //    //
 
     }
 

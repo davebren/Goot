@@ -3,21 +3,17 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-        >
-    <LinearLayout
-         android:id="@+id/by_title_holder"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
+>
+    <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
 
     >
-        <LinearLayout
-            android:id="@+id/by_title_header"
-            android:layout_width="fill_parent"
-            android:layout_height="100dip"
-            android:text="By Title"
-            android:background="@android:drawable/list_selector_background"
-         ></LinearLayout>
-    </LinearLayout>
+    </ListView>
+
+
+
 
 </LinearLayout>
 

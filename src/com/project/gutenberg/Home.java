@@ -2,10 +2,13 @@ package com.project.gutenberg;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.Display;
+import android.view.*;
+import android.widget.*;
 import com.project.gutenberg.com.project.gutenberg.util.RootActivity;
 import com.project.gutenberg.com.project.gutenberg.util.SharedPrefs;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 
 /**
@@ -21,8 +24,11 @@ public class Home extends RootActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialize_app();
-                 //    //             //     /
+        setup_views();
+    }
 
+    private void setup_views() {
+       setContentView(R.layout.home);
     }
 
     private void initialize_app() {
@@ -34,5 +40,11 @@ public class Home extends RootActivity {
         screen_width = display.getWidth();
         setContentView(R.layout.home);
     }
+
+
+
+
+
+
 
 }

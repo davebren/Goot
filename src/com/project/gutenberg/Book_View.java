@@ -49,7 +49,6 @@ public class Book_View {
     private int  first_loaded_page = -1;
     private int last_loaded_page = 1;
 
-    protected int absolute_page;
     private int page_with_currently_loaded = 0;
 
     protected int font_size;
@@ -89,6 +88,8 @@ public class Book_View {
 
         book_holder.addView(next_page);
         book_holder.addView(current_page);
+
+        // TODO temporary way to test changing page.
         book_holder.setOnClickListener(new View.OnClickListener() {
             int counter = 0;
             public void onClick(View v) {
@@ -110,7 +111,6 @@ public class Book_View {
 
 
         // TODO remove.
-
         initialize_formatting(Home.pure_activity_width, Home.pure_activity_height);
         try {
             setup_epub_book((new EpubReader()).readEpub(assets.open("pg1497.epub")));
@@ -236,8 +236,8 @@ public class Book_View {
                 Debug.log("page " + i + ": " + lines_of_text[i][j]);
             }
         }
+        Debug.log("current page: " + page_with_currently_loaded);
 
-        absolute_page = 0;
 
 
     }
@@ -487,10 +487,11 @@ public class Book_View {
             current_page = prev_page;
             prev_page = temp;
 
-
-            lines_of_text[2] = lines_of_text[1];
-            lines_of_text[1] = lines_of_text[0];
-            lines_of_text[0] = complete_lines_of_text.get(page_with_currently_loaded-1);
+            if (page_with_currently_loaded != 1) {
+                lines_of_text[0] = complete_lines_of_text.get(page_with_currently_loaded-2);
+            }
+            lines_of_text[1] = complete_lines_of_text.get(page_with_currently_loaded-1);
+            lines_of_text[2] = complete_lines_of_text.get(page_with_currently_loaded);
             page_with_currently_loaded--;
             current_page.set_page_stack_id(0);
             next_page.set_page_stack_id(1);
@@ -515,17 +516,15 @@ public class Book_View {
             current_page = next_page;
             next_page = temp;
 
-
-            lines_of_text[0] = lines_of_text[1];
-            lines_of_text[1] = lines_of_text[2];
-            lines_of_text[2] = complete_lines_of_text.get(page_with_currently_loaded+1);
+            lines_of_text[0] = complete_lines_of_text.get(page_with_currently_loaded);
+            lines_of_text[1] = complete_lines_of_text.get(page_with_currently_loaded+1);
+            if (page_with_currently_loaded < complete_lines_of_text.size()-2) {
+                lines_of_text[2] = complete_lines_of_text.get(page_with_currently_loaded+2);
+            }
             page_with_currently_loaded++;
 
             current_page.set_page_stack_id(0);
             next_page.set_page_stack_id(1);
-
-
-            Debug.log("page switched");
 
         }
     }

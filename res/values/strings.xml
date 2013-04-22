@@ -11,4 +11,5 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+    <string name="menu_search">Search</string>
 </resources>

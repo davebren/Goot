@@ -5,14 +5,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import com.project.gutenberg.R;
-
 
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
-import android.util.Log;
 
 public class Sound_Manager {
 	
@@ -24,13 +21,13 @@ private  Vector<Integer> available_sounds = new Vector<Integer>();
 private  On_Load loader;
 private LinkedList<Integer> streams;
 public boolean initialized;
-private SharedPrefs prefs;
+private Shared_Prefs prefs;
 
 private final int NUM_SOUNDS = 28;
 
 	public Sound_Manager(Context context){
 		 this.context = context;
-		 prefs = new SharedPrefs(context);
+		 prefs = new Shared_Prefs(context);
 	     sound_pool = new SoundPool(NUM_SOUNDS, AudioManager.STREAM_MUSIC, 0); 
 	     resource_locator = new HashMap<Integer, Integer>(); 
 	     loader = new On_Load(NUM_SOUNDS);

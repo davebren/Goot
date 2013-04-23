@@ -11,17 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.project.gutenberg.com.project.gutenberg.util.Debug;
 import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.Spine;
+import nl.siegmann.epublib.domain.TOCReference;
 import nl.siegmann.epublib.epub.EpubReader;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -70,14 +64,18 @@ public class Book_View {
     private Load_All_Pages page_loader;
     private boolean stop_loading = false;
 
+    private Action_Bar_Handler action_bar_handler;
 
 
 
 
 
-    protected Book_View(Context context, LayoutInflater inflater, boolean download, String URI, AssetManager assets, LinearLayout.LayoutParams fill_screen_params, int book_id) {
+
+    protected Book_View(Context context, LayoutInflater inflater, boolean download, String URI, AssetManager assets, LinearLayout.LayoutParams fill_screen_params, int book_id, Action_Bar_Handler action_bar_handler) {
         this.context = context;
         this.inflater = inflater;
+        this.action_bar_handler = action_bar_handler;
+        action_bar_handler.set_book_view_menu();
         page_loader = new Load_All_Pages();
         outer_view = (LinearLayout)inflater.inflate(R.layout.book_view, null);
         book_holder = (RelativeLayout)outer_view.findViewById(R.id.book_holder);
@@ -148,12 +146,18 @@ public class Book_View {
         //Book book = (new EpubReader()).readEpub(epubInputStream);
         book_title = epub_book.getTitle();
         book_author = epub_book.getMetadata().getAuthors().get(0).getLastname();
+        action_bar_handler.set_title_author(book_title, book_author);
 
         epub_spine = new Spine(epub_book.getTableOfContents());
+        List<TOCReference> r = epub_book.getTableOfContents().getTocReferences();
+        for (TOCReference t : r) {
+            Debug.log("titles: " + t.getTitle());
+        }
         chapters_parsed = new Chapter[epub_spine.size()];
         for (int i=0; i < chapters_parsed.length; i++) {
             if (i == current_page_chapter) {
                 chapters_parsed[i] = new Chapter(i, epub_spine.getResource(i));
+                action_bar_handler.set_chapter_title(epub_book.getTableOfContents().getTocReferences().get(i).getTitle());
             } else {
                 chapters_parsed[i] = new Chapter(i);
             }

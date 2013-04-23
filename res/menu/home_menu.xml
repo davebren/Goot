@@ -6,4 +6,13 @@
           android:icon="@drawable/ic_menu_search_holo_light"
           android:showAsAction="always"
           android:actionViewClass="android.widget.SearchView" />
+    <item
+        android:id="@+id/menu_chapter_indicator"
+        android:showAsAction="always"
+        android:title=""
+        android:actionViewClass="android.widget.Spinner" />
+    <item android:id="@+id/menu_page_indicator"
+          android:title=""
+          android:showAsAction="ifRoom|withText" />
+
 </menu>

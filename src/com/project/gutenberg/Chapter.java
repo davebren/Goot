@@ -1,5 +1,6 @@
 package com.project.gutenberg;
 
+import com.project.gutenberg.com.project.gutenberg.util.Debug;
 import nl.siegmann.epublib.domain.Resource;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,6 +16,7 @@ public class Chapter {
     private boolean parsed = false;
     private LinkedList<String> paragraphs;
     private int chapter_index = -1;
+    //private String chapter_title;
 
     protected Chapter(int index) {
         paragraphs = new LinkedList<String>();
@@ -26,6 +28,8 @@ public class Chapter {
         parse_chapter(res);
     }
     protected void parse_chapter(Resource res) {
+        //chapter_title = res.getTitle();
+        Debug.log("chapter id: " + res.getId() + ", chapter title: " + res.getTitle());
         try {
             InputStream is = res.getInputStream();
             Document doc = Jsoup.parse(is, "UTF-8", "");
@@ -44,6 +48,9 @@ public class Chapter {
     }
     protected boolean is_parsed() {
         return parsed;
+    }
+    protected String get_chapter_title() {
+        return "";
     }
 
 

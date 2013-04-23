@@ -1,8 +1,6 @@
 package com.project.gutenberg;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
@@ -23,8 +21,9 @@ public class Home extends RootActivity {
     public static int screen_height;
     public static int screen_width;
     private static Fonts fonts;
-    private ActionBar action_bar;
-    private SearchView search_view;
+
+    private Action_Bar_Handler action_bar_handler;
+
     private LinearLayout[] home_nav;
     private TextView[] home_nav_headers;
     private LinearLayout browse_title;
@@ -35,6 +34,7 @@ public class Home extends RootActivity {
 
     private LayoutInflater inflater;
     private LinearLayout.LayoutParams fill_screen_params;
+
 
     private final int num_primary_nav_menus = 6;
     private final int browse_title_index = 0;
@@ -55,11 +55,13 @@ public class Home extends RootActivity {
         super.onCreate(savedInstanceState);
         initialize_app();
         setup_views();
-        AssetManager assetManager = getAssets();
+    }
 
-
-
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        action_bar_handler = new Action_Bar_Handler(menu, getActionBar());
+        action_bar_handler.set_home_view_menu();
+        return super.onCreateOptionsMenu(menu);
     }
 
 
@@ -148,25 +150,11 @@ public class Home extends RootActivity {
         pure_activity_width = screen_width;
 
         fonts = new Fonts(prefs, context);
-        action_bar = getActionBar();
-        action_bar.setTitle("Home");
-        fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - action_bar.getHeight());
-    }
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_menu, menu);
-        SearchView search_view = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        search_view.setOnQueryTextListener(query_listener);
-        return super.onCreateOptionsMenu(menu);
+        fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
     }
 
-    SearchView.OnQueryTextListener query_listener = new SearchView.OnQueryTextListener() {
-        public boolean onQueryTextChange(String query) {
-            return true;
-        }
-        public boolean onQueryTextSubmit(String query) {
-            return true;
-        }
-    };
+
+
 
     private void expand_primary_nav(int index) {
         switch(index) {
@@ -187,7 +175,7 @@ public class Home extends RootActivity {
     private void toggle_by_title() {
         if (!expanded_primary_nav[browse_title_index]) {
             home_nav[browse_title_index].addView(browse_title);
-            action_bar.setTitle("Browse By Title");
+            action_bar_handler.set_title_browsing_menu();
             home_scroll.post(new Runnable() {
                 public void run() {
                     home_scroll.scrollTo(0, home_nav_headers[browse_title_index].getBottom());
@@ -196,7 +184,7 @@ public class Home extends RootActivity {
             current_menu_depth = 1;
         } else {
             home_nav[browse_title_index].removeView(browse_title);
-            action_bar.setTitle("Home");
+            action_bar_handler.set_home_view_menu();
             current_menu_depth = 0;
         }
         expanded_primary_nav[browse_title_index] = !expanded_primary_nav[browse_title_index];
@@ -242,9 +230,8 @@ public class Home extends RootActivity {
                 current_book_holder = (LinearLayout)view;
 
                 // TODO change arguments to book details retrieved from database.
-                book_view = new Book_View(context, inflater, false, "", getAssets(), fill_screen_params, -1);
+                book_view = new Book_View(context, inflater, false, "", getAssets(), fill_screen_params, -1, action_bar_handler);
                 ((LinearLayout)view).addView(book_view.get_view());
-                action_bar.setTitle(book_view.get_title() + " by " + book_view.get_author());
                 browse_titles_list.postDelayed(new Runnable() {
                     public void run() {
                         browse_titles_list.setSelection(f_position);

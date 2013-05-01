@@ -32,9 +32,20 @@ public class Shared_Prefs {
      public String get_menu_font() {
          return app_shared_preferences.getString("menu_font", "");
      }
-
     public void set_menu_font(String font) {
         prefs_editor.putString("menu_font", font).commit();
+    }
+    public void set_book_font(String font) {
+        prefs_editor.putString("book_font", font).commit();
+    }
+    public String get_book_font() {
+        return app_shared_preferences.getString("book_font", null);
+    }
+    public void set_book_font_size(int font_size) {
+        prefs_editor.putInt("book_font_size", font_size).commit();
+    }
+    public int get_book_font_size() {
+        return app_shared_preferences.getInt("book_font_size", 16);
     }
     // TODO change to integer value indicating small, medium, large, xlarge.
     public int get_text_size() {

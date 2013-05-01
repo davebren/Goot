@@ -44,11 +44,13 @@ public class Book_View {
     private int last_loaded_page = 1;
 
     private int page_with_currently_loaded = 0;
+    private int chapter_with_currently_loaded = 0;
 
     protected int font_size;
     protected int line_spacing;
     protected int line_width;
     protected int margin_width;
+    private int lines_per_page;
     protected int[] text_line_positions;
 
     protected Paint text_paint;
@@ -57,7 +59,8 @@ public class Book_View {
 
     protected String[][] lines_of_text;
 
-    Chapter[] chapters_parsed;
+    private Chapter[] chapters_parsed;
+    private String[] chapter_titles;
     private LinkedList<String[]> complete_lines_of_text;
     private LinkedList<Integer[]> complete_text_boundaries;
     private boolean loading_pages = true;
@@ -65,6 +68,7 @@ public class Book_View {
     private boolean stop_loading = false;
 
     private Action_Bar_Handler action_bar_handler;
+
 
 
 
@@ -103,7 +107,7 @@ public class Book_View {
         relative_page = 0;
         current_page_chapter = Home.prefs.get_last_chapter(book_id);
         // TODO remove.
-        current_page_chapter = 1;
+        current_page_chapter = 0;
         current_page_paragraph = Home.prefs.get_last_paragraph(book_id);
         current_page_word = Home.prefs.get_last_word(book_id);
 
@@ -128,13 +132,13 @@ public class Book_View {
         int free_space = height;
         int starting_position = font_size + line_spacing*3;
         free_space = free_space - (font_size*2 + line_spacing*4); // header, footer space.
-        int number_of_lines = free_space/(font_size+line_spacing);
-        text_line_positions = new int[number_of_lines];
+        lines_per_page = free_space/(font_size+line_spacing);
+        text_line_positions = new int[lines_per_page];
         text_line_positions[0] = starting_position;
         for (int i=1; i < text_line_positions.length; i++) {
             text_line_positions[i] = text_line_positions[i-1]+font_size+line_spacing;
         }
-        lines_of_text = new String[3][number_of_lines];
+        lines_of_text = new String[3][lines_per_page];
         complete_lines_of_text = new LinkedList<String[]>();
         complete_text_boundaries = new LinkedList<Integer[]>();
     }
@@ -143,27 +147,61 @@ public class Book_View {
     protected void setup_epub_book(Book epub_book) {
         this.epub_book = epub_book;
         //InputStream epubInputStream = assets.open("pg1497.epub");
-        //Book book = (new EpubReader()).readEpub(epubInputStream);
+        //Android_Book_View book = (new EpubReader()).readEpub(epubInputStream);
         book_title = epub_book.getTitle();
         book_author = epub_book.getMetadata().getAuthors().get(0).getLastname();
         action_bar_handler.set_title_author(book_title, book_author);
 
         epub_spine = new Spine(epub_book.getTableOfContents());
-        List<TOCReference> r = epub_book.getTableOfContents().getTocReferences();
-        for (TOCReference t : r) {
-            Debug.log("titles: " + t.getTitle());
-        }
+        List<TOCReference> table_of_contents = epub_book.getTableOfContents().getTocReferences();
+
+        initialize_chapters(epub_spine, table_of_contents);
+        initialize_open_pages();
+    }
+    private void initialize_chapters(Spine epub_spine, List<TOCReference> table_of_contents) {
         chapters_parsed = new Chapter[epub_spine.size()];
         for (int i=0; i < chapters_parsed.length; i++) {
             if (i == current_page_chapter) {
                 chapters_parsed[i] = new Chapter(i, epub_spine.getResource(i));
-                action_bar_handler.set_chapter_title(epub_book.getTableOfContents().getTocReferences().get(i).getTitle());
             } else {
                 chapters_parsed[i] = new Chapter(i);
             }
         }
+        chapter_titles = new String[chapters_parsed.length];
+        if (table_of_contents != null && table_of_contents.size()>0) {
+            String[] temp_titles = new String[table_of_contents.size()];
+            for (int i=0; i < table_of_contents.size(); i++) {
+                String t = table_of_contents.get(i).getTitle();
+                if (t != null) {
+                    temp_titles[i] = t;
+                } else {
+                    temp_titles[i] = "";
+                }
+            }
+            boolean[] titles_set = new boolean[chapter_titles.length];
+            for (int j=0; j < chapter_titles.length; j++) {
+                for (int i=0; i < table_of_contents.size(); i++) {
+                    if (epub_spine.getResource(j).getId().equals(table_of_contents.get(i).getResourceId())) {
+                        if (!titles_set[j]) {
+                            chapter_titles[j] = temp_titles[i];
 
-        initialize_open_pages();
+                            titles_set[j] = true;
+                        }
+                        break;
+                    }
+                }
+                if (!titles_set[j]) {
+                    chapter_titles[j] = "" + (j+1);
+                }
+            }
+            action_bar_handler.initialize_spinner_chapters(chapter_titles, current_page_chapter);
+
+        } else {
+            for (int i=0; i < chapter_titles.length; i++) {
+                chapter_titles[i] = "Chapter " + (i+1);
+            }
+        }
+
 
     }
 
@@ -236,8 +274,10 @@ public class Book_View {
         //book_holder.removeView(current_page);
         //book_holder.addView(prev_page);
         for (int i=0; i < lines_of_text.length; i++) {
-            for (int j=0; j < lines_of_text[i].length; j++) {
-                Debug.log("page " + i + ": " + lines_of_text[i][j]);
+            if (lines_of_text[i] != null) {
+                for (int j=0; j < lines_of_text[i].length; j++) {
+                    Debug.log("page " + i + ": " + lines_of_text[i][j]);
+                }
             }
         }
         Debug.log("current page: " + page_with_currently_loaded);
@@ -248,7 +288,8 @@ public class Book_View {
 
     private String[] get_next_page_lines(Integer[] prev_boundaries) {
         Integer[] text_boundaries = new Integer[6];
-        String[] lines_of_text = new String[this.lines_of_text[0].length];
+
+        String[] lines_of_text = new String[lines_per_page];
         lines_of_text[0] = "";
         int line_count = 0;
 
@@ -542,11 +583,12 @@ public class Book_View {
             Integer[] last_loaded_boundaries;
 
             long start_time = System.currentTimeMillis();
-
+            int iteration = 0;
             while(true) {
                 if (stop_loading) {
                     break;
                 }
+                iteration++;
                 first_loaded_boundaries = complete_text_boundaries.getFirst();
                 last_loaded_boundaries = complete_text_boundaries.getLast();
                 if (first_loaded_boundaries[0] == 0 && first_loaded_boundaries[1] == 0 && first_loaded_boundaries[2] == 0) {
@@ -555,6 +597,8 @@ public class Book_View {
                 if (last_loaded_boundaries[3] == chapters_parsed.length) {
                     finished_next_pages = true;
                 }
+
+                Debug.log("load page iteration " + iteration + ": " + finished_previous_pages + ", " + finished_next_pages + ", " +  first_loaded_boundaries[0] +  ", " + first_loaded_boundaries[1] + ", " + first_loaded_boundaries[2]);
                 if (finished_previous_pages && finished_next_pages) {
                     break;
                 }

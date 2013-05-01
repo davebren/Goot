@@ -16,11 +16,7 @@ public class Book_Page extends View {
     private int font_size;
     private int line_spacing;
     private int line_width;
-
     private int margin_width;
-
-
-
     private int[] text_line_positions;
 
     private Paint text_paint;

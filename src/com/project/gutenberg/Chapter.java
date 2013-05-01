@@ -50,6 +50,7 @@ public class Chapter {
         return parsed;
     }
     protected String get_chapter_title() {
+
         return "";
     }
 

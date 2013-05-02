@@ -45,7 +45,7 @@ public class Shared_Prefs {
         prefs_editor.putInt("book_font_size", font_size).commit();
     }
     public int get_book_font_size() {
-        return app_shared_preferences.getInt("book_font_size", 16);
+        return app_shared_preferences.getInt("book_font_size", 25);
     }
     // TODO change to integer value indicating small, medium, large, xlarge.
     public int get_text_size() {

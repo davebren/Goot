@@ -31,35 +31,26 @@
     </device-configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="68fc1f05-00e6-4a35-89d5-924fa32be30d" name="Default" comment="add search to action bar">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Book_View.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Page_View.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/Book.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_Formatting.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Book_Parser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/library/Book_Resource.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_View.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/Chapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Epub_Parser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/Page.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/Page_Flipper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Page_Splitter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Page_View.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/android/Simple_Page_Flipper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/Action_Bar_Handler.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/Action_Bar_Handler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/Book_Page.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/Book_Page.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/Book_View.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/Book_View.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/Chapter.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/Chapter.java" />
+    <list default="true" id="68fc1f05-00e6-4a35-89d5-924fa32be30d" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/android/Android_Line_Measurer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Chapter_Navigator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Line_Measurer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Book_View.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Book_View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/book/Book.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/Book.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_View.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/book/Chapter.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/Chapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Epub_Parser.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Epub_Parser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/Home.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/Home.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/book/Page.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/Page.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Page_Splitter.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Page_Splitter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/Shared_Prefs.java" afterPath="$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/Shared_Prefs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/menu/home_menu.xml" afterPath="$PROJECT_DIR$/res/menu/home_menu.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/styles.xml" afterPath="$PROJECT_DIR$/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GutenDroid.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367433063573" ignored="false" />
+    <file path="/Dummy.txt" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367470740837" ignored="false" />
     <file path="/home.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365558374136" ignored="false" />
-    <file path="/Home.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366682256783" ignored="false" />
+    <file path="/Home.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367477469769" ignored="false" />
     <file path="/home_menu_row.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365556940491" ignored="false" />
     <file path="/Fonts.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1364863420607" ignored="false" />
     <file path="/SharedPrefs.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366248525645" ignored="false" />
@@ -70,24 +61,27 @@
     <file path="/book_view_split.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365601973094" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365605290713" ignored="false" />
     <file path="/book_view.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366226278877" ignored="false" />
-    <file path="/Book_View.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366929423315" ignored="false" />
+    <file path="/Book_View.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367475967673" ignored="false" />
     <file path="/Debug.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365638725556" ignored="false" />
     <file path="/Book_Page.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366923508543" ignored="false" />
     <file path="/fragment.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366926434348" ignored="false" />
-    <file path="/Chapter.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367363492800" ignored="false" />
+    <file path="/Chapter.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367472866800" ignored="false" />
     <file path="/Menu_Handler.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366682574838" ignored="false" />
     <file path="/Action_Bar_Handler.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366828266563" ignored="false" />
     <file path="/styles.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366822290291" ignored="false" />
     <file path="/Book_Parser.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367363217220" ignored="false" />
     <file path="/Epub_Parser.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367363942861" ignored="false" />
-    <file path="/Book.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367363768924" ignored="false" />
-    <file path="/Page.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366922109662" ignored="false" />
+    <file path="/Book.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367474248641" ignored="false" />
+    <file path="/Page.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367472619773" ignored="false" />
     <file path="/Book_Resource.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366922460577" ignored="false" />
     <file path="/Shared_Prefs.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366923697600" ignored="false" />
     <file path="/Page_View.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366929057469" ignored="false" />
     <file path="/Book_Formatting.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366929172605" ignored="false" />
     <file path="/Android_Page_View.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366929307651" ignored="false" />
-    <file path="/Android_Book_View.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1366929469567" ignored="false" />
+    <file path="/Android_Book_View.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367475939592" ignored="false" />
+    <file path="/Page_Splitter.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367477301347" ignored="false" />
+    <file path="/Line_Measurer.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367471079925" ignored="false" />
+    <file path="/Android_Line_Measurer.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367471070344" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +101,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -141,7 +136,6 @@
         <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -151,47 +145,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Book_Parser.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Book_Parser.java">
+      <file leaf-file-name="Page_Splitter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Page_Splitter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="54" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="218" column="195" selection-start="10307" selection-end="10307" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Book.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/Book.java">
+      <file leaf-file-name="Home.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Home.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="5" selection-start="161" selection-end="161" vertical-scroll-proportion="0.10526316">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Book_View.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Book_View.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="160" column="0" selection-start="5885" selection-end="7772" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Chapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/Chapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="0" selection-start="917" selection-end="917" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Chapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Chapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="0" selection-start="805" selection-end="1392" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="171" column="28" selection-start="6261" selection-end="6261" vertical-scroll-proportion="0.42105263">
+              <folding>
+                <element signature="e#8607#10856#0" expanded="true" />
+                <element signature="e#10849#10850#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -219,28 +191,28 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/library/Book_Resource.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/android_view/Book_View.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_Page.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/Shared_Prefs.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/Book_View.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Page_View.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_Formatting.java" />
         <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Page_View.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_View.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Book_View.java" />
         <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/android/Android_Page_Flipper.java" />
         <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/Page_Flipper.java" />
         <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Book_Parser.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Epub_Parser.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/android/Android_Line_Measurer.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Line_Measurer.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/Page.java" />
         <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/Chapter.java" />
         <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/Book.java" />
-        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Epub_Parser.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_View.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/Shared_Prefs.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Book_View.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/view/Chapter_Navigator.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Page_Splitter.java" />
+        <option value="$PROJECT_DIR$/src/com/project/gutenberg/Home.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="62" />
-    <option name="y" value="31" />
+    <option name="x" value="6" />
+    <option name="y" value="47" />
     <option name="width" value="1900" />
     <option name="height" value="1032" />
   </component>
@@ -289,8 +261,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -521,66 +493,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="parsing" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gutenberg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="book" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pagination" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gutenberg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="book" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="page_flipping" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -650,132 +562,6 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout-large" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-xhdpi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-mdpi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable-hdpi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -814,8 +600,8 @@
     <property name="AndroidRunProguardForReleaseBuild" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -863,19 +649,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -901,6 +674,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1003,12 +789,16 @@
       <created>1366669868068</created>
       <updated>1366669868073</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add search to action bar">
+      <created>1367433196802</created>
+      <updated>1367433196802</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="62" y="31" width="1900" height="1032" extended-state="0" />
-    <editor active="false" />
+    <frame x="6" y="47" width="1900" height="1032" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1018,12 +808,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295838" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19060475" sideWeight="0.6704162" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19060475" sideWeight="0.6704162" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991362" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1031,7 +822,6 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991362" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295838" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295838" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1103,114 +893,124 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Book_Page.java">
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Epub_Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="14" selection-start="1336" selection-end="1336" vertical-scroll-proportion="0.6604867">
+        <state line="34" column="54" selection-start="958" selection-end="989" vertical-scroll-proportion="0.3508772">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Book_View.java">
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Line_Measurer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="50" selection-start="1176" selection-end="1176" vertical-scroll-proportion="0.34762457">
+        <state line="3" column="32" selection-start="81" selection-end="81" vertical-scroll-proportion="0.05263158">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/android/Android_Line_Measurer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="24" selection-start="265" selection-end="265" vertical-scroll-proportion="0.14035088">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/Page_View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="33" selection-start="235" selection-end="235" vertical-scroll-proportion="0.15789473">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/library/Book_Resource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="13" selection-start="53" selection-end="53" vertical-scroll-proportion="0.03508772">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/Chapter_Navigator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="41" selection-end="41" vertical-scroll-proportion="0.01754386">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/Shared_Prefs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="73" selection-start="1485" selection-end="1485" vertical-scroll-proportion="0.7017544">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Page_View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="48" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.74739283">
-          <folding />
+        <state line="32" column="175" selection-start="1125" selection-end="1125" vertical-scroll-proportion="0.5614035">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/android/Simple_Page_Flipper.java">
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Book_View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="1" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/Page_Flipper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="39" selection-start="83" selection-end="83" vertical-scroll-proportion="0.10428737">
+        <state line="266" column="20" selection-start="10721" selection-end="10721" vertical-scroll-proportion="-1.1401426">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="852" selection-end="852" vertical-scroll-proportion="0.39976826">
+        <state line="29" column="6" selection-start="1135" selection-end="1135" vertical-scroll-proportion="0.50877196">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/Page_View.java">
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/Page_Flipper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="37" selection-start="230" selection-end="230" vertical-scroll-proportion="0.1216686">
+        <state line="2" column="13" selection-start="64" selection-end="64" vertical-scroll-proportion="0.03508772">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Book_View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="66" selection-start="1888" selection-end="1888" vertical-scroll-proportion="0.5263158">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/android/Simple_Page_Flipper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="13" selection-start="72" selection-end="72" vertical-scroll-proportion="0.03508772">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_Formatting.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="38" selection-start="395" selection-end="395" vertical-scroll-proportion="0.26071844">
+        <state line="12" column="57" selection-start="322" selection-end="322" vertical-scroll-proportion="0.21052632">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Book_View.java">
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Page_Splitter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="160" column="0" selection-start="5885" selection-end="7772" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/Chapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="917" selection-end="917" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/apache/http/entity/mime/Header.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="33" selection-start="2509" selection-end="2509" vertical-scroll-proportion="0.7368421" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/apache/http/entity/mime/HttpMultipart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="9" selection-start="2309" selection-end="2309" vertical-scroll-proportion="-0.877193" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Book_Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="54" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/parsing/Epub_Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="25" selection-start="1227" selection-end="1227" vertical-scroll-proportion="0.6315789">
+        <state line="218" column="195" selection-start="10307" selection-end="10307" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3610#3618#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/Book.java">
+    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Home.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="5" selection-start="161" selection-end="161" vertical-scroll-proportion="0.10526316">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Chapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="0" selection-start="805" selection-end="1392" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="171" column="28" selection-start="6261" selection-end="6261" vertical-scroll-proportion="0.42105263">
+          <folding>
+            <element signature="e#8607#10856#0" expanded="true" />
+            <element signature="e#10849#10850#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

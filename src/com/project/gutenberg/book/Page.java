@@ -3,5 +3,8 @@ package com.project.gutenberg.book;
 import java.util.LinkedList;
 
 public class Page {
-    private LinkedList<String[]> lines_of_text;
+    private String[] page_text;
+    public Page(String[] page_text) {
+        this.page_text = page_text;
+    }
 }

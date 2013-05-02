@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.project.gutenberg.book.Book;
+import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
 import com.project.gutenberg.book.view.Book_View;
 import com.project.gutenberg.book.view.Page_View;
 import com.project.gutenberg.com.project.gutenberg.util.Shared_Prefs;
@@ -24,7 +25,7 @@ public class Android_Book_View extends Book_View {
         this.context = context;
         initialize_page_holder(fill_screen_params);
         initialize_page_views();
-
+        line_measurer = new Android_Line_Measurer(text_painter);
     }
     private void initialize_page_holder(LinearLayout.LayoutParams fill_screen_params) {
         page_holder = new RelativeLayout(context);
@@ -37,12 +38,13 @@ public class Android_Book_View extends Book_View {
         prev_page = new Android_Page_View(context, this, prev_page_stack_id);
         current_page = new Android_Page_View(context, this, current_page_stack_id);
         next_page = new Android_Page_View(context, this, next_page_stack_id);
-        next_page.add_view(-1);
         current_page.add_view(-1);
+        next_page.add_view(0);
     }
-    protected RelativeLayout get_page_holder() {
+    public RelativeLayout get_page_holder() {
         return page_holder;
     }
+
 
 
 }

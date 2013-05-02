@@ -4,11 +4,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+import com.project.gutenberg.book.Book;
+import com.project.gutenberg.book.pagination.Line_Measurer;
+import com.project.gutenberg.book.pagination.Page_Splitter;
+import com.project.gutenberg.book.parsing.Epub_Parser;
+import com.project.gutenberg.book.view.*;
+import com.project.gutenberg.book.view.android.Android_Book_View;
 import com.project.gutenberg.com.project.gutenberg.util.Fonts;
 import com.project.gutenberg.com.project.gutenberg.util.RootActivity;
 import com.project.gutenberg.com.project.gutenberg.util.Shared_Prefs;
 
 import android.view.View.OnClickListener;
+import nl.siegmann.epublib.epub.EpubReader;
+
+import java.io.IOException;
 
 
 /**
@@ -43,7 +52,8 @@ public class Home extends RootActivity {
 
     private int current_menu_depth = 0;
 
-    private Book_View book_view;
+    //private Book_View book_view;
+    private Android_Book_View book_view;
     private LinearLayout current_book_holder;
     private int current_book_holder_position = -1;
     private boolean book_view_open = false;
@@ -206,8 +216,11 @@ public class Home extends RootActivity {
             TextView row_view_header = (TextView)row_view.findViewById(R.id.browse_titles_row_header);
             row_view_header.setText(titles[position]);
             if (position == current_book_holder_position && book_view_open) {
-                ((LinearLayout)book_view.get_view().getParent()).removeView(book_view.get_view());
-                row_view.addView(book_view.get_view());
+                //((LinearLayout)book_view.get_view().getParent()).removeView(book_view.get_view());
+                //row_view.addView(book_view.get_view());
+                ((LinearLayout)book_view.get_page_holder().getParent()).removeView(book_view.get_page_holder());
+                row_view.addView(book_view.get_page_holder());
+
                 current_book_holder = row_view;
             }
 
@@ -217,7 +230,8 @@ public class Home extends RootActivity {
     private AdapterView.OnItemClickListener title_click = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (current_menu_depth == 2 && book_view_open) {
-                current_book_holder.removeView(book_view.get_view());
+                //current_book_holder.removeView(book_view.get_view());
+                current_book_holder.removeView(book_view.get_page_holder());
             }
             if (position != current_book_holder_position) {
                 final View row_view = view;
@@ -230,8 +244,21 @@ public class Home extends RootActivity {
                 current_book_holder = (LinearLayout)view;
 
                 // TODO change arguments to book details retrieved from database.
-                book_view = new Book_View(context, inflater, false, "", getAssets(), fill_screen_params, -1, action_bar_handler);
-                ((LinearLayout)view).addView(book_view.get_view());
+               // book_view = new Book_View(context, inflater, false, "", getAssets(), fill_screen_params, -1, action_bar_handler);
+                //((LinearLayout)view).addView(book_view.get_view());
+                nl.siegmann.epublib.domain.Book b = null;
+                try {
+                    b = new EpubReader().readEpub(getAssets().open("pg1497.epub"));
+                } catch(IOException e) {
+
+                }
+                Epub_Parser parser = new Epub_Parser(b, 1, 0, 0);
+                Book book = parser.parse_book();
+                book_view = new Android_Book_View(book,context, prefs, fill_screen_params, screen_width, fill_screen_params.height);
+                Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 1, 0, 0);
+                page_splitter.paginate();
+                ((LinearLayout)view).addView(book_view.get_page_holder());
+
                 browse_titles_list.postDelayed(new Runnable() {
                     public void run() {
                         browse_titles_list.setSelection(f_position);
@@ -252,8 +279,9 @@ public class Home extends RootActivity {
         } else if (current_menu_depth == 1) {
             expand_primary_nav(-1);
         } else if (current_menu_depth == 2) {
-            current_book_holder.removeView(book_view.get_view());
-            book_view.kill_book();
+            //current_book_holder.removeView(book_view.get_view());
+            current_book_holder.removeView(book_view.get_page_holder());
+            //book_view.kill_book();
             book_view = null;
             current_menu_depth = 1;
             book_view_open = false;
@@ -282,7 +310,7 @@ public class Home extends RootActivity {
             fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, h);
             browse_titles_list.setLayoutParams(fill_screen_params);
             if (book_view_open) {
-                book_view.size_changed();
+                //book_view.size_changed();
             }
 
         }

@@ -48,8 +48,6 @@ public class Epub_Parser implements Book_Parser {
         List<TOCReference> table_of_contents = epub.getTableOfContents().getTocReferences();
         initialize_chapters(spine, table_of_contents);
         Book book = new Book(book_title, book_author, chapters);
-
-
         return book;
     }
     private void initialize_chapters(Spine epub_spine, List<TOCReference> table_of_contents) {

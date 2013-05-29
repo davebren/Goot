@@ -4,6 +4,8 @@ import android.graphics.Paint;
 
 public class Book_Formatting {
 
+    private int total_width;
+    private int total_height;
     private int margin_width;
     private int line_width;
     private int line_spacing;
@@ -11,14 +13,16 @@ public class Book_Formatting {
     private int[] line_y_coordinates;
 
     public Book_Formatting(int width, int height, int font_size) {
-        initialize_formatting(width, height, font_size);
+        total_width = width;
+        total_height = height;
+        initialize_formatting(font_size);
     }
 
-    public void initialize_formatting(int width, int height, int font_size) {
-        margin_width = (int)(width*0.05);
-        line_width = width - (margin_width*2);
+    public void initialize_formatting(int font_size) {
+        margin_width = (int)(total_width*0.05);
+        line_width = total_width - (margin_width*2);
         line_spacing = (int)(font_size*0.5);
-        int free_space = height;
+        int free_space = total_height;
         int starting_position = font_size + line_spacing*3;
         free_space = free_space - (font_size*2 + line_spacing*4); // header, footer space.
         lines_per_page = free_space/(font_size+line_spacing);
@@ -40,5 +44,8 @@ public class Book_Formatting {
     }
     public int get_margin_width() {
         return margin_width;
+    }
+    public int get_total_width() {
+        return total_width;
     }
 }

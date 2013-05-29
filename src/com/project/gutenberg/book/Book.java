@@ -41,5 +41,12 @@ public class Book {
     public void increment_current_page() {
         current_page++;
     }
+    public int get_current_page() {
+        return current_page;
+    }
+    public int get_current_chapter() {
+        return current_chapter;
+    }
+
 
 }

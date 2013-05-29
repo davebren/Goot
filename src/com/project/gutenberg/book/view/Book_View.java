@@ -1,10 +1,14 @@
 package com.project.gutenberg.book.view;
 
+import com.project.gutenberg.book.Book;
+import com.project.gutenberg.book.page_flipping.Page_Flipper;
 import com.project.gutenberg.book.pagination.Line_Measurer;
+import com.project.gutenberg.book.pagination.Page_Splitter;
 
 public abstract class Book_View {
     protected Book_Formatting formatting;
     protected Line_Measurer line_measurer;
+    protected Page_Flipper page_flipper;
     protected String[][] prev_current_next_page_lines;
     protected Page_View prev_page;
     protected Page_View current_page;
@@ -12,6 +16,9 @@ public abstract class Book_View {
     protected final int prev_page_stack_id = -1;
     protected final int current_page_stack_id = 0;
     protected final int next_page_stack_id = 1;
+
+    protected Book book;
+    protected int flip_style;
 
     protected Book_View(int width, int height, int font_size) {
         formatting = new Book_Formatting(width, height, font_size);
@@ -29,5 +36,10 @@ public abstract class Book_View {
     public void set_prev_current_next_page_lines(String[][] prev_current_next_page_lines) {
         this.prev_current_next_page_lines = prev_current_next_page_lines;
     }
+    public void set_prev_current_next_page_lines(String[] lines, int index) {
+        this.prev_current_next_page_lines[index] = lines;
+    }
+    public abstract void initialize_page_flipper();
+    public abstract void loading_hook_completed_receiver(String[] lines_of_text, int stack_id);
 
 }

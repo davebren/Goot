@@ -7,4 +7,7 @@ public class Page {
     public Page(String[] page_text) {
         this.page_text = page_text;
     }
+    public String[] get_page_text() {
+        return page_text;
+    }
 }

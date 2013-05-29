@@ -1,6 +1,7 @@
 package com.project.gutenberg.book.pagination;
 
 import com.project.gutenberg.book.Book;
+import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.book.Page;
 import com.project.gutenberg.book.view.Book_Formatting;
 import com.project.gutenberg.book.view.Book_View;
@@ -45,7 +46,7 @@ public class Page_Splitter {
             }
         }
         book_view.set_prev_current_next_page_lines(prev_current_next_page_lines);
-
+        new Load_All_Pages();
     }
 
 
@@ -193,8 +194,8 @@ public class Page_Splitter {
                 lines_of_text[i] = "";
             }
         }
-        book.get_chapter(current_chapter).add_page(false, new Page(lines_of_text));
-        book.get_chapter(current_chapter).add_boundary(false, text_boundaries);
+        book.get_chapter(text_boundaries[0]).add_page(false, new Page(lines_of_text));
+        book.get_chapter(text_boundaries[0]).add_boundary(false, text_boundaries);
         return lines_of_text;
 
     }
@@ -332,4 +333,99 @@ public class Page_Splitter {
 
         }
     }
+
+    private void initialize_chapter(int chapter) {
+        Integer[] i = new Integer[6];
+        i[3] = chapter;
+        i[4] = -1;
+        i[5] = -1;
+        get_next_page_lines(i);
+    }
+
+
+    private class Load_All_Pages extends Thread {
+        Load_All_Pages() {
+            super();
+            start();
+        }
+        public void run() {
+            Integer[] first_loaded_boundaries;
+            Integer[] last_loaded_boundaries;
+            long start_time = System.currentTimeMillis();
+
+
+
+            for (int i=0; i < book.number_of_chapters(); i++) {
+                Chapter c = book.get_chapter(i);
+                if (!c.first_page_loaded) {
+                    first_loaded_boundaries = c.get_first_boundary();
+                    if (first_loaded_boundaries == null) {
+                        c.first_page_loaded = true;
+                        initialize_chapter(i);
+                    } else if (first_loaded_boundaries[1] == 0 && first_loaded_boundaries[2] == 0) {
+                        c.first_page_loaded = true;
+                    }
+                } else if (!c.last_page_loaded) {
+                    last_loaded_boundaries = c.get_last_boundary();
+                    if (last_loaded_boundaries[5] == -1 && last_loaded_boundaries[4] == -1) {
+                        c.last_page_loaded = true;
+                    }
+                }
+            }
+
+
+            boolean stop_loop;
+            A: while(true) {
+                stop_loop = true;
+
+                if (!load_prev_and_next_pages(current_chapter)) {
+                    stop_loop = false;
+                }
+                for (int i=0; i < book.number_of_chapters(); i++) {
+                    if (!load_prev_and_next_pages(i)) {
+                        stop_loop = false;
+                    }
+                }
+                if (stop_loop) {
+                    break A;
+                }
+            }
+            for (int i=0; i < book.number_of_chapters(); i++) {
+                Chapter c = book.get_chapter(i);
+                Debug.log("chapter " + i + ": " + c.number_of_pages());
+            }
+            Debug.log("pages loaded in " + (System.currentTimeMillis() -start_time) + " ms.");
+        }
+    }
+
+    private boolean load_prev_and_next_pages(int chapter) {
+        boolean stop_loop = false;
+        Chapter c = book.get_chapter(chapter);
+        if (!c.first_page_loaded) {
+            stop_loop = false;
+            Integer[] first_loaded_boundaries = c.get_first_boundary();
+            if (first_loaded_boundaries[1] == 0 && first_loaded_boundaries[2] == 0) {
+                c.first_page_loaded = true;
+            } else {
+                get_prev_page_lines(first_loaded_boundaries);
+            }
+
+        }
+        if (!c.last_page_loaded) {
+            stop_loop = false;
+            Integer[] last_loaded_boundaries = c.get_last_boundary();
+            if (last_loaded_boundaries[3] > chapter) {
+                c.last_page_loaded = true;
+            } else {
+                get_next_page_lines(last_loaded_boundaries);
+            }
+        }
+        return stop_loop;
+    }
+
+
+
+
+
+
 }

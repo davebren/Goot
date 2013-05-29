@@ -231,7 +231,7 @@ public class Home extends RootActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (current_menu_depth == 2 && book_view_open) {
                 //current_book_holder.removeView(book_view.get_view());
-                current_book_holder.removeView(book_view.get_page_holder());
+                //current_book_holder.removeView(book_view.get_page_holder());
             }
             if (position != current_book_holder_position) {
                 final View row_view = view;
@@ -254,7 +254,7 @@ public class Home extends RootActivity {
                 }
                 Epub_Parser parser = new Epub_Parser(b, 1, 0, 0);
                 Book book = parser.parse_book();
-                book_view = new Android_Book_View(book,context, prefs, fill_screen_params, screen_width, fill_screen_params.height);
+                book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0);
                 Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 1, 0, 0);
                 page_splitter.paginate();
                 ((LinearLayout)view).addView(book_view.get_page_holder());

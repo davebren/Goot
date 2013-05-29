@@ -26,6 +26,15 @@ class Android_Page_View extends Page_View {
     public void remove_view() {
         ((Android_Book_View)page_holder).get_page_holder().removeView(page);
     }
+    public void set_page_stack_id(int id) {
+        page_stack_id = id;
+    }
+    public int get_page_stack_id() {
+        return page_stack_id;
+    }
+    public void invalidate() {
+        page.invalidate();
+    }
 
 
     private class Page extends View {

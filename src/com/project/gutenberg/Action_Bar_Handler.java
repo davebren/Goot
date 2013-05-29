@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
 
 public class Action_Bar_Handler {
     private ActionBar action_bar;

@@ -5,9 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;
 import com.project.gutenberg.book.view.Book_Formatting;
-import com.project.gutenberg.book.view.Book_View;
 import com.project.gutenberg.book.view.Page_View;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
 
 class Android_Page_View extends Page_View {
     private Page page;

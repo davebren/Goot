@@ -2,7 +2,6 @@ package com.project.gutenberg.book.parsing;
 
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.Chapter;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.Spine;
 import nl.siegmann.epublib.domain.TOCReference;

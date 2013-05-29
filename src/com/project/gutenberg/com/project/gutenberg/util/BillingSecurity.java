@@ -20,9 +20,7 @@ import android.text.TextUtils;
 import android.util.Log;
   
 import com.project.gutenberg.com.project.gutenberg.util.C.PurchaseState;
-import com.project.gutenberg.com.project.gutenberg.util.Base64;
-import com.project.gutenberg.com.project.gutenberg.util.Base64DecoderException;
-  
+
 /**
  * Security-related methods. For a secure implementation, all of this code
  * should be implemented on a server that communicates with the application on

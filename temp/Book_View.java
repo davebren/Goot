@@ -1,4 +1,4 @@
-package com.project.gutenberg;
+/*package com.project.gutenberg;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -484,6 +484,7 @@ public class Book_View {
     /*
      *  When backtracking, if the start of a paragraph is found, the paragraph needs to be recompiled in order to fill the first line, and leave whitespace after the last line.
      */
+    /*
     private void recompile_paragraph(String paragraph, String[] lines_of_text, int start_line, int end_line) {
         String[] words = paragraph.split(" ");
         Debug.log("recompile paragraph: " + start_line + " - " + end_line);
@@ -642,3 +643,4 @@ public class Book_View {
 
 
 }
+*/

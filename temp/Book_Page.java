@@ -1,8 +1,7 @@
-package com.project.gutenberg;
+/*package com.project.gutenberg;
 
 import android.content.Context;
 import android.graphics.*;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import com.project.gutenberg.com.project.gutenberg.util.Debug;
@@ -94,3 +93,4 @@ public class Book_Page extends View {
 
 
 }
+*/

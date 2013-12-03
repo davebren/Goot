@@ -32,8 +32,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68fc1f05-00e6-4a35-89d5-924fa32be30d" name="Default" comment="add search to action bar">
-      <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\.idea\.name" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\.idea\ant.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\.idea\compiler.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\.idea\copyright\profiles_settings.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\.idea\encodings.xml" afterPath="" />
@@ -45,12 +43,13 @@
       <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\.idea\uiDesigner.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\.idea\vcs.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\.idea\workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/project/gutenberg/Manifest.java" afterPath="$PROJECT_DIR$/gen/com/project/gutenberg/Manifest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/project/gutenberg/R.java" afterPath="$PROJECT_DIR$/gen/com/project/gutenberg/R.java" />
+      <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\gen\com\project\gutenberg\BuildConfig.java" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\gen\com\project\gutenberg\Manifest.java" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\David\Desktop\gutendroid\master\gen\com\project\gutenberg\R.java" afterPath="" />
     </list>
     <ignored path="GutenDroid.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1386032011916" ignored="false" />
+    <file path="/Dummy.txt" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1386032165415" ignored="false" />
     <file path="/home.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365558374136" ignored="false" />
     <file path="/Home.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367717907031" ignored="false" />
     <file path="/home_menu_row.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365556940491" ignored="false" />
@@ -603,7 +602,11 @@
       <created>1369817726620</created>
       <updated>1369817726642</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="add search to action bar">
+      <created>1386032092848</created>
+      <updated>1386032092849</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -618,6 +621,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -632,7 +636,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991362" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -777,7 +780,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Home.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="236" column="57" selection-start="9067" selection-end="9067" vertical-scroll-proportion="3.3795784" />
+        <state line="236" column="57" selection-start="9067" selection-end="9067" vertical-scroll-proportion="3.3795784">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/BillingReceiver.java">

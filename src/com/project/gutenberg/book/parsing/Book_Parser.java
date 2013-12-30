@@ -1,6 +1,5 @@
 package com.project.gutenberg.book.parsing;
 
-import com.project.gutenberg.Chapter;
 import com.project.gutenberg.book.Book;
 
 import java.util.LinkedList;

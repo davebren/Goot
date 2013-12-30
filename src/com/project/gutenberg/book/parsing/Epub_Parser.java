@@ -17,9 +17,6 @@ import java.util.List;
 
 public class Epub_Parser implements Book_Parser {
     private int current_chapter = 0;
-
-
-
     private int current_paragraph = 0;
     private int current_word = 0;
 

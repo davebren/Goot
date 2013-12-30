@@ -9,7 +9,6 @@ public class Android_Line_Measurer implements Line_Measurer {
     public Android_Line_Measurer(Paint text_paint) {
         this.text_paint = text_paint;
     }
-
     public float measure_width(String s) {
         return text_paint.measureText(s);
     }

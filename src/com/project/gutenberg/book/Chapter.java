@@ -27,7 +27,6 @@ public class Chapter {
     private boolean loading_hook_next = false;
     private Book_View loading_hook_book_view;
 
-
     public Chapter(Book_Parser parser, int chapter_index) {
         pages = new LinkedList<Page>();
         boundaries = new LinkedList<Integer[]>();
@@ -37,6 +36,9 @@ public class Chapter {
 
     public void set_title(String title) {
         this.title = title;
+    }
+    public String get_title() {
+        return title;
     }
     public void set_paragraphs(LinkedList<String> paragraphs) {
         this.paragraphs = paragraphs;
@@ -52,9 +54,6 @@ public class Chapter {
     public int number_of_pages() {
         return pages.size();
     }
-
-
-
     public Page get_page(int index) {
         try {
             return pages.get(index);
@@ -118,12 +117,9 @@ public class Chapter {
             boundaries.addLast(b);
         }
     }
-
-
     public boolean is_first_page_loaded() {
         return first_page_loaded;
     }
-
     public boolean is_last_page_loaded() {
         return last_page_loaded;
     }
@@ -162,7 +158,4 @@ public class Chapter {
     public boolean get_loading_hook_status() {
         return loading_hook;
     }
-
-
-
 }

@@ -3,7 +3,6 @@ package com.project.gutenberg.book.view;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.page_flipping.Page_Flipper;
 import com.project.gutenberg.book.pagination.Line_Measurer;
-import com.project.gutenberg.book.pagination.Page_Splitter;
 
 public abstract class Book_View {
     protected Book_Formatting formatting;
@@ -41,5 +40,7 @@ public abstract class Book_View {
     }
     public abstract void initialize_page_flipper();
     public abstract void loading_hook_completed_receiver(String[] lines_of_text, int stack_id);
-
+    public Book get_book() {
+        return book;
+    }
 }

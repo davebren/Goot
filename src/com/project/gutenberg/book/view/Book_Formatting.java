@@ -1,9 +1,6 @@
 package com.project.gutenberg.book.view;
 
-import android.graphics.Paint;
-
 public class Book_Formatting {
-
     private int total_width;
     private int total_height;
     private int margin_width;

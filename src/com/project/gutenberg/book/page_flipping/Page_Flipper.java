@@ -18,9 +18,7 @@ public abstract class Page_Flipper {
         this.current_page = current_page;
         this.next_page = next_page;
         this.book = book;
-
     }
-
     public abstract void next_page();
     public abstract void prev_page();
 

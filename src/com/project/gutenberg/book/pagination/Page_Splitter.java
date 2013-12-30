@@ -21,9 +21,6 @@ public class Page_Splitter {
     private Line_Measurer line_measurer;
     private final Object add_page_lock = new Object();
 
-
-
-
     public Page_Splitter(Book_View book_view, Book book, Book_Formatting formatting, Line_Measurer line_measurer, int current_chapter, int current_paragraph, int current_word) {
         this.book_view = book_view;
         this.current_chapter = current_chapter;

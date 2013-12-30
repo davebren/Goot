@@ -22,7 +22,6 @@ public class Android_Book_View extends Book_View {
     private Context context;
     protected Paint text_painter;
 
-
     public Android_Book_View(Book book, Context context, Shared_Prefs prefs, LinearLayout.LayoutParams fill_screen_params, int view_width, int view_height, int flip_style) {
         super(view_width, view_height, prefs.get_book_font_size());
         this.prefs = prefs;
@@ -33,7 +32,6 @@ public class Android_Book_View extends Book_View {
         this.flip_style = flip_style;
         this.book = book;
         initialize_page_flipper();
-
     }
     private void initialize_page_holder(LinearLayout.LayoutParams fill_screen_params) {
         page_holder = new RelativeLayout(context);
@@ -65,11 +63,9 @@ public class Android_Book_View extends Book_View {
     public RelativeLayout get_page_holder() {
         return page_holder;
     }
-
     public void initialize_page_flipper() {
         page_flipper = new Simple_Page_Flipper(this, prev_page, current_page, next_page, book, page_holder);
     }
-
     public void loading_hook_completed_receiver(String[] lines_of_text, int stack_id) {
         if (stack_id == -1) {
             this.set_prev_current_next_page_lines(lines_of_text, 0);

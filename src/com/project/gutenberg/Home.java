@@ -17,12 +17,7 @@ import nl.siegmann.epublib.epub.EpubReader;
 
 import java.io.IOException;
 
-
-/**
- *
- */
 public class Home extends RootActivity {
-
     protected static Shared_Prefs prefs;
     private Context context;
     public static int screen_height;
@@ -64,19 +59,14 @@ public class Home extends RootActivity {
         initialize_app();
         setup_views();
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
         action_bar_handler = new Action_Bar_Handler(menu, getActionBar());
         action_bar_handler.set_home_view_menu();
         return super.onCreateOptionsMenu(menu);
     }
-
-
-
     private void setup_views() {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         setContentView(new Home_Outer(context));
         outer_layout = (LinearLayout)findViewById(R.id.home_outer);
         home_scroll = (ScrollView)findViewById(R.id.home_scroll);
@@ -160,16 +150,10 @@ public class Home extends RootActivity {
         fonts = new Fonts(prefs, context);
         fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
     }
-
-
-
-
     private void expand_primary_nav(int index) {
-        switch(index) {
-            case browse_title_index: toggle_by_title();
-                break;
+        if (index == browse_title_index) {
+            toggle_by_title();
         }
-
         // close other navs.
         for (int i=0; i < expanded_primary_nav.length; i++) {
             if (i != index && expanded_primary_nav[i]) {
@@ -228,14 +212,11 @@ public class Home extends RootActivity {
     private AdapterView.OnItemClickListener title_click = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (current_menu_depth == 2 && book_view_open) {
-                //current_book_holder.removeView(book_view.get_view());
-                //current_book_holder.removeView(book_view.get_page_holder());
+                current_book_holder.removeView(book_view.get_page_holder());
             }
             if (position != current_book_holder_position) {
                 final View row_view = view;
                 final int f_position = position;
-
-
                 book_view_open = true;
                 current_menu_depth = 2;
                 current_book_holder_position = position;
@@ -255,7 +236,10 @@ public class Home extends RootActivity {
                 book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0);
                 Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 1, 0, 0);
                 page_splitter.paginate();
+
                 ((LinearLayout)view).addView(book_view.get_page_holder());
+                action_bar_handler.set_book_view_menu();
+                action_bar_handler.initialize_spinner_chapters(book.get_chapters(),0);
 
                 browse_titles_list.postDelayed(new Runnable() {
                     public void run() {
@@ -270,7 +254,6 @@ public class Home extends RootActivity {
             }
         }
     };
-
     public void onBackPressed() {
         if (current_menu_depth == 0) {
             super.onBackPressed();
@@ -285,13 +268,7 @@ public class Home extends RootActivity {
             book_view_open = false;
             current_book_holder_position = -1;
         }
-
     }
-
-
-
-
-
     private class Home_Outer extends LinearLayout {
         public Home_Outer(Context context) {
             super(context);
@@ -299,8 +276,6 @@ public class Home extends RootActivity {
             outer_layout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
             this.addView(outer_layout);
         }
-
-
         public void onSizeChanged (int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
             pure_activity_height = h;
@@ -310,15 +285,6 @@ public class Home extends RootActivity {
             if (book_view_open) {
                 //book_view.size_changed();
             }
-
         }
-
-
     }
-
-
-
-
-
-
 }

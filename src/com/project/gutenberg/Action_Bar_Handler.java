@@ -66,11 +66,7 @@ public class Action_Bar_Handler {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chapter_indicator_spinner.setPrompt(chapter_titles[current_chapter]);
         this.chapter_titles = chapter_titles;
-
     }
-
-
-
     SearchView.OnQueryTextListener query_listener = new SearchView.OnQueryTextListener() {
         public boolean onQueryTextChange(String query) {
             return true;

@@ -1,7 +1,5 @@
 package com.project.gutenberg.book;
 
-import android.view.View;
-
 import java.util.LinkedList;
 
 public class Book {
@@ -46,6 +44,13 @@ public class Book {
     }
     public int get_current_chapter() {
         return current_chapter;
+    }
+    public String[] get_chapters() {
+        String[] ret = new String[chapters.size()];
+        for (int i=0; i<chapters.size();i++) {
+            ret[i] = chapters.get(i).get_title();
+        }
+        return ret;
     }
 
 

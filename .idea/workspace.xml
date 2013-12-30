@@ -32,7 +32,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68fc1f05-00e6-4a35-89d5-924fa32be30d" name="Default" comment="add search to action bar">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/project/gutenberg/BuildConfig.java" afterPath="$PROJECT_DIR$/gen/com/project/gutenberg/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GutenDroid.iml" afterPath="$PROJECT_DIR$/GutenDroid.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/project/gutenberg/Manifest.java" afterPath="$PROJECT_DIR$/gen/com/project/gutenberg/Manifest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/com/project/gutenberg/R.java" afterPath="$PROJECT_DIR$/gen/com/project/gutenberg/R.java" />
@@ -40,7 +39,7 @@
     </list>
     <ignored path="GutenDroid.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1388360295371" ignored="false" />
+    <file path="/Dummy.txt" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1388361815376" ignored="false" />
     <file path="/home.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365558374136" ignored="false" />
     <file path="/Home.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367717907031" ignored="false" />
     <file path="/home_menu_row.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365556940491" ignored="false" />
@@ -133,10 +132,10 @@
     <file path="$PROJECT_DIR$/../Knowt/gen/com/android/vending/billing/IMarketBillingService.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367719318911" ignored="false" />
     <file path="/RootActivity.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367719821480" ignored="false" />
     <file path="$PROJECT_DIR$/../Knowt/project.properties" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367720587538" ignored="false" />
-    <file path="$USER_HOME$/Desktop/JakeWharton-ActionBarSherlock-071a61c/actionbarsherlock/project.properties" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367719597222" ignored="false" />
+    <file path="$PROJECT_DIR$/../JakeWharton-ActionBarSherlock-071a61c/actionbarsherlock/project.properties" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367719597222" ignored="false" />
     <file path="/Page_Flipper.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1368489291157" ignored="false" />
     <file path="/Simple_Page_Flipper.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1368504635205" ignored="false" />
-    <file path="$USER_HOME$/Desktop/android/Eskimo_Apps/Spanish_Nouns/src/spanish/nouns/Settings.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1368579164972" ignored="false" />
+    <file path="$PROJECT_DIR$/../android/Eskimo_Apps/Spanish_Nouns/src/spanish/nouns/Settings.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1368579164972" ignored="false" />
     <file path="/Settings.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1368579161879" ignored="false" />
     <file path="$PROJECT_DIR$/../Spanish_Nouns/gen/com/android/vending/billing/IMarketBillingService.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1368580608565" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -158,7 +157,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -195,6 +193,7 @@
         <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -211,7 +210,7 @@
     </FindUsagesManager>
   </component>
   <component name="GenerateSignedApkSettings">
-    <option name="KEY_STORE_PATH" value="$USER_HOME$/Desktop/android/sight_read.keystore" />
+    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/../android/sight_read.keystore" />
     <option name="KEY_ALIAS" value="allheylouya" />
     <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
@@ -295,7 +294,10 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane />
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -314,63 +316,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gutenberg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GutenDroid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -413,7 +360,7 @@
       <recent name="com.project.gutenberg" />
     </key>
   </component>
-  <component name="RunManager" selected="Android Application.Knowt">
+  <component name="RunManager" selected="Android Application.GutenDroid">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -552,8 +499,25 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <method />
     </configuration>
-    <list size="1">
+    <configuration default="false" name="GutenDroid" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="GutenDroid" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Android Application.Knowt" />
+      <item index="1" class="java.lang.String" itemvalue="Android Application.GutenDroid" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -722,18 +686,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/Page.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="25" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/Book.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="39" selection-start="113" selection-end="113" vertical-scroll-proportion="0.06659268">
-          <folding />
-        </state>
+        <state line="6" column="39" selection-start="113" selection-end="113" vertical-scroll-proportion="0.06659268" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/pagination/Page_Splitter.java">
@@ -748,9 +703,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/Book_View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="93" selection-start="1755" selection-end="1755" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="42" column="93" selection-start="1755" selection-end="1755" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Page_View.java">
@@ -760,39 +713,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/android/Android_Book_View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="41" selection-start="2307" selection-end="2307" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="47" column="41" selection-start="2307" selection-end="2307" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/view/Page_View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="24" selection-start="354" selection-end="354" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="10" column="24" selection-start="354" selection-end="354" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/Page_Flipper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="48" selection-start="761" selection-end="761" vertical-scroll-proportion="0.33296338">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="20" column="48" selection-start="761" selection-end="761" vertical-scroll-proportion="0.33296338" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/Chapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="161" column="18" selection-start="4776" selection-end="4776" vertical-scroll-proportion="2.5971143">
-          <folding />
-        </state>
+        <state line="161" column="18" selection-start="4776" selection-end="4776" vertical-scroll-proportion="2.5971143" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/Home.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="236" column="57" selection-start="9067" selection-end="9067" vertical-scroll-proportion="3.3795784">
-          <folding />
-        </state>
+        <state line="236" column="57" selection-start="9067" selection-end="9067" vertical-scroll-proportion="3.3795784" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/android/vending/billing/IMarketBillingService.aidl">
@@ -802,31 +743,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/BillingHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="271" column="56" selection-start="15002" selection-end="15002" vertical-scroll-proportion="4.263041">
-          <folding />
-        </state>
+        <state line="271" column="56" selection-start="15002" selection-end="15002" vertical-scroll-proportion="4.263041" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/book/page_flipping/android/Simple_Page_Flipper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="40" selection-start="1450" selection-end="1450" vertical-scroll-proportion="0.06719368">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Simple_Page_Flipper#0;class#Simple_Page_Flipper#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="30" column="40" selection-start="1450" selection-end="1450" vertical-scroll-proportion="0.06719368" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/BillingService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="15" selection-start="1817" selection-end="1817" vertical-scroll-proportion="0.49604744">
-          <folding />
-        </state>
+        <state line="47" column="15" selection-start="1817" selection-end="1817" vertical-scroll-proportion="0.49604744" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/project/gutenberg/com/project/gutenberg/util/BillingReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="885" selection-end="885" vertical-scroll-proportion="0.0327553">
+        <state line="15" column="13" selection-start="885" selection-end="885" vertical-scroll-proportion="0.0327553" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GutenDroid.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

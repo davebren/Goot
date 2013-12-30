@@ -32,14 +32,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68fc1f05-00e6-4a35-89d5-924fa32be30d" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\David\Desktop\GutenDroid\.idea\workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\David\Desktop\GutenDroid\gen\com\project\gutenberg\BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\David\Desktop\GutenDroid\gen\com\project\gutenberg\Manifest.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\David\Desktop\GutenDroid\gen\com\project\gutenberg\R.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="GutenDroid.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1388361858564" ignored="false" />
+    <file path="/Dummy.txt" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1388361901427" ignored="false" />
     <file path="/home.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365558374136" ignored="false" />
     <file path="/Home.java" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1367717907031" ignored="false" />
     <file path="/home_menu_row.xml" changelist="68fc1f05-00e6-4a35-89d5-924fa32be30d" time="1365556940491" ignored="false" />
@@ -584,7 +581,11 @@
       <created>1388361862189</created>
       <updated>1388361862189</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary=".">
+      <created>1388361908294</created>
+      <updated>1388361908294</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">

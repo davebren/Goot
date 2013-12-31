@@ -68,6 +68,7 @@ public class Home extends RootActivity {
     }
     public void onDestroy() {
         Action_Time_Analysis.log();
+        super.onDestroy();
     }
     private void setup_views() {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

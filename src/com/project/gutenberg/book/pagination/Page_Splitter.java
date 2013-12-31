@@ -7,6 +7,7 @@ import com.project.gutenberg.book.view.Book_Formatting;
 import com.project.gutenberg.book.view.Book_View;
 import com.project.gutenberg.util.Action_Time_Analysis;
 import com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Fast_Line_Splitter;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -143,12 +144,17 @@ public class Page_Splitter {
         int paragraph_index = text_boundaries[1];
 
         boolean reading_first_paragraph = true;
+        int parity=0;
         A: for (String paragraph : book.get_chapter(text_boundaries[0]).get_paragraphs().subList(text_boundaries[1], book.get_chapter(text_boundaries[0]).get_paragraphs().size())) {
+            parity = (int)(Math.random()*10000);
             if (paragraph == null || paragraph.equals("")) {
                 lines_of_text[line_count] = "";
             } else {
+                Action_Time_Analysis.start("get_next_page_lines.split");
                 String[] words = paragraph.split(" ");
+                Action_Time_Analysis.end("get_next_page_lines.split");
                 words[0] = "     " + words[0];
+                float[] word_widths = Fast_Line_Splitter.word_widths(words,line_measurer);
 
                 int word_index = 0;
                 if (reading_first_paragraph) {
@@ -156,22 +162,11 @@ public class Page_Splitter {
                         word_index = text_boundaries[2]+1;
                     }
                 }
-                for (int i=word_index; i < words.length; i++) {
-                    if (line_measurer.measure_width(lines_of_text[line_count] + " " + words[i]) > formatting.get_line_width()) {
-                        i--;
-                        line_count++;
-                        if (line_count == lines_of_text.length) { // paragraph cutoff
-                            text_boundaries[3] = text_boundaries[0];
-                            text_boundaries[4] = paragraph_index;
-                            text_boundaries[5] = i;
-                            break A;
-                        } else {
-                            lines_of_text[line_count] = "";
-                        }
-                    } else {
-                        lines_of_text[line_count] += " " + words[i];
-                    }
-                }
+                Object[] split_return;
+                split_return = Fast_Line_Splitter.split(line_measurer,formatting,words,word_index,paragraph_index,line_count,text_boundaries,lines_of_text,word_widths);
+                paragraph_index = (Integer)split_return[2];
+                line_count = (Integer)split_return[3];
+                if ((Boolean)split_return[1]) {break A;}
             }
             line_count++;
             if (line_count == lines_of_text.length) { // paragraph finished exactly.

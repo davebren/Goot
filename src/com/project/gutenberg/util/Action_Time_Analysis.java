@@ -16,10 +16,13 @@ public class Action_Time_Analysis {
     public static void end(String action_key) {
         if (!start_times.containsKey(action_key)) {return;}
         long action_count = 1;
+        long total_time = 0;
         if (times.containsKey(action_key)) {
             action_count += times.get(action_key)[0];
+            total_time = times.get(action_key)[1];
         }
         Long[] val = new Long[] {action_count,System.currentTimeMillis()-start_times.get(action_key)};
+        val[1] += total_time;
         times.put(action_key,val);
     }
     public static void log() {

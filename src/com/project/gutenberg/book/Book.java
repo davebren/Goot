@@ -1,5 +1,7 @@
 package com.project.gutenberg.book;
 
+import com.project.gutenberg.util.Action_Time_Analysis;
+
 import java.util.LinkedList;
 
 public class Book {
@@ -15,13 +17,11 @@ public class Book {
         this.chapters = chapters;
     }
     public Chapter get_chapter(int index) {
+        Action_Time_Analysis.start("Book.get_chapter");
         try {
             return chapters.get(index);
-        } catch(IndexOutOfBoundsException e1) {
-
-        } catch(NullPointerException e2) {
-
-        }
+        } catch(IndexOutOfBoundsException e1) {} catch(NullPointerException e2) {}
+        Action_Time_Analysis.end("Book.get_chapter");
         return null;
     }
     public int number_of_chapters() {
@@ -52,6 +52,4 @@ public class Book {
         }
         return ret;
     }
-
-
 }

@@ -8,9 +8,10 @@ import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.pagination.Page_Splitter;
 import com.project.gutenberg.book.parsing.Epub_Parser;
 import com.project.gutenberg.book.view.android.Android_Book_View;
-import com.project.gutenberg.com.project.gutenberg.util.Fonts;
-import com.project.gutenberg.com.project.gutenberg.util.RootActivity;
-import com.project.gutenberg.com.project.gutenberg.util.Shared_Prefs;
+import com.project.gutenberg.util.Action_Time_Analysis;
+import com.project.gutenberg.util.Fonts;
+import com.project.gutenberg.util.RootActivity;
+import com.project.gutenberg.util.Shared_Prefs;
 
 import android.view.View.OnClickListener;
 import nl.siegmann.epublib.epub.EpubReader;
@@ -64,6 +65,9 @@ public class Home extends RootActivity {
         action_bar_handler = new Action_Bar_Handler(menu, getActionBar());
         action_bar_handler.set_home_view_menu();
         return super.onCreateOptionsMenu(menu);
+    }
+    public void onDestroy() {
+        Action_Time_Analysis.log();
     }
     private void setup_views() {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -11,8 +11,8 @@ import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.page_flipping.android.Simple_Page_Flipper;
 import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
 import com.project.gutenberg.book.view.Book_View;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
-import com.project.gutenberg.com.project.gutenberg.util.Shared_Prefs;
+import com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Shared_Prefs;
 
 public class Android_Book_View extends Book_View {
     protected int background_color = Color.parseColor("#f7f5f5");

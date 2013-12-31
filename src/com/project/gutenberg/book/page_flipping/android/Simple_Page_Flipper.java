@@ -6,7 +6,7 @@ import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.book.page_flipping.Page_Flipper;
 import com.project.gutenberg.book.view.Book_View;
 import com.project.gutenberg.book.view.Page_View;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Debug;
 
 public class Simple_Page_Flipper extends Page_Flipper {
     private RelativeLayout page_holder;
@@ -36,11 +36,6 @@ public class Simple_Page_Flipper extends Page_Flipper {
                 lines_of_text[2] = new String[1];
                 lines_of_text[2][0] = "";
                 current_chapter.add_loading_hook(1, true, book_view);
-            }
-            for (int i=0; i < lines_of_text.length; i++) {
-                for (int j=0; j < lines_of_text[i].length; j++) {
-                    Debug.log("page " + i +", " + lines_of_text[i][j]);
-                }
             }
             book_view.set_prev_current_next_page_lines(lines_of_text);
             current_page.set_page_stack_id(0);

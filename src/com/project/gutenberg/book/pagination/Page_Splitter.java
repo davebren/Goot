@@ -5,7 +5,8 @@ import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.book.Page;
 import com.project.gutenberg.book.view.Book_Formatting;
 import com.project.gutenberg.book.view.Book_View;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Action_Time_Analysis;
+import com.project.gutenberg.util.Debug;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -45,9 +46,8 @@ public class Page_Splitter {
         book_view.set_prev_current_next_page_lines(prev_current_next_page_lines);
         new Load_All_Pages();
     }
-
-
     private void initialize_open_pages() {
+        Action_Time_Analysis.start("initialize_open_pages");
         int line_count = 0;
         prev_current_next_page_lines[1][0] = "";
         Integer[] text_boundaries = new Integer[6];  // chapter start, paragraph start, word start, chapter end, paragraph end, word end.
@@ -110,9 +110,11 @@ public class Page_Splitter {
         prev_current_next_page_lines[2] = get_next_page_lines(book.get_chapter(current_chapter).get_last_boundary());
         prev_current_next_page_lines[0] = get_prev_page_lines(book.get_chapter(current_chapter).get_first_boundary());
         book_view.set_prev_current_next_page_lines(prev_current_next_page_lines);
+        Action_Time_Analysis.end("initialize_open_pages");
     }
 
     private String[] get_next_page_lines(Integer[] prev_boundaries) {
+        Action_Time_Analysis.start("get_next_page_lines");
         Integer[] text_boundaries = new Integer[6];
 
         String[] lines_of_text = new String[formatting.get_lines_per_page()];
@@ -193,11 +195,12 @@ public class Page_Splitter {
         }
         book.get_chapter(text_boundaries[0]).add_page(false, new Page(lines_of_text));
         book.get_chapter(text_boundaries[0]).add_boundary(false, text_boundaries);
+        Action_Time_Analysis.end("get_next_page_lines");
         return lines_of_text;
-
     }
 
     private String[] get_prev_page_lines(Integer[] next_boundaries) {
+        Action_Time_Analysis.start("get_prev_page_lines");
         Integer[] text_boundaries = new Integer[6];
         String[] lines_of_text = new String[formatting.get_lines_per_page()];
         lines_of_text[0] = "";
@@ -304,6 +307,7 @@ public class Page_Splitter {
                 book.increment_current_page();
             }
         }
+        Action_Time_Analysis.end("get_prev_page_lines");
         return lines_of_text;
     }
 
@@ -311,6 +315,7 @@ public class Page_Splitter {
      *  When backtracking, if the start of a paragraph is found, the paragraph needs to be recompiled in order to fill the first line, and leave whitespace after the last line.
      */
     private void recompile_paragraph(String paragraph, String[] lines_of_text, int start_line, int end_line) {
+        Action_Time_Analysis.start("recompile_paragraph");
         String[] words = paragraph.split(" ");
         words[0] = "     " + words[0];
         int line_count = start_line;
@@ -327,8 +332,8 @@ public class Page_Splitter {
             } else {
                 lines_of_text[line_count] += " " + words[i];
             }
-
         }
+        Action_Time_Analysis.end("recompile_paragraph");
     }
 
     private void initialize_chapter(int chapter) {
@@ -338,21 +343,19 @@ public class Page_Splitter {
         i[5] = -1;
         get_next_page_lines(i);
     }
-
-
     private class Load_All_Pages extends Thread {
         Load_All_Pages() {
             super();
             start();
         }
         public void run() {
+            Action_Time_Analysis.start("Load_All_Pages.run");
             Integer[] first_loaded_boundaries;
             Integer[] last_loaded_boundaries;
             long start_time = System.currentTimeMillis();
 
-
-
             for (int i=0; i < book.number_of_chapters(); i++) {
+                Action_Time_Analysis.start("Load_All_Pages.loop1");
                 Chapter c = book.get_chapter(i);
                 if (!c.first_page_loaded) {
                     first_loaded_boundaries = c.get_first_boundary();
@@ -368,11 +371,11 @@ public class Page_Splitter {
                         c.last_page_loaded = true;
                     }
                 }
+                Action_Time_Analysis.end("Load_All_Pages.loop1");
             }
-
-
             boolean stop_loop;
             A: while(true) {
+                Action_Time_Analysis.start("Load_All_Pages.loop2");
                 stop_loop = true;
 
                 if (!load_prev_and_next_pages(current_chapter)) {
@@ -383,18 +386,15 @@ public class Page_Splitter {
                         stop_loop = false;
                     }
                 }
+                Action_Time_Analysis.end("Load_All_Pages.loop2");
                 if (stop_loop) {
                     break A;
                 }
             }
-            for (int i=0; i < book.number_of_chapters(); i++) {
-                Chapter c = book.get_chapter(i);
-                Debug.log("chapter " + i + ": " + c.number_of_pages());
-            }
             Debug.log("pages loaded in " + (System.currentTimeMillis() -start_time) + " ms.");
+            Action_Time_Analysis.end("Load_All_Pages.run");
         }
     }
-
     private boolean load_prev_and_next_pages(int chapter) {
         boolean stop_loop = false;
         Chapter c = book.get_chapter(chapter);
@@ -419,10 +419,4 @@ public class Page_Splitter {
         }
         return stop_loop;
     }
-
-
-
-
-
-
 }

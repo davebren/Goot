@@ -1,4 +1,4 @@
-package com.project.gutenberg.com.project.gutenberg.util;
+package com.project.gutenberg.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

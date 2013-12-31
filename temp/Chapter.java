@@ -1,6 +1,6 @@
 /*package com.project.gutenberg;
 
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Debug;
 import nl.siegmann.epublib.domain.Resource;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

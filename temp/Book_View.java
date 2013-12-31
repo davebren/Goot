@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Debug;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Spine;
 import nl.siegmann.epublib.domain.TOCReference;

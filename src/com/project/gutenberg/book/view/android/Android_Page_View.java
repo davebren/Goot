@@ -44,6 +44,7 @@ class Android_Page_View extends Page_View {
             String[] text = page_holder.get_page_lines(page_stack_id+1);
             Book_Formatting format = page_holder.get_formatting();
             int[] line_y_coordinates = format.get_line_y_coordinates();
+            if (text == null) {return;}
             for (int i=0; i < text.length; i++) {
                 if (text[i]!= null) {
                     c.drawText(text[i], format.get_margin_width(), line_y_coordinates[i], ((Android_Book_View)page_holder).text_painter);

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.*;
 import android.view.View;
 import android.widget.RelativeLayout;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Debug;
 
 public class Book_Page extends View {
 

@@ -2,7 +2,7 @@ package com.project.gutenberg.book;
 
 import com.project.gutenberg.book.parsing.Book_Parser;
 import com.project.gutenberg.book.view.Book_View;
-import com.project.gutenberg.com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Debug;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;

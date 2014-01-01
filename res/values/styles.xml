@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="android:Theme.Holo.Light" />
-    <!--<style name="action_bar" parent="@android:style/Theme.Holo">
-        <item name="android:actionDropDownStyle">@style/spinner_style</item>
+    <style name="nav_header">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">100dip</item>
+        <item name="android:textSize">40dip</item>
+        <item name="android:textColor">#4e4b47</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
-    <style name="spinner_style" parent="android:style/Widget.Holo.Light.Spinner.DropDown.ActionBar">
-        <item name="android:background">@drawable/ad_spinner_background_holo_light</item>
-    </style> -->
 </resources>

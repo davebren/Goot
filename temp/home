@@ -1,0 +1,221 @@
+package com.project.gutenberg;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.*;
+import android.widget.*;
+import com.project.gutenberg.book.Book;
+import com.project.gutenberg.book.pagination.Page_Splitter;
+import com.project.gutenberg.book.parsing.Epub_Parser;
+import com.project.gutenberg.book.view.android.Android_Book_View;
+import com.project.gutenberg.util.*;
+
+import android.view.View.OnClickListener;
+import nl.siegmann.epublib.epub.EpubReader;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
+import java.io.IOException;
+
+@EActivity(R.layout.home)
+public class Home extends RootActivity {
+    protected static Shared_Prefs prefs;
+    private Context context;
+    public static int screen_height;
+    public static int screen_width;
+    private static Fonts fonts;
+
+    private Action_Bar_Handler action_bar_handler;
+
+    private LinearLayout[] home_nav;
+    private TextView[] home_nav_headers;
+    private LinearLayout browse_title;
+    private ListView browse_titles_list;
+    @ViewById Size_Change_Callback_Linear_Layout home;
+    @ViewById ScrollView home_scroll_view;
+    @ViewById LinearLayout home_outer;
+
+    private LayoutInflater inflater;
+    private LinearLayout.LayoutParams fill_screen_params;
+
+    private final int num_primary_nav_menus = 6;
+    private final int browse_title_index = 0;
+    private boolean[] expanded_primary_nav = new boolean[num_primary_nav_menus];
+
+    private int current_menu_depth = 0;
+    private Android_Book_View book_view;
+    private LinearLayout current_book_holder;
+    private int current_book_holder_position = -1;
+    private boolean book_view_open = false;
+
+    protected static int pure_activity_height; // does not include action bar, etc...
+    protected static int pure_activity_width;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initialize_app();
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_menu, menu);
+        action_bar_handler = new Action_Bar_Handler(menu, getActionBar());
+        action_bar_handler.set_home_view_menu();
+        return super.onCreateOptionsMenu(menu);
+    }
+    public void onDestroy() {
+        Action_Time_Analysis.log();
+        super.onDestroy();
+    }
+    @AfterViews
+    void setup_views() {
+        Log.d("gutendroid", "setup_views");
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        home.set_response_callback(size_change_callback);
+        home_scroll_view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE && book_view_open) {
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+    private void initialize_app() {
+        context = this;
+        prefs = new Shared_Prefs(context);
+        TAG = Home.class.getName();
+
+        Display display = getWindowManager().getDefaultDisplay();
+        screen_height = display.getHeight();
+        screen_width = display.getWidth();
+        pure_activity_height = screen_height;
+        pure_activity_width = screen_width;
+
+        fonts = new Fonts(prefs, context);
+        fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
+    }
+    private void expand_primary_nav(int index) {
+        if (index == browse_title_index) {
+            toggle_by_title();
+        }
+        // close other navs.
+        for (int i=0; i < expanded_primary_nav.length; i++) {
+            if (i != index && expanded_primary_nav[i]) {
+                switch(i) {
+                    case browse_title_index: toggle_by_title();
+                        break;
+                }
+            }
+        }
+    }
+    private void toggle_by_title() {
+        if (!expanded_primary_nav[browse_title_index]) {
+            home_nav[browse_title_index].addView(browse_title);
+            action_bar_handler.set_title_browsing_menu();
+            home_scroll_view.post(new Runnable() {
+                public void run() {
+                    home_scroll_view.scrollTo(0, home_nav_headers[browse_title_index].getBottom());
+                }
+            });
+            current_menu_depth = 1;
+        } else {
+            home_nav[browse_title_index].removeView(browse_title);
+            action_bar_handler.set_home_view_menu();
+            current_menu_depth = 0;
+        }
+        expanded_primary_nav[browse_title_index] = !expanded_primary_nav[browse_title_index];
+    }
+    private class Title_Adapter extends ArrayAdapter<Object> {
+        private Context context;
+        String[] titles;
+        public Title_Adapter(Context context, Object[] titles) {
+            super(context, R.layout.home_menu_row, titles);
+            this.context = context;
+            this.titles = (String[])titles;
+        }
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LinearLayout row_view = (LinearLayout)inflater.inflate(R.layout.browse_titles_row, parent, false);
+            TextView row_view_header = (TextView)row_view.findViewById(R.id.browse_titles_row_header);
+            row_view_header.setText(titles[position]);
+            if (position == current_book_holder_position && book_view_open) {
+                //((LinearLayout)book_view.get_view().getParent()).removeView(book_view.get_view());
+                //row_view.addView(book_view.get_view());
+                ((LinearLayout)book_view.get_page_holder().getParent()).removeView(book_view.get_page_holder());
+                row_view.addView(book_view.get_page_holder());
+
+                current_book_holder = row_view;
+            }
+
+            return row_view;
+        }
+    }
+    private AdapterView.OnItemClickListener title_click = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (current_menu_depth == 2 && book_view_open) {
+                current_book_holder.removeView(book_view.get_page_holder());
+            }
+            if (position != current_book_holder_position) {
+                final View row_view = view;
+                final int f_position = position;
+                book_view_open = true;
+                current_menu_depth = 2;
+                current_book_holder_position = position;
+                current_book_holder = (LinearLayout)view;
+
+                // TODO change arguments to book details retrieved from database.
+               // book_view = new Book_View(context, inflater, false, "", getAssets(), fill_screen_params, -1, action_bar_handler);
+                //((LinearLayout)view).addView(book_view.get_view());
+                nl.siegmann.epublib.domain.Book b = null;
+                try {
+                    b = new EpubReader().readEpub(getAssets().open("pg1497.epub"));
+                } catch(IOException e) {
+
+                }
+                Epub_Parser parser = new Epub_Parser(b, 1, 0, 0);
+                Book book = parser.parse_book();
+                book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0);
+                Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 1, 0, 0);
+                page_splitter.paginate();
+
+                ((LinearLayout)view).addView(book_view.get_page_holder());
+                action_bar_handler.set_book_view_menu();
+                action_bar_handler.initialize_spinner_chapters(book.get_chapters(),0);
+
+                browse_titles_list.postDelayed(new Runnable() {
+                    public void run() {
+                        browse_titles_list.setSelection(f_position);
+                        browse_titles_list.scrollBy(0, row_view.findViewById(R.id.browse_titles_row_header).getBottom());
+                    }
+                },0);
+            } else {
+                current_menu_depth = 1;
+                book_view_open = false;
+                current_book_holder_position = -1;
+            }
+        }
+    };
+    public void onBackPressed() {
+        if (current_menu_depth == 0) {
+            super.onBackPressed();
+        } else if (current_menu_depth == 1) {
+            expand_primary_nav(-1);
+        } else if (current_menu_depth == 2) {
+            //current_book_holder.removeView(book_view.get_view());
+            current_book_holder.removeView(book_view.get_page_holder());
+            //book_view.kill_book();
+            book_view = null;
+            current_menu_depth = 1;
+            book_view_open = false;
+            current_book_holder_position = -1;
+        }
+    }
+    private Response_Callback<Integer[]> size_change_callback = new Response_Callback<Integer[]>() {
+        public void on_response(Integer[] dimensions) {
+            pure_activity_height = dimensions[1];
+            pure_activity_width = dimensions[0];
+            fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, pure_activity_height);
+            browse_titles_list.setLayoutParams(fill_screen_params);
+        }
+    };
+}

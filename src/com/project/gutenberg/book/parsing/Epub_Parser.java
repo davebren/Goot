@@ -24,7 +24,6 @@ public class Epub_Parser implements Book_Parser {
     private Spine spine;
     private LinkedList<Chapter> chapters;
 
-
     public Epub_Parser(nl.siegmann.epublib.domain.Book epub) {
         this.epub = epub;
     }
@@ -34,12 +33,9 @@ public class Epub_Parser implements Book_Parser {
         this.current_word = current_word;
         this.epub = epub;
     }
-
-
     public Book parse_book() {
         String book_title = epub.getTitle();
         String book_author = epub.getMetadata().getAuthors().get(0).getLastname();
-
         spine = new Spine(epub.getTableOfContents());
         List<TOCReference> table_of_contents = epub.getTableOfContents().getTocReferences();
         initialize_chapters(spine, table_of_contents);

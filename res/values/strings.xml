@@ -1,15 +1,12 @@
 <resources>
 
     <string name="app_name">GutenDroid</string>
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
     <string name="menu_search">Search</string>
+
+    <string name="nav_title_header">Browse: By Title</string>
+    <string name="nav_author_header">By Author</string>
+    <string name="nav_category_header">By Category</string>
+    <string name="nav_year_header">By Year</string>
+    <string name="nav_settings_header">Settings</string>
+    <string name="nav_donate_header">Donate</string>
 </resources>

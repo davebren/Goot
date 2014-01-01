@@ -11,9 +11,9 @@ public class Android_Line_Measurer implements Line_Measurer {
         this.text_paint = text_paint;
     }
     public float measure_width(String s) {
-        //Action_Time_Analysis.start("Android_Line_Measurer.measure_width");
+        Action_Time_Analysis.start("Android_Line_Measurer.measure_width");
         float width = text_paint.measureText(s);
-        //Action_Time_Analysis.end("Android_Line_Measurer.measure_width");
+        Action_Time_Analysis.end("Android_Line_Measurer.measure_width");
         return width;
     }
 }

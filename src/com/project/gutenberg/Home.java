@@ -1,16 +1,18 @@
 package com.project.gutenberg;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.project.gutenberg.book.pagination.Page_Splitter;
+import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
 import com.project.gutenberg.book.parsing.Epub_Parser;
 import com.project.gutenberg.book.view.android.Android_Book_View;
 import com.project.gutenberg.util.*;
 
-import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.epub.EpubReader;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -46,6 +48,23 @@ public class Home extends RootActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialize_app();
+        Paint text_painter = new Paint();
+        text_painter.setTextSize(prefs.get_book_font_size());
+        text_painter.setColor(Color.BLACK);
+        Android_Line_Measurer line_measurer = new Android_Line_Measurer(new Paint());
+        /*String s = "blah";
+        Action_Time_Analysis.start("measure_width");
+        for (int i=0; i < 1000000; i++) {
+            line_measurer.measure_width(s);
+        }
+        Action_Time_Analysis.end("measure_width");
+        Action_Time_Analysis.log();
+        Action_Time_Analysis.start("measure_width2");
+        for (int i=0; i < 1000000; i++) {
+            line_measurer.measure_width_fast(s);
+        }
+        Action_Time_Analysis.end("measure_width2");
+        Action_Time_Analysis.log();    */
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
@@ -95,11 +114,8 @@ public class Home extends RootActivity {
             home.removeAllViews();
             book_view_open = true;
             nl.siegmann.epublib.domain.Book b = null;
-            try {
-                b = new EpubReader().readEpub(getAssets().open("pg1497.epub"));
-            } catch(IOException e) {
-
-            }
+            try {b = new EpubReader().readEpub(getAssets().open("pg1497.epub"));
+            } catch(IOException e) {}
             Epub_Parser parser = new Epub_Parser(b, 1, 0, 0);
             com.project.gutenberg.book.Book book = parser.parse_book();
             LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());

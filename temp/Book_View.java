@@ -513,7 +513,7 @@ public class Book_View {
     protected String get_author() {
         return book_author;
     }
-    protected LinearLayout get_view() {
+    protected LinearLayout get_page_holder() {
         return outer_view;
     }
     protected void size_changed() {

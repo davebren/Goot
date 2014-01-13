@@ -3,11 +3,14 @@ package com.project.gutenberg.book.view.android;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.project.gutenberg.book.Book;
+import com.project.gutenberg.book.page_flipping.android.Page_Slider;
 import com.project.gutenberg.book.page_flipping.android.Simple_Page_Flipper;
 import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
 import com.project.gutenberg.book.view.Book_View;
@@ -18,7 +21,7 @@ public class Android_Book_View extends Book_View {
     protected int background_color = Color.parseColor("#f7f5f5");
     private int standard_text_grey = Color.parseColor("#4e4b47");
     private Shared_Prefs prefs;
-    private RelativeLayout page_holder;
+    private ViewGroup page_holder;
     private Context context;
     protected Paint text_painter;
 
@@ -38,7 +41,7 @@ public class Android_Book_View extends Book_View {
         page_holder.setLayoutParams(fill_screen_params);
         page_holder.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                Debug.log("on touch, " + event.getAction() + ":" + MotionEvent.ACTION_UP + ", " + event.getX() + ", " + (formatting.get_total_width() / 2));
+                Log.d("gutendroid", "on touch, " + event.getAction() + ":" + MotionEvent.ACTION_UP + ", " + event.getX() + ", " + (formatting.get_total_width() / 2));
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getX() > formatting.get_total_width()/2) {
                         page_flipper.next_page();
@@ -60,11 +63,15 @@ public class Android_Book_View extends Book_View {
         current_page.add_view(-1);
         next_page.add_view(0);
     }
-    public RelativeLayout get_page_holder() {
+    public ViewGroup get_page_holder() {
         return page_holder;
     }
     public void initialize_page_flipper() {
-        page_flipper = new Simple_Page_Flipper(this, prev_page, current_page, next_page, book, page_holder);
+        if (prefs.get_page_flip_style().equals("slide") && false) {
+            page_flipper = new Page_Slider(this, prev_page, current_page, next_page, book, (RelativeLayout)page_holder);
+        } else {
+            page_flipper = new Simple_Page_Flipper(this, prev_page, current_page, next_page, book);
+        }
     }
     public void loading_hook_completed_receiver(String[] lines_of_text, int stack_id) {
         if (stack_id == -1) {

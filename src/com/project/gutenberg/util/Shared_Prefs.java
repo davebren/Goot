@@ -71,6 +71,13 @@ public class Shared_Prefs {
     public void set_last_word(int book_id, int word) {
         prefs_editor.putInt("last_word_" + book_id, word).commit();
     }
+    public String get_page_flip_style() {
+        return app_shared_preferences.getString("page_flip_style","slide");
+    }
+    public void set_page_flip_style(String style) {
+        prefs_editor.putString("page_flip_style",style);
+    }
+
 
 
 

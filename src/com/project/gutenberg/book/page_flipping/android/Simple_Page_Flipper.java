@@ -9,9 +9,7 @@ import com.project.gutenberg.book.view.Page_View;
 import com.project.gutenberg.util.Debug;
 
 public class Simple_Page_Flipper extends Page_Flipper {
-    private RelativeLayout page_holder;
-
-    public Simple_Page_Flipper(Book_View book_view, Page_View prev_page, Page_View current_page, Page_View next_page, Book book, RelativeLayout page_holder) {
+    public Simple_Page_Flipper(Book_View book_view, Page_View prev_page, Page_View current_page, Page_View next_page, Book book) {
         super(book_view, prev_page, current_page, next_page, book);
 
     }

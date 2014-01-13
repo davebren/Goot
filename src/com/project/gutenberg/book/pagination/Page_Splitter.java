@@ -7,7 +7,6 @@ import com.project.gutenberg.book.view.Book_Formatting;
 import com.project.gutenberg.book.view.Book_View;
 import com.project.gutenberg.util.Action_Time_Analysis;
 import com.project.gutenberg.util.Debug;
-import com.project.gutenberg.util.Fast_Line_Splitter;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -61,8 +60,8 @@ public class Page_Splitter {
                 String[] words = paragraph.split(" ");
                 words[0] = "     " + words[0];
                 for (int i=current_word; i < words.length; i++) {
-                    if (line_measurer.measure_width(prev_current_next_page_lines[1][line_count] + " " + words[i]) > formatting.get_line_width()) {
-                        Debug.log("measure width (>" + formatting.get_line_width() + "): " + line_measurer.measure_width(prev_current_next_page_lines[1][line_count] + " " + words[i]));
+                    if (line_measurer.measure_width_fast(prev_current_next_page_lines[1][line_count] + " " + words[i]) > formatting.get_line_width()) {
+                        Debug.log("measure width (>" + formatting.get_line_width() + "): " + line_measurer.measure_width_fast(prev_current_next_page_lines[1][line_count] + " " + words[i]));
                         i--;
                         line_count++;
                         if (line_count == prev_current_next_page_lines[1].length) { // paragraph cutoff
@@ -140,21 +139,18 @@ public class Page_Splitter {
             text_boundaries[1] = prev_boundaries[4];
             text_boundaries[2] = prev_boundaries[5];
         }
-
         int paragraph_index = text_boundaries[1];
-
         boolean reading_first_paragraph = true;
-        int parity=0;
         A: for (String paragraph : book.get_chapter(text_boundaries[0]).get_paragraphs().subList(text_boundaries[1], book.get_chapter(text_boundaries[0]).get_paragraphs().size())) {
-            parity = (int)(Math.random()*10000);
             if (paragraph == null || paragraph.equals("")) {
                 lines_of_text[line_count] = "";
             } else {
                 Action_Time_Analysis.start("get_next_page_lines.split");
-                String[] words = paragraph.split(" ");
+                String[] words = Line_Splitter.fast_split(paragraph, ' ');
                 Action_Time_Analysis.end("get_next_page_lines.split");
+                if (words.length == 0) {continue;}
                 words[0] = "     " + words[0];
-                float[] word_widths = Fast_Line_Splitter.word_widths(words,line_measurer);
+                float[] word_widths = Line_Splitter.word_widths(words, line_measurer);
 
                 int word_index = 0;
                 if (reading_first_paragraph) {
@@ -163,7 +159,7 @@ public class Page_Splitter {
                     }
                 }
                 Object[] split_return;
-                split_return = Fast_Line_Splitter.split(line_measurer,formatting,words,word_index,paragraph_index,line_count,text_boundaries,lines_of_text,word_widths);
+                split_return = Line_Splitter.split(line_measurer, formatting, words, word_index, paragraph_index, line_count, text_boundaries, lines_of_text, word_widths);
                 paragraph_index = (Integer)split_return[2];
                 line_count = (Integer)split_return[3];
                 if ((Boolean)split_return[1]) {break A;}
@@ -250,9 +246,12 @@ public class Page_Splitter {
                         word_index = text_boundaries[5]-1;
                     }
                 }
-
+                float[] word_widths = Line_Splitter.word_widths(words,line_measurer);
+                float space_width = line_measurer.measure_width_fast(" ");
+                float current_width = line_measurer.measure_width_fast(lines_of_text[line_count]);
                 for (int i=word_index; i > -1; i--) {
-                    if (line_measurer.measure_width(words[i] + " " + lines_of_text[line_count]) > formatting.get_line_width()) {
+                    float new_width = current_width + space_width + word_widths[i];
+                    if (new_width > formatting.get_line_width()) {
                         i++;
                         line_count--;
                         if (line_count == -1) { // paragraph cutoff at top.
@@ -262,9 +261,11 @@ public class Page_Splitter {
                             break A;
                         } else {
                             lines_of_text[line_count] = "";
+                            current_width=0;
                         }
                     } else {
                         lines_of_text[line_count] = words[i] + " " + lines_of_text[line_count];
+                        current_width=new_width;
                     }
                 }
             }
@@ -315,17 +316,23 @@ public class Page_Splitter {
         words[0] = "     " + words[0];
         int line_count = start_line;
         lines_of_text[line_count] = "";
+        float[] word_widths = Line_Splitter.word_widths(words,line_measurer);
+        float space_width = line_measurer.measure_width_fast(" ");
+        float current_width = line_measurer.measure_width_fast(lines_of_text[line_count]);
         for (int i=0; i < words.length; i++) {
-            if (line_measurer.measure_width(lines_of_text[line_count] + " " + words[i]) > formatting.get_line_width()) {
+            float new_width = current_width + space_width + word_widths[i];
+            if (new_width > formatting.get_line_width()) {
                 i--;
                 line_count++;
                 if (line_count >= end_line) { // paragraph cutoff
                     break;
                 } else {
                     lines_of_text[line_count] = "";
+                    current_width=0;
                 }
             } else {
                 lines_of_text[line_count] += " " + words[i];
+                current_width=new_width;
             }
         }
         Action_Time_Analysis.end("recompile_paragraph");
@@ -391,20 +398,16 @@ public class Page_Splitter {
         }
     }
     private boolean load_prev_and_next_pages(int chapter) {
-        boolean stop_loop = false;
         Chapter c = book.get_chapter(chapter);
         if (!c.first_page_loaded) {
-            stop_loop = false;
             Integer[] first_loaded_boundaries = c.get_first_boundary();
             if (first_loaded_boundaries[1] == 0 && first_loaded_boundaries[2] == 0) {
                 c.first_page_loaded = true;
             } else {
                 get_prev_page_lines(first_loaded_boundaries);
             }
-
         }
         if (!c.last_page_loaded) {
-            stop_loop = false;
             Integer[] last_loaded_boundaries = c.get_last_boundary();
             if (last_loaded_boundaries[3] > chapter) {
                 c.last_page_loaded = true;
@@ -412,6 +415,6 @@ public class Page_Splitter {
                 get_next_page_lines(last_loaded_boundaries);
             }
         }
-        return stop_loop;
+        return c.first_page_loaded && c.last_page_loaded;
     }
 }

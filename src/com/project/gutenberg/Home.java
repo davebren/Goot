@@ -51,20 +51,6 @@ public class Home extends RootActivity {
         Paint text_painter = new Paint();
         text_painter.setTextSize(prefs.get_book_font_size());
         text_painter.setColor(Color.BLACK);
-        Android_Line_Measurer line_measurer = new Android_Line_Measurer(new Paint());
-        /*String s = "blah";
-        Action_Time_Analysis.start("measure_width");
-        for (int i=0; i < 1000000; i++) {
-            line_measurer.measure_width(s);
-        }
-        Action_Time_Analysis.end("measure_width");
-        Action_Time_Analysis.log();
-        Action_Time_Analysis.start("measure_width2");
-        for (int i=0; i < 1000000; i++) {
-            line_measurer.measure_width_fast(s);
-        }
-        Action_Time_Analysis.end("measure_width2");
-        Action_Time_Analysis.log();    */
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);

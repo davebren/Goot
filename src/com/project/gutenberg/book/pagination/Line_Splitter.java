@@ -21,8 +21,8 @@ public class Line_Splitter {
     public static Object[] build_backward(Line_Measurer line_measurer, Book_Formatting formatting, String[] words, int word_index, int paragraph_index, int line_count,Integer[] text_boundaries, String[] lines_of_text, float[] word_widths) {
         Object[] return_object = new Object[5];
         return_object[1]=new Boolean(false);
-        float space_width = line_measurer.measure_width_fast(" ");
-        float current_width = line_measurer.measure_width_fast(lines_of_text[line_count]);
+        float space_width = line_measurer.measure_width(" ");
+        float current_width = line_measurer.measure_width(lines_of_text[line_count]);
 
         return return_object;
     }
@@ -30,8 +30,8 @@ public class Line_Splitter {
         Object[] return_object = new Object[5];
         return_object[1]=new Boolean(false);
         int words_added = 0;
-        float space_width = line_measurer.measure_width_fast(" ");
-        float current_width = line_measurer.measure_width_fast(lines_of_text[line_count]);
+        float space_width = line_measurer.measure_width(" ");
+        float current_width = line_measurer.measure_width(lines_of_text[line_count]);
         for (int i=word_index; i < words.length; i++) {
             float new_width = current_width + space_width + word_widths[i];
             if (new_width > formatting.get_line_width()) {
@@ -62,7 +62,7 @@ public class Line_Splitter {
     public static float[] word_widths(String[] words, Line_Measurer line_measurer) {
         float[] widths = new float[words.length];
         for (int i=0; i < words.length; i++) {
-            widths[i] = line_measurer.measure_width_fast(words[i]);
+            widths[i] = line_measurer.measure_width(words[i]);
         }
         return widths;
     }

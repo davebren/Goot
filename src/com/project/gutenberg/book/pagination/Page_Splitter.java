@@ -60,8 +60,8 @@ public class Page_Splitter {
                 String[] words = paragraph.split(" ");
                 words[0] = "     " + words[0];
                 for (int i=current_word; i < words.length; i++) {
-                    if (line_measurer.measure_width_fast(prev_current_next_page_lines[1][line_count] + " " + words[i]) > formatting.get_line_width()) {
-                        Debug.log("measure width (>" + formatting.get_line_width() + "): " + line_measurer.measure_width_fast(prev_current_next_page_lines[1][line_count] + " " + words[i]));
+                    if (line_measurer.measure_width(prev_current_next_page_lines[1][line_count] + " " + words[i]) > formatting.get_line_width()) {
+                        Debug.log("measure width (>" + formatting.get_line_width() + "): " + line_measurer.measure_width(prev_current_next_page_lines[1][line_count] + " " + words[i]));
                         i--;
                         line_count++;
                         if (line_count == prev_current_next_page_lines[1].length) { // paragraph cutoff
@@ -247,8 +247,8 @@ public class Page_Splitter {
                     }
                 }
                 float[] word_widths = Line_Splitter.word_widths(words,line_measurer);
-                float space_width = line_measurer.measure_width_fast(" ");
-                float current_width = line_measurer.measure_width_fast(lines_of_text[line_count]);
+                float space_width = line_measurer.measure_width(" ");
+                float current_width = line_measurer.measure_width(lines_of_text[line_count]);
                 for (int i=word_index; i > -1; i--) {
                     float new_width = current_width + space_width + word_widths[i];
                     if (new_width > formatting.get_line_width()) {
@@ -317,8 +317,8 @@ public class Page_Splitter {
         int line_count = start_line;
         lines_of_text[line_count] = "";
         float[] word_widths = Line_Splitter.word_widths(words,line_measurer);
-        float space_width = line_measurer.measure_width_fast(" ");
-        float current_width = line_measurer.measure_width_fast(lines_of_text[line_count]);
+        float space_width = line_measurer.measure_width(" ");
+        float current_width = line_measurer.measure_width(lines_of_text[line_count]);
         for (int i=0; i < words.length; i++) {
             float new_width = current_width + space_width + word_widths[i];
             if (new_width > formatting.get_line_width()) {

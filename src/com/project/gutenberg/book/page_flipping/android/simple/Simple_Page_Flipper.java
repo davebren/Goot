@@ -73,7 +73,6 @@ public class Simple_Page_Flipper extends Page_Flipper {
         prev_page.remove_view();
         prev_page.add_view(1);
         current_page.remove_view();
-
     }
     private View.OnTouchListener right_button_listener = new View.OnTouchListener(){
         public boolean onTouch(View view, MotionEvent motionEvent) {

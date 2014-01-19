@@ -10,11 +10,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.project.gutenberg.book.Book;
-import com.project.gutenberg.book.page_flipping.android.Page_Slider;
-import com.project.gutenberg.book.page_flipping.android.Simple_Page_Flipper;
+import com.project.gutenberg.book.page_flipping.android.simple.Simple_Page_Flipper;
 import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
 import com.project.gutenberg.book.view.Book_View;
-import com.project.gutenberg.util.Debug;
 import com.project.gutenberg.util.Shared_Prefs;
 
 public class Android_Book_View extends Book_View {
@@ -67,11 +65,7 @@ public class Android_Book_View extends Book_View {
         return page_holder;
     }
     public void initialize_page_flipper() {
-        if (prefs.get_page_flip_style().equals("slide") && false) {
-            page_flipper = new Page_Slider(this, prev_page, current_page, next_page, book, (RelativeLayout)page_holder);
-        } else {
-            page_flipper = new Simple_Page_Flipper(this, prev_page, current_page, next_page, book);
-        }
+        page_flipper = new Simple_Page_Flipper(this, context, prev_page, current_page, next_page, book);
     }
     public void loading_hook_completed_receiver(String[] lines_of_text, int stack_id) {
         if (stack_id == -1) {

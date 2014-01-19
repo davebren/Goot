@@ -150,8 +150,9 @@ public class Page_Splitter {
                 Action_Time_Analysis.end("get_next_page_lines.split");
                 if (words.length == 0) {continue;}
                 words[0] = "     " + words[0];
+                Action_Time_Analysis.start("get_next_page_lines.word_widths");
                 float[] word_widths = Line_Splitter.word_widths(words, line_measurer);
-
+                Action_Time_Analysis.end("get_next_page_lines.word_widths");
                 int word_index = 0;
                 if (reading_first_paragraph) {
                     if (!(text_boundaries[2] >= words.length-1)) {

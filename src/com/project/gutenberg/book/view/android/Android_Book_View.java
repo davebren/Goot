@@ -37,19 +37,6 @@ public class Android_Book_View extends Book_View {
     private void initialize_page_holder(LinearLayout.LayoutParams fill_screen_params) {
         page_holder = new RelativeLayout(context);
         page_holder.setLayoutParams(fill_screen_params);
-        page_holder.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d("gutendroid", "on touch, " + event.getAction() + ":" + MotionEvent.ACTION_UP + ", " + event.getX() + ", " + (formatting.get_total_width() / 2));
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getX() > formatting.get_total_width()/2) {
-                        page_flipper.next_page();
-                    } else {
-                        page_flipper.prev_page();
-                    }
-                }
-                return true;
-            }
-        });
     }
     private void initialize_page_views() {
         text_painter = new Paint();

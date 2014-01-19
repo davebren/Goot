@@ -1,6 +1,7 @@
 package com.project.gutenberg.book.page_flipping.android.simple;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +13,6 @@ import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.book.page_flipping.Page_Flipper;
 import com.project.gutenberg.book.view.Page_View;
 import com.project.gutenberg.book.view.android.Android_Book_View;
-import com.project.gutenberg.util.Debug;
 
 public class Simple_Page_Flipper extends Page_Flipper {
     final Button right_button;
@@ -40,43 +40,39 @@ public class Simple_Page_Flipper extends Page_Flipper {
         left_button.setOnTouchListener(left_button_listener);
     }
     public void next_page() {
-        Chapter current_chapter = book.get_chapter(book.get_current_chapter());
-        if (current_chapter.number_of_pages() > current_chapter.get_list_relative_current_page_index()+1) {
-            current_page.remove_view();
-            Debug.log("remove view");
-            current_page.add_view(0);
-            Debug.log("add view back");
-            Debug.log("pre swap: " + prev_page.get_page_stack_id() + ", " + current_page.get_page_stack_id() + ", " + next_page.get_page_stack_id());
-            Page_View temp = current_page;
-            current_page = next_page;
-            next_page = temp;
-            Debug.log("post swap: " + prev_page.get_page_stack_id() + ", " + current_page.get_page_stack_id() + ", " + next_page.get_page_stack_id());
-            String[][] lines_of_text = new String[3][];
-            lines_of_text[0] = book_view.get_page_lines(1);
-            lines_of_text[1] = current_chapter.get_next_page().get_page_text();
-            if (current_chapter.number_of_pages() > current_chapter.get_list_relative_current_page_index()+1) {
-                lines_of_text[2] = current_chapter.peek_next_page().get_page_text();
-            } else if (!current_chapter.last_page_loaded) {
-                lines_of_text[2] = new String[1];
-                lines_of_text[2][0] = "";
-                current_chapter.add_loading_hook(1, true, book_view);
-            }
-            book_view.set_prev_current_next_page_lines(lines_of_text);
-            current_page.set_page_stack_id(0);
-            next_page.set_page_stack_id(1);
-            book_view.set_prev_current_next_page_lines(lines_of_text);
-        } else if (current_chapter.last_page_loaded) {
-            if (book.get_current_chapter()+1 < book.number_of_chapters()) {
-
-            } else {
-
-            }
+        if (book.on_last_chapter()) return;
+        Chapter current_chapter = book.get_current_chapter();
+        current_page.remove_view();
+        current_page.add_view(0);
+        Page_View temp = prev_page;
+        prev_page = current_page;
+        current_page = next_page;
+        next_page = temp;
+        String[][] lines_of_text = new String[3][];
+        lines_of_text[0] = current_chapter.peek_current_page().get_page_text();
+        if (current_chapter.on_penultimate_page()) {
+            lines_of_text[1] = current_chapter.next_page().get_page_text();
+            lines_of_text[2] = book.peek_next_chapter().peek_current_page().get_page_text();
+        } else if (current_chapter.on_last_page()) {
+            book.next_chapter();
+            lines_of_text[1] = book.get_current_chapter().peek_current_page().get_page_text();
+            lines_of_text[2] = book.get_current_chapter().peek_next_page().get_page_text();
         } else {
-
+            lines_of_text[1] = current_chapter.next_page().get_page_text();
+            lines_of_text[2] = current_chapter.peek_next_page().get_page_text();
         }
-
+        prev_page.set_page_stack_id(-1);
+        current_page.set_page_stack_id(0);
+        next_page.set_page_stack_id(1);
+        book_view.set_prev_current_next_page_lines(lines_of_text);
     }
     public void prev_page() {
+        Chapter current_chapter = book.get_current_chapter();
+        if (book.get_current_chapter_index() == 0 && current_chapter.get_list_relative_current_page_index() ==0) return;
+        next_page.remove_view();
+        prev_page.remove_view();
+        prev_page.add_view(1);
+        current_page.remove_view();
 
     }
     private View.OnTouchListener right_button_listener = new View.OnTouchListener(){

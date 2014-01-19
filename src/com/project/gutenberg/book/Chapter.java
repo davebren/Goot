@@ -1,5 +1,6 @@
 package com.project.gutenberg.book;
 
+import android.util.Log;
 import com.project.gutenberg.book.parsing.Book_Parser;
 import com.project.gutenberg.book.view.Book_View;
 import com.project.gutenberg.util.Debug;
@@ -20,7 +21,6 @@ public class Chapter {
     private int last_loaded_page;
 
     private int list_relative_current_page_index = 0;
-    private Object pages_lock = new Object();
 
     private boolean loading_hook = false;
     private int loading_hook_stack_index = 0;
@@ -34,16 +34,16 @@ public class Chapter {
         this.chapter_index = chapter_index;
     }
 
-    public void set_title(String title) {
+    public synchronized void set_title(String title) {
         this.title = title;
     }
-    public String get_title() {
+    public synchronized String get_title() {
         return title;
     }
-    public void set_paragraphs(LinkedList<String> paragraphs) {
+    public synchronized void set_paragraphs(LinkedList<String> paragraphs) {
         this.paragraphs = paragraphs;
     }
-    public LinkedList<String> get_paragraphs() {
+    public synchronized LinkedList<String> get_paragraphs() {
         if (paragraphs != null) {
            return paragraphs;
         } else {
@@ -51,10 +51,10 @@ public class Chapter {
             return paragraphs;
         }
     }
-    public int number_of_pages() {
+    public synchronized int number_of_pages() {
         return pages.size();
     }
-    public Page get_page(int index) {
+    public synchronized Page get_page(int index) {
         try {
             return pages.get(index);
         } catch(IndexOutOfBoundsException e1) {
@@ -66,7 +66,7 @@ public class Chapter {
         }
         return null;
     }
-    public Integer[] get_last_boundary() {
+    public synchronized Integer[] get_last_boundary() {
         try {
             return boundaries.getLast();
         } catch(IndexOutOfBoundsException e1) {
@@ -78,7 +78,7 @@ public class Chapter {
         }
         return null;
     }
-    public Integer[] get_first_boundary() {
+    public synchronized Integer[] get_first_boundary() {
         try {
             return boundaries.getFirst();
         } catch(IndexOutOfBoundsException e1) {
@@ -91,22 +91,20 @@ public class Chapter {
         return null;
     }
     public synchronized void add_page(boolean before, Page p){
-        synchronized(pages_lock) {
-            if (pages.size() == 0) {
-                first_loaded_page = 0;
-                last_loaded_page = 0;
-                list_relative_current_page_index=0;
-                pages.add(p);
-            } else if (before) {
-                pages.addFirst(p);
-                first_loaded_page--;
-                list_relative_current_page_index++;
-            } else {
-                pages.addLast(p);
-                last_loaded_page++;
-                if (loading_hook) {
-                    loading_hook_book_view.set_prev_current_next_page_lines(p.get_page_text(), loading_hook_stack_index);
-                }
+        if (pages.size() == 0) {
+            first_loaded_page = 0;
+            last_loaded_page = 0;
+            list_relative_current_page_index=0;
+            pages.add(p);
+        } else if (before) {
+            pages.addFirst(p);
+            first_loaded_page--;
+            list_relative_current_page_index++;
+        } else {
+            pages.addLast(p);
+            last_loaded_page++;
+            if (loading_hook) {
+                loading_hook_book_view.set_prev_current_next_page_lines(p.get_page_text(), loading_hook_stack_index);
             }
         }
     }
@@ -117,45 +115,47 @@ public class Chapter {
             boundaries.addLast(b);
         }
     }
-    public boolean is_first_page_loaded() {
+    public synchronized boolean is_first_page_loaded() {
         return first_page_loaded;
     }
-    public boolean is_last_page_loaded() {
+    public synchronized boolean is_last_page_loaded() {
         return last_page_loaded;
     }
-
-    public int get_first_loaded_page_index() {
+    public synchronized int get_first_loaded_page_index() {
         return first_loaded_page;
     }
-
-    public int get_last_loaded_page_index() {
+    public synchronized int get_last_loaded_page_index() {
         return last_loaded_page;
     }
-    public int get_list_relative_current_page_index() {
+    public synchronized int get_list_relative_current_page_index() {
         return list_relative_current_page_index;
     }
-    public Page get_next_page() {
-        synchronized(pages_lock) {
-            list_relative_current_page_index++;
-            Debug.log("get next page: " + list_relative_current_page_index + "/" + pages.size());
-            return pages.get(list_relative_current_page_index);
-        }
+    public synchronized Page next_page() {
+        list_relative_current_page_index++;
+        Debug.log("get next page: " + list_relative_current_page_index + "/" + pages.size());
+        return pages.get(list_relative_current_page_index);
     }
-    public Page peek_next_page() {
-        synchronized(pages_lock) {
-            Debug.log("peek next page: " + (list_relative_current_page_index+1) + "/" + pages.size());
-            return pages.get(list_relative_current_page_index+1);
-        }
+    public synchronized Page peek_next_page() {
+        Debug.log("peek next page: " + (list_relative_current_page_index+1) + "/" + pages.size());
+        return pages.get(list_relative_current_page_index+1);
     }
-    public void add_loading_hook(int page_stack_index, boolean next, Book_View book_view) {
-        synchronized(pages_lock) {
-            loading_hook = true;
-            loading_hook_stack_index = page_stack_index;
-            loading_hook_next = next;
-            loading_hook_book_view = book_view;
-        }
+    public synchronized Page peek_current_page() {
+        return pages.get(list_relative_current_page_index);
     }
-    public boolean get_loading_hook_status() {
+    public synchronized void add_loading_hook(int page_stack_index, boolean next, Book_View book_view) {
+        loading_hook = true;
+        loading_hook_stack_index = page_stack_index;
+        loading_hook_next = next;
+        loading_hook_book_view = book_view;
+    }
+    public synchronized boolean get_loading_hook_status() {
         return loading_hook;
+    }
+    public synchronized boolean on_last_page() {
+        return last_page_loaded && pages.size()-1 == get_list_relative_current_page_index();
+    }
+    public synchronized boolean on_penultimate_page() {
+        Log.d("gutendroid", "on_penultimate_page: " + last_page_loaded + ", " + pages.size() + ", " + get_list_relative_current_page_index());
+        return last_page_loaded && pages.size()-2 == get_list_relative_current_page_index();
     }
 }

@@ -31,10 +31,8 @@ public class Page_Splitter {
         this.line_measurer = line_measurer;
         this.book = book;
         this.book.set_current_chapter(this.current_chapter);
-        this.book.set_current_page(0);
         prev_current_next_page_lines = new String[3][formatting.get_lines_per_page()];
     }
-
     public void paginate() {
         initialize_open_pages();
         Debug.log("first paragraph: " + book.get_chapter(current_chapter).get_paragraphs().getFirst());
@@ -300,9 +298,6 @@ public class Page_Splitter {
         synchronized(add_page_lock) {
             book.get_chapter(ending_chapter_index).add_page(true, new Page(lines_of_text));
             book.get_chapter(ending_chapter_index).add_boundary(true, text_boundaries);
-            if (ending_chapter_index == current_chapter) {
-                book.increment_current_page();
-            }
         }
         Action_Time_Analysis.end("get_prev_page_lines");
         return lines_of_text;

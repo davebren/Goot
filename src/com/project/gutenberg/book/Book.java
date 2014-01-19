@@ -9,7 +9,6 @@ public class Book {
     private String book_title;
     private String book_author;
     private int current_chapter;
-    private int current_page;
 
     public Book(String title, String author, LinkedList<Chapter> chapters) {
         this.book_title = title;
@@ -30,20 +29,17 @@ public class Book {
     public void set_current_chapter(int current_chapter) {
         this.current_chapter = current_chapter;
     }
-    public void increment_current_chapter() {
+    public int get_current_chapter_index() {
+        return current_chapter;
+    }
+    public Chapter get_current_chapter() {
+        return chapters.get(current_chapter);
+    }
+    public void next_chapter() {
         current_chapter++;
     }
-    public void set_current_page(int current_page) {
-        this.current_page = current_page;
-    }
-    public void increment_current_page() {
-        current_page++;
-    }
-    public int get_current_page() {
-        return current_page;
-    }
-    public int get_current_chapter() {
-        return current_chapter;
+    public Chapter peek_next_chapter() {
+        return chapters.get(current_chapter+1);
     }
     public String[] get_chapters() {
         String[] ret = new String[chapters.size()];
@@ -51,5 +47,8 @@ public class Book {
             ret[i] = chapters.get(i).get_title();
         }
         return ret;
+    }
+    public boolean on_last_chapter() {
+        return current_chapter == chapters.size()-1;
     }
 }

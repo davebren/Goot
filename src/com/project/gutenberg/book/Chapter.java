@@ -135,12 +135,22 @@ public class Chapter {
         Debug.log("get next page: " + list_relative_current_page_index + "/" + pages.size());
         return pages.get(list_relative_current_page_index);
     }
+    public synchronized Page previous_page() {
+        list_relative_current_page_index--;
+        return pages.get(list_relative_current_page_index);
+    }
     public synchronized Page peek_next_page() {
         Debug.log("peek next page: " + (list_relative_current_page_index+1) + "/" + pages.size());
         return pages.get(list_relative_current_page_index+1);
     }
     public synchronized Page peek_current_page() {
         return pages.get(list_relative_current_page_index);
+    }
+    public synchronized Page peek_previous_page() {
+        return pages.get(list_relative_current_page_index-1);
+    }
+    public synchronized Page peek_last_page() {
+        return pages.get(pages.size()-1);
     }
     public synchronized void add_loading_hook(int page_stack_index, boolean next, Book_View book_view) {
         loading_hook = true;
@@ -152,10 +162,24 @@ public class Chapter {
         return loading_hook;
     }
     public synchronized boolean on_last_page() {
-        return last_page_loaded && pages.size()-1 == get_list_relative_current_page_index();
+        return last_page_loaded && pages.size()-1 == list_relative_current_page_index;
     }
     public synchronized boolean on_penultimate_page() {
         Log.d("gutendroid", "on_penultimate_page: " + last_page_loaded + ", " + pages.size() + ", " + get_list_relative_current_page_index());
-        return last_page_loaded && pages.size()-2 == get_list_relative_current_page_index();
+        return last_page_loaded && pages.size()-2 == list_relative_current_page_index;
+    }
+    public synchronized boolean on_first_page() {
+        return list_relative_current_page_index == 0;
+    }
+    public synchronized boolean on_second_page() {
+        return list_relative_current_page_index == 1;
+    }
+    public synchronized boolean set_last_page() {
+        if (!last_page_loaded) return false;
+        list_relative_current_page_index = pages.size()-1;
+        return true;
+    }
+    public synchronized void set_first_page() {
+        list_relative_current_page_index = 0;
     }
 }

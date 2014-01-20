@@ -3,12 +3,14 @@ package com.project.gutenberg.book.view.android;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import com.project.gutenberg.Action_Bar_Handler;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.page_flipping.android.simple.Simple_Page_Flipper;
 import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
@@ -21,12 +23,16 @@ public class Android_Book_View extends Book_View {
     private Shared_Prefs prefs;
     private ViewGroup page_holder;
     private Context context;
-    protected Paint text_painter;
+    protected TextPaint text_painter;
+    private Action_Bar_Handler action_bar_handler;
 
-    public Android_Book_View(Book book, Context context, Shared_Prefs prefs, LinearLayout.LayoutParams fill_screen_params, int view_width, int view_height, int flip_style) {
+    public Android_Book_View(Book book, Context context, Shared_Prefs prefs, LinearLayout.LayoutParams fill_screen_params, int view_width, int view_height, int flip_style, Action_Bar_Handler action_bar_handler) {
         super(view_width, view_height, prefs.get_book_font_size());
         this.prefs = prefs;
         this.context = context;
+        this.action_bar_handler = action_bar_handler;
+        text_painter = new TextPaint();
+
         initialize_page_holder(fill_screen_params);
         initialize_page_views();
         line_measurer = new Android_Line_Measurer(text_painter);
@@ -39,13 +45,12 @@ public class Android_Book_View extends Book_View {
         page_holder.setLayoutParams(fill_screen_params);
     }
     private void initialize_page_views() {
-        text_painter = new Paint();
         text_painter.setTextSize(prefs.get_book_font_size());
         text_painter.setColor(standard_text_grey);
         prev_page = new Android_Page_View(context, this, prev_page_stack_id);
         current_page = new Android_Page_View(context, this, current_page_stack_id);
         next_page = new Android_Page_View(context, this, next_page_stack_id);
-        current_page.add_view(-1);
+        current_page.add_view(0);
         next_page.add_view(0);
     }
     public ViewGroup get_page_holder() {
@@ -65,5 +70,8 @@ public class Android_Book_View extends Book_View {
             this.set_prev_current_next_page_lines(lines_of_text, 2);
             next_page.invalidate();
         }
+    }
+    public Action_Bar_Handler get_action_bar_handler() {
+        return action_bar_handler;
     }
 }

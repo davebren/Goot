@@ -100,18 +100,20 @@ public class Home extends RootActivity {
             home.removeAllViews();
             book_view_open = true;
             nl.siegmann.epublib.domain.Book b = null;
-            try {b = new EpubReader().readEpub(getAssets().open("pg1497.epub"));
+            try {b = new EpubReader().readEpub(getAssets().open("pg2753.epub"));
             } catch(IOException e) {}
             Epub_Parser parser = new Epub_Parser(b, 1, 0, 0);
             com.project.gutenberg.book.Book book = parser.parse_book();
             LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
-            Android_Book_View book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0);
+            Android_Book_View book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0, action_bar_handler);
             Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 1, 0, 0);
             page_splitter.paginate();
 
             home.addView(book_view.get_page_holder());
-            action_bar_handler.set_book_view_menu();
+            action_bar_handler.set_book_view_menu(book_view);
             action_bar_handler.initialize_spinner_chapters(book.get_chapters(),0);
+            action_bar_handler.set_page(1);
+
         }
     };
 

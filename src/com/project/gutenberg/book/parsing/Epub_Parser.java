@@ -1,5 +1,6 @@
 package com.project.gutenberg.book.parsing;
 
+import android.util.Log;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.Chapter;
 import nl.siegmann.epublib.domain.Resource;
@@ -12,6 +13,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,21 +46,31 @@ public class Epub_Parser implements Book_Parser {
     }
     private void initialize_chapters(Spine epub_spine, List<TOCReference> table_of_contents) {
         chapters = new LinkedList<Chapter>();
+        HashMap<Integer, Void> removed_chapters = new HashMap<Integer, Void>();
         for (int i=0; i < epub_spine.size(); i++) {
             chapters.addLast(new Chapter(this, i));
-            if (i == current_chapter) {
+            if (i-removed_chapters.size() == current_chapter) {
                 chapters.getLast().set_paragraphs(parse_chapter(i));
+                if (chapters.getLast().get_paragraphs().size() == 0) {
+                    chapters.removeLast();
+                    removed_chapters.put(i,null);
+                }
             }
         }
         String[] chapter_titles = new String[chapters.size()];
         if (table_of_contents != null && table_of_contents.size()>0) {
-            String[] temp_titles = new String[table_of_contents.size()];
+            String[] temp_titles = new String[chapters.size()];
+            int chapters_skipped = 0;
             for (int i=0; i < table_of_contents.size(); i++) {
-                String t = table_of_contents.get(i).getTitle();
+                if (removed_chapters.containsKey(i)) {
+                    chapters_skipped++;
+                    continue;
+                }
+                String t = format_title(table_of_contents.get(i).getTitle());
                 if (t != null) {
-                    temp_titles[i] = t;
+                    temp_titles[i-chapters_skipped] = t;
                 } else {
-                    temp_titles[i] = "";
+                    temp_titles[i-chapters_skipped] = "";
                 }
             }
             boolean[] titles_set = new boolean[chapter_titles.length];
@@ -90,12 +102,39 @@ public class Epub_Parser implements Book_Parser {
             Document doc = Jsoup.parse(is, "UTF-8", "");
             Elements paragraphs = doc.getElementsByTag("p");
             for (Element p : paragraphs) {
-                para.add(p.text());
+                if (p.text().matches(".*\\w.*")) {
+                    para.add(p.text());
+                }
             }
             is.close();
             res.close();
         } catch (IOException e) {
         }
         return para;
+    }
+
+    private String format_title(String title) {
+        String s ="";
+        String[] words = title.split(" ");
+        for (int i=0; i < words.length; i++) {
+            if (is_roman_numeral(words[i])) {
+                s += words[i];
+            } else {
+                s += words[i].substring(0,1).toUpperCase() + words[i].substring(1).toLowerCase();
+            }
+            if (i < words.length -1) {
+                s += " ";
+            }
+        }
+        return s;
+    }
+    private boolean is_roman_numeral(String s) {   // doesn't check correctness.
+        for (int j=0; j < s.length(); j++) {
+            char c = s.charAt(j);
+            if (c != 'I' && c != 'V' && c != 'X'
+                    && c != 'L' && c != 'C' && c != 'D'
+                    && c != 'M') return false;
+        }
+        return true;
     }
 }

@@ -40,14 +40,14 @@ public class Simple_Page_Flipper extends Page_Flipper {
         left_button.setOnTouchListener(left_button_listener);
     }
     public void next_page() {
-        if (book.on_last_chapter()) return;
         Chapter current_chapter = book.get_current_chapter();
+        if (book.on_last_chapter() && book.get_current_chapter().on_last_page()) return;
         current_page.remove_view();
-        current_page.add_view(0);
         Page_View temp = prev_page;
         prev_page = current_page;
         current_page = next_page;
         next_page = temp;
+        next_page.add_view(0);
         String[][] lines_of_text = new String[3][];
         lines_of_text[0] = current_chapter.peek_current_page().get_page_text();
         if (current_chapter.on_penultimate_page()) {
@@ -65,14 +65,66 @@ public class Simple_Page_Flipper extends Page_Flipper {
         current_page.set_page_stack_id(0);
         next_page.set_page_stack_id(1);
         book_view.set_prev_current_next_page_lines(lines_of_text);
+        ((Android_Book_View)book_view).get_action_bar_handler().set_page(book.get_page_number());
     }
     public void prev_page() {
         Chapter current_chapter = book.get_current_chapter();
-        if (book.get_current_chapter_index() == 0 && current_chapter.get_list_relative_current_page_index() ==0) return;
+        Log.d("gutendroid", "prev_page: " + book.get_current_chapter_index() + ", " + current_chapter.get_list_relative_current_page_index());
+        if (book.get_current_chapter_index() == 1 && current_chapter.get_list_relative_current_page_index() ==0) return;
         next_page.remove_view();
-        prev_page.remove_view();
         prev_page.add_view(1);
+        Page_View temp = current_page;
+        current_page = prev_page;
+        prev_page = next_page;
+        next_page = temp;
+        String[][] lines_of_text = new String[3][];
+        lines_of_text[2] = current_chapter.peek_current_page().get_page_text();
+        if (current_chapter.on_second_page()) {
+            lines_of_text[1] = current_chapter.previous_page().get_page_text();
+            lines_of_text[0] = book.peek_previous_chapter().peek_last_page().get_page_text();
+        } else if (current_chapter.on_first_page()) {
+            book.previous_chapter();
+            book.get_current_chapter().set_last_page();
+            lines_of_text[1] = book.get_current_chapter().peek_current_page().get_page_text();
+            lines_of_text[0] = book.get_current_chapter().peek_previous_page().get_page_text();
+        } else {
+            lines_of_text[1] = current_chapter.previous_page().get_page_text();
+            lines_of_text[0] = current_chapter.peek_previous_page().get_page_text();
+        }
+        prev_page.set_page_stack_id(-1);
+        current_page.set_page_stack_id(0);
+        next_page.set_page_stack_id(1);
+        book_view.set_prev_current_next_page_lines(lines_of_text);
+        ((Android_Book_View)book_view).get_action_bar_handler().set_page(book.get_page_number());
+    }
+    public void jump_to_chapter(int chapter_index) {
+        String[][] lines_of_text = new String[3][];
+        book.get_current_chapter().set_first_page();
+        book.set_current_chapter(chapter_index);
+        Chapter current_chapter = book.get_current_chapter();
+        current_chapter.set_first_page();
+        lines_of_text[1] = current_chapter.peek_current_page().get_page_text();
+        if (!current_chapter.on_last_page()) {
+            lines_of_text[2] = current_chapter.peek_next_page().get_page_text();
+        } else if (!book.on_last_chapter()) {
+            lines_of_text[2] = book.peek_next_chapter().peek_current_page().get_page_text();
+        } else {
+            lines_of_text[2] = new String[0];
+        }
+        if (!book.on_first_chapter()) {
+            lines_of_text[0] = book.peek_previous_chapter().peek_last_page().get_page_text();
+        } else {
+            lines_of_text[0] = new String[0];
+        }
+        book_view.set_prev_current_next_page_lines(lines_of_text);
         current_page.remove_view();
+        next_page.remove_view();
+        current_page.add_view(0);
+        next_page.add_view(0);
+        prev_page.set_page_stack_id(-1);
+        current_page.set_page_stack_id(0);
+        next_page.set_page_stack_id(1);
+        ((Android_Book_View)book_view).get_action_bar_handler().set_page(book.get_page_number());
     }
     private View.OnTouchListener right_button_listener = new View.OnTouchListener(){
         public boolean onTouch(View view, MotionEvent motionEvent) {

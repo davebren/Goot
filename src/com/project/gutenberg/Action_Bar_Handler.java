@@ -3,9 +3,12 @@ package com.project.gutenberg;
 import android.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import com.project.gutenberg.book.view.android.Android_Book_View;
 
 public class Action_Bar_Handler {
     private ActionBar action_bar;
@@ -16,6 +19,7 @@ public class Action_Bar_Handler {
     private Spinner chapter_indicator_spinner;
     private final double spinner_portion = 0.75;
     private String[] chapter_titles;
+    private Android_Book_View book_view;
 
     public Action_Bar_Handler(Menu menu, ActionBar action_bar) {
         this.action_bar = action_bar;
@@ -27,10 +31,11 @@ public class Action_Bar_Handler {
         search_view = (SearchView)search_item.getActionView();
         search_view.setOnQueryTextListener(query_listener);
     }
-    public void set_book_view_menu() {
+    public void set_book_view_menu(Android_Book_View book_view) {
         search_item.setVisible(false);
         page_indicator.setVisible(true);
         chapter_indicator.setVisible(true);
+        this.book_view = book_view;
     }
     public void set_home_view_menu() {
         action_bar.setTitle("GutenDroid");
@@ -66,7 +71,20 @@ public class Action_Bar_Handler {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chapter_indicator_spinner.setPrompt(chapter_titles[current_chapter]);
         this.chapter_titles = chapter_titles;
+        chapter_indicator_spinner.setOnItemSelectedListener(spinner_listener);
     }
+    private AdapterView.OnItemSelectedListener spinner_listener = new AdapterView.OnItemSelectedListener() {
+        private boolean ignore = true;
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            if (ignore) {
+                ignore = false;
+                return;
+            }
+            if (book_view == null) return;
+            book_view.get_page_flipper().jump_to_chapter(i);
+        }
+        public void onNothingSelected(AdapterView<?> adapterView) {}
+    };
     SearchView.OnQueryTextListener query_listener = new SearchView.OnQueryTextListener() {
         public boolean onQueryTextChange(String query) {
             return true;

@@ -38,8 +38,14 @@ public class Book {
     public void next_chapter() {
         current_chapter++;
     }
+    public void previous_chapter() {
+        current_chapter--;
+    }
     public Chapter peek_next_chapter() {
         return chapters.get(current_chapter+1);
+    }
+    public Chapter peek_previous_chapter() {
+        return chapters.get(current_chapter-1);
     }
     public String[] get_chapters() {
         String[] ret = new String[chapters.size()];
@@ -50,5 +56,15 @@ public class Book {
     }
     public boolean on_last_chapter() {
         return current_chapter == chapters.size()-1;
+    }
+    public boolean on_first_chapter() {
+        return current_chapter == 0;
+    }
+    public int get_page_number() {
+        int page_sum = 0;
+        for (int i=0; i < current_chapter; i++) {
+            page_sum += chapters.get(i).number_of_pages();
+        }
+        return page_sum + chapters.get(current_chapter).get_list_relative_current_page_index()+1;
     }
 }

@@ -25,6 +25,9 @@ public abstract class Page_Flipper {
     public void prev_page() {
 
     }
+    public void jump_to_chapter(int chapter_index) {
+
+    }
 
 
 }

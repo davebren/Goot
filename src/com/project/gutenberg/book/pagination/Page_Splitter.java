@@ -1,5 +1,6 @@
 package com.project.gutenberg.book.pagination;
 
+import android.util.Log;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.book.Page;
@@ -35,7 +36,7 @@ public class Page_Splitter {
     }
     public void paginate() {
         initialize_open_pages();
-        Debug.log("first paragraph: " + book.get_chapter(current_chapter).get_paragraphs().getFirst());
+        //Debug.log("first paragraph: " + book.get_chapter(current_chapter).get_paragraphs().getFirst());
         for (int i=0; i < prev_current_next_page_lines.length; i++) {
             for (int j=0; j < prev_current_next_page_lines[i].length; j++) {
                 Debug.log("page: " + i + ", " + prev_current_next_page_lines[i][j]);
@@ -122,9 +123,9 @@ public class Page_Splitter {
         if (prev_boundaries[3] >= book.number_of_chapters()) { // book is over.
             return null;
         } else if (prev_boundaries[4] == -1) { // start new chapter
-            text_boundaries[0] = prev_boundaries[3];
-            text_boundaries[1] = 0;
-            text_boundaries[2] = 0;
+            text_boundaries[0] = prev_boundaries[3]; // chapter start index
+            text_boundaries[1] = 0; // paragraph start index
+            text_boundaries[2] = -1; // word start index
             //if (!chapters_parsed[text_boundaries[0]].is_parsed()) {
                 //chapters_parsed[text_boundaries[0]].parse_chapter(epub_spine.getResource(text_boundaries[0]));
             //}
@@ -146,8 +147,8 @@ public class Page_Splitter {
                 Action_Time_Analysis.start("get_next_page_lines.split");
                 String[] words = Line_Splitter.fast_split(paragraph, ' ');
                 Action_Time_Analysis.end("get_next_page_lines.split");
-                if (words.length == 0) {continue;}
-                words[0] = "     " + words[0];
+                if (words.length == 0) continue;
+                words[0] = "    " + words[0];
                 Action_Time_Analysis.start("get_next_page_lines.word_widths");
                 float[] word_widths = Line_Splitter.word_widths(words, line_measurer);
                 Action_Time_Analysis.end("get_next_page_lines.word_widths");
@@ -369,6 +370,7 @@ public class Page_Splitter {
                         c.last_page_loaded = true;
                     }
                 }
+                Log.d("gutendroid", "chapter parsed: " + c.get_paragraphs().getFirst());
                 Action_Time_Analysis.end("Load_All_Pages.loop1");
             }
             boolean stop_loop;
@@ -389,6 +391,7 @@ public class Page_Splitter {
                     break A;
                 }
             }
+            Log.d("gutendroid", "chapter bug: " + book.get_chapter(2).get_page(0).get_page_text()[0]);
             Debug.log("pages loaded in " + (System.currentTimeMillis() -start_time) + " ms.");
             Action_Time_Analysis.end("Load_All_Pages.run");
         }

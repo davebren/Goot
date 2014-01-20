@@ -43,4 +43,7 @@ public abstract class Book_View {
     public Book get_book() {
         return book;
     }
+    public Page_Flipper get_page_flipper() {
+        return page_flipper;
+    }
 }

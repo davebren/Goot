@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Holo.Light" />
+    <style name="app_theme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_action_bar_style</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Action_bar_style</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Action_bar_style</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Action_bar_style</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Action_bar_style</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Action_bar_style</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_action_bar_style</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_action_bar_style</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Action_bar_style</item>
+        <item name="android:actionMenuTextAppearance">@style/action_bar_text_case</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.Action_bar_style.Widget</item>
+    </style>
     <style name="nav_header">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">100dip</item>

@@ -53,7 +53,9 @@ public class Action_Bar_Handler {
         chapter_indicator.setVisible(false);
         chapter_titles = null;
     }
-
+    public void set_book_title(String title) {
+        action_bar.setTitle(title);
+    }
     public void set_title_author(String title, String author) {
         action_bar.setTitle(title + " by " + author);
     }
@@ -61,7 +63,6 @@ public class Action_Bar_Handler {
         page_indicator.setTitle("page " + page_number);
     }
     public void set_chapter_title(int chapter_index) {
-        Log.d("gutendroid", "set_chapter_title, " + chapter_index + ", " + chapter_titles.length + ", " + (chapter_titles != null));
         if (chapter_titles != null && chapter_titles.length > chapter_index && chapter_index > -1) {
             ignore_spinner_selection = true;
             chapter_indicator_spinner.setSelection(chapter_index);

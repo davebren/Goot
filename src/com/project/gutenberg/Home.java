@@ -64,7 +64,6 @@ public class Home extends RootActivity {
     }
     @AfterViews
     void setup_views() {
-        Log.d("gutendroid", "setup_views");
         home.set_response_callback(size_change_callback);
         home_scroll_view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -113,7 +112,7 @@ public class Home extends RootActivity {
             action_bar_handler.set_book_view_menu(book_view);
             action_bar_handler.initialize_spinner_chapters(book.get_chapters(),0);
             action_bar_handler.set_page(1);
-
+            action_bar_handler.set_book_title(book.get_title());
         }
     };
 

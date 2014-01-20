@@ -165,7 +165,6 @@ public class Chapter {
         return last_page_loaded && pages.size()-1 == list_relative_current_page_index;
     }
     public synchronized boolean on_penultimate_page() {
-        Log.d("gutendroid", "on_penultimate_page: " + last_page_loaded + ", " + pages.size() + ", " + get_list_relative_current_page_index());
         return last_page_loaded && pages.size()-2 == list_relative_current_page_index;
     }
     public synchronized boolean on_first_page() {

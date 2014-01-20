@@ -364,7 +364,6 @@ public class Page_Splitter {
                         c.last_page_loaded = true;
                     }
                 }
-                Log.d("gutendroid", "chapter parsed: " + c.get_paragraphs().getFirst());
                 Action_Time_Analysis.end("Load_All_Pages.loop1");
             }
             boolean stop_loop;

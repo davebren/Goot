@@ -15,6 +15,9 @@ public class Book {
         this.book_author = author;
         this.chapters = chapters;
     }
+    public String get_title() {
+        return book_title;
+    }
     public Chapter get_chapter(int index) {
         Action_Time_Analysis.start("Book.get_chapter");
         try {

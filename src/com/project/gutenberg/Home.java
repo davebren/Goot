@@ -106,7 +106,7 @@ public class Home extends RootActivity {
             com.project.gutenberg.book.Book book = parser.parse_book();
             LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
             Android_Book_View book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0, action_bar_handler);
-            Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 1, 0, 0);
+            Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 0, 0, 0);
             page_splitter.paginate();
 
             home.addView(book_view.get_page_holder());

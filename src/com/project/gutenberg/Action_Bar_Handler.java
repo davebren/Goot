@@ -1,6 +1,7 @@
 package com.project.gutenberg;
 
 import android.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ public class Action_Bar_Handler {
     private final double spinner_portion = 0.75;
     private String[] chapter_titles;
     private Android_Book_View book_view;
+    private boolean ignore_spinner_selection = true;
 
     public Action_Bar_Handler(Menu menu, ActionBar action_bar) {
         this.action_bar = action_bar;
@@ -59,8 +61,10 @@ public class Action_Bar_Handler {
         page_indicator.setTitle("page " + page_number);
     }
     public void set_chapter_title(int chapter_index) {
-        if (chapter_titles != null && chapter_titles.length > chapter_index) {
-            chapter_indicator_spinner.setPrompt(chapter_titles[chapter_index]);
+        Log.d("gutendroid", "set_chapter_title, " + chapter_index + ", " + chapter_titles.length + ", " + (chapter_titles != null));
+        if (chapter_titles != null && chapter_titles.length > chapter_index && chapter_index > -1) {
+            ignore_spinner_selection = true;
+            chapter_indicator_spinner.setSelection(chapter_index);
         }
     }
     public void initialize_spinner_chapters(String[] chapter_titles, int current_chapter) {
@@ -74,10 +78,9 @@ public class Action_Bar_Handler {
         chapter_indicator_spinner.setOnItemSelectedListener(spinner_listener);
     }
     private AdapterView.OnItemSelectedListener spinner_listener = new AdapterView.OnItemSelectedListener() {
-        private boolean ignore = true;
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            if (ignore) {
-                ignore = false;
+            if (ignore_spinner_selection) {
+                ignore_spinner_selection = false;
                 return;
             }
             if (book_view == null) return;

@@ -36,12 +36,6 @@ public class Page_Splitter {
     }
     public void paginate() {
         initialize_open_pages();
-        //Debug.log("first paragraph: " + book.get_chapter(current_chapter).get_paragraphs().getFirst());
-        for (int i=0; i < prev_current_next_page_lines.length; i++) {
-            for (int j=0; j < prev_current_next_page_lines[i].length; j++) {
-                Debug.log("page: " + i + ", " + prev_current_next_page_lines[i][j]);
-            }
-        }
         book_view.set_prev_current_next_page_lines(prev_current_next_page_lines);
         new Load_All_Pages();
     }
@@ -391,7 +385,6 @@ public class Page_Splitter {
                     break A;
                 }
             }
-            Log.d("gutendroid", "chapter bug: " + book.get_chapter(2).get_page(0).get_page_text()[0]);
             Debug.log("pages loaded in " + (System.currentTimeMillis() -start_time) + " ms.");
             Action_Time_Analysis.end("Load_All_Pages.run");
         }
@@ -400,7 +393,7 @@ public class Page_Splitter {
         Chapter c = book.get_chapter(chapter);
         if (!c.first_page_loaded) {
             Integer[] first_loaded_boundaries = c.get_first_boundary();
-            if (first_loaded_boundaries[1] == 0 && first_loaded_boundaries[2] == 0) {
+            if ((first_loaded_boundaries[1] == 0 && first_loaded_boundaries[2] == 0) || c.number_of_pages() == 1) {
                 c.first_page_loaded = true;
             } else {
                 get_prev_page_lines(first_loaded_boundaries);

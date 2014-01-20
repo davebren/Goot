@@ -52,11 +52,16 @@ public class Simple_Page_Flipper extends Page_Flipper {
         lines_of_text[0] = current_chapter.peek_current_page().get_page_text();
         if (current_chapter.on_penultimate_page()) {
             lines_of_text[1] = current_chapter.next_page().get_page_text();
-            lines_of_text[2] = book.peek_next_chapter().peek_current_page().get_page_text();
+            if (!book.on_last_chapter()) {
+                lines_of_text[2] = book.peek_next_chapter().peek_current_page().get_page_text();
+            } lines_of_text[2] = new String[0];
         } else if (current_chapter.on_last_page()) {
             book.next_chapter();
+            ((Android_Book_View)book_view).get_action_bar_handler().set_chapter_title(book.get_current_chapter_index());
             lines_of_text[1] = book.get_current_chapter().peek_current_page().get_page_text();
-            lines_of_text[2] = book.get_current_chapter().peek_next_page().get_page_text();
+            if (!book.get_current_chapter().on_last_page()) {
+                lines_of_text[2] = book.get_current_chapter().peek_next_page().get_page_text();
+            } else lines_of_text[2] = new String[0];
         } else {
             lines_of_text[1] = current_chapter.next_page().get_page_text();
             lines_of_text[2] = current_chapter.peek_next_page().get_page_text();
@@ -69,8 +74,7 @@ public class Simple_Page_Flipper extends Page_Flipper {
     }
     public void prev_page() {
         Chapter current_chapter = book.get_current_chapter();
-        Log.d("gutendroid", "prev_page: " + book.get_current_chapter_index() + ", " + current_chapter.get_list_relative_current_page_index());
-        if (book.get_current_chapter_index() == 1 && current_chapter.get_list_relative_current_page_index() ==0) return;
+        if (current_chapter.on_first_page() && book.on_first_chapter()) return;
         next_page.remove_view();
         prev_page.add_view(1);
         Page_View temp = current_page;
@@ -81,12 +85,17 @@ public class Simple_Page_Flipper extends Page_Flipper {
         lines_of_text[2] = current_chapter.peek_current_page().get_page_text();
         if (current_chapter.on_second_page()) {
             lines_of_text[1] = current_chapter.previous_page().get_page_text();
-            lines_of_text[0] = book.peek_previous_chapter().peek_last_page().get_page_text();
+            if (!book.on_first_chapter()) {
+                lines_of_text[0] = book.peek_previous_chapter().peek_last_page().get_page_text();
+            } else lines_of_text[0] = new String[0];
         } else if (current_chapter.on_first_page()) {
             book.previous_chapter();
             book.get_current_chapter().set_last_page();
             lines_of_text[1] = book.get_current_chapter().peek_current_page().get_page_text();
-            lines_of_text[0] = book.get_current_chapter().peek_previous_page().get_page_text();
+            ((Android_Book_View)book_view).get_action_bar_handler().set_chapter_title(book.get_current_chapter_index());
+            if (!book.get_current_chapter().on_first_page()) {
+                lines_of_text[0] = book.get_current_chapter().peek_previous_page().get_page_text();
+            } else lines_of_text[0] = new String[0];
         } else {
             lines_of_text[1] = current_chapter.previous_page().get_page_text();
             lines_of_text[0] = current_chapter.peek_previous_page().get_page_text();

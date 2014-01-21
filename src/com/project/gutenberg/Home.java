@@ -1,14 +1,17 @@
 package com.project.gutenberg;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.project.gutenberg.book.pagination.Page_Splitter;
-import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
 import com.project.gutenberg.book.parsing.Epub_Parser;
 import com.project.gutenberg.book.view.android.Android_Book_View;
 import com.project.gutenberg.util.*;
@@ -39,11 +42,16 @@ public class Home extends RootActivity {
     @ViewById TextView home_year_nav;
     @ViewById TextView home_settings_nav;
     @ViewById TextView home_donate_nav;
+    @ViewById DrawerLayout drawer_layout;
+    @ViewById ListView drawer_list;
 
     private boolean book_view_open = false;
+    private Android_Book_View current_book_view;
 
     protected static int pure_activity_height; // does not include action bar, etc...
     protected static int pure_activity_width;
+
+    private ActionBarDrawerToggle drawer_toggle;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,18 @@ public class Home extends RootActivity {
         Paint text_painter = new Paint();
         text_painter.setTextSize(prefs.get_book_font_size());
         text_painter.setColor(Color.BLACK);
+    }
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawer_toggle.syncState();
+    }
+    public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config);
+        drawer_toggle.onConfigurationChanged(config);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawer_toggle.onOptionsItemSelected(item)) return true;
+        return super.onOptionsItemSelected(item);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
@@ -73,6 +93,24 @@ public class Home extends RootActivity {
                 return false;
             }
         });
+        drawer_list.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, new String[] {"Drawer 1", "Drawer 2"}));
+        drawer_toggle = new ActionBarDrawerToggle(this, drawer_layout,R.drawable.ic_drawer,R.string.nav_drawer_open,R.string.nav_drawer_closed) {
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(getTitle());
+                invalidateOptionsMenu();
+            }
+            public void onDrawerOpened(View drawerView) {
+                Log.d("gutendroid", "onDrawerOpened");
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(getTitle());
+                invalidateOptionsMenu();
+            }
+        };
+        drawer_layout.setDrawerListener(drawer_toggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        //drawer_layout.setOnItemClickListener(new DrawerItemClickListener());
     }
     private void initialize_app() {
         prefs = new Shared_Prefs(context);
@@ -104,17 +142,26 @@ public class Home extends RootActivity {
             Epub_Parser parser = new Epub_Parser(b, 1, 0, 0);
             com.project.gutenberg.book.Book book = parser.parse_book();
             LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
-            Android_Book_View book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0, action_bar_handler);
-            Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 0, 0, 0);
+            current_book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0, action_bar_handler);
+            Page_Splitter page_splitter = new Page_Splitter(current_book_view, book, current_book_view.get_formatting(), current_book_view.get_line_measurer(), 0, 0, 0);
             page_splitter.paginate();
 
-            home.addView(book_view.get_page_holder());
-            action_bar_handler.set_book_view_menu(book_view);
+            home.addView(current_book_view.get_page_holder());
+            action_bar_handler.set_book_view_menu(current_book_view);
             action_bar_handler.initialize_spinner_chapters(book.get_chapters(),0);
             action_bar_handler.set_page(1);
             action_bar_handler.set_book_title(book.get_title());
         }
     };
+    private void open_book() {
 
+    }
+    public void onBackPressed() {
+        if (!book_view_open) super.onBackPressed();
+        else {
+            home.removeView(current_book_view.get_page_holder());
+            home.addView(home_scroll_view);
+        }
+    }
 
 }

@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.project.gutenberg.Size_Change_Callback_Linear_Layout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/home"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
->
-    <com.project.gutenberg.android_utils.Disabler_Scroll_View
-        android:id="@+id/home_scroll_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     >
-        <LinearLayout
-            android:id="@+id/home_outer"
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.project.gutenberg.Size_Change_Callback_Linear_Layout
+            android:id="@+id/home"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical"
-        >
-            <TextView android:id="@+id/home_title_nav" style="@style/nav_header" android:text="@string/nav_title_header"/>
-            <TextView android:id="@+id/home_author_nav" style="@style/nav_header" android:text="@string/nav_author_header"/>
-            <TextView android:id="@+id/home_category_nav" style="@style/nav_header" android:text="@string/nav_category_header"/>
-            <TextView android:id="@+id/home_year_nav" style="@style/nav_header" android:text="@string/nav_year_header"/>
-            <TextView android:id="@+id/home_settings_nav" style="@style/nav_header" android:text="@string/nav_settings_header"/>
-            <TextView android:id="@+id/home_donate_nav" style="@style/nav_header" android:text="@string/nav_donate_header"/>
-        </LinearLayout>
-    </com.project.gutenberg.android_utils.Disabler_Scroll_View>
-</com.project.gutenberg.Size_Change_Callback_Linear_Layout>
+            >
+            <com.project.gutenberg.android_utils.Disabler_Scroll_View
+                android:id="@+id/home_scroll_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+
+                >
+                <LinearLayout
+                    android:id="@+id/home_outer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    >
+                    <TextView android:id="@+id/home_title_nav" style="@style/nav_header" android:text="@string/nav_title_header"/>
+                    <TextView android:id="@+id/home_author_nav" style="@style/nav_header" android:text="@string/nav_author_header"/>
+                    <TextView android:id="@+id/home_category_nav" style="@style/nav_header" android:text="@string/nav_category_header"/>
+                    <TextView android:id="@+id/home_year_nav" style="@style/nav_header" android:text="@string/nav_year_header"/>
+                    <TextView android:id="@+id/home_settings_nav" style="@style/nav_header" android:text="@string/nav_settings_header"/>
+                    <TextView android:id="@+id/home_donate_nav" style="@style/nav_header" android:text="@string/nav_donate_header"/>
+                </LinearLayout>
+            </com.project.gutenberg.android_utils.Disabler_Scroll_View>
+        </com.project.gutenberg.Size_Change_Callback_Linear_Layout>
+    </FrameLayout>
+    <ListView android:id="@+id/drawer_list"
+              android:layout_width="240dp"
+              android:layout_height="match_parent"
+              android:layout_gravity="start"
+              android:choiceMode="singleChoice"
+              style="@style/drawer"
+
+        />
+</android.support.v4.widget.DrawerLayout>
+
+
 

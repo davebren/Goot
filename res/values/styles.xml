@@ -20,4 +20,9 @@
         <item name="android:textColor">#4e4b47</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
+    <style name="drawer">
+        <item name="android:divider">@drawable/list_divider_holo_dark</item>
+        <item name="android:background">@drawable/ab_solid_action_bar_style</item>
+        <item name="android:listSelector">@drawable/selectable_background_action_bar_style</item>
+    </style>
 </resources>

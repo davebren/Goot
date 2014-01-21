@@ -4,10 +4,12 @@
     <string name="menu_search">Search</string>
 
     <string name="nav_title_header">Browse: By Title</string>
-    <string name="nav_author_header">By Author</string>
-    <string name="nav_category_header">By Category</string>
-    <string name="nav_year_header">By Year</string>
+    <string name="nav_author_header">Author</string>
+    <string name="nav_category_header">Category</string>
+    <string name="nav_year_header">Year</string>
     <string name="nav_settings_header">Settings</string>
     <string name="nav_donate_header">Donate</string>
 
+    <string name="nav_drawer_open">Navigation Drawer Opened</string>
+    <string name="nav_drawer_closed">Navigation Drawer Closed</string>
 </resources>

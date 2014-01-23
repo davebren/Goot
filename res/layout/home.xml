@@ -39,13 +39,13 @@
             </com.project.gutenberg.android_utils.Disabler_Scroll_View>
         </com.project.gutenberg.Size_Change_Callback_Linear_Layout>
     </FrameLayout>
-    <ListView android:id="@+id/drawer_list"
+    <ExpandableListView android:id="@+id/drawer_list"
               android:layout_width="240dp"
               android:layout_height="match_parent"
               android:layout_gravity="start"
               android:choiceMode="singleChoice"
               style="@style/drawer"
-
+              android:groupIndicator="@null"
         />
 </android.support.v4.widget.DrawerLayout>
 

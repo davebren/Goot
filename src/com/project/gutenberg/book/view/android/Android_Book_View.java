@@ -2,11 +2,7 @@ package com.project.gutenberg.book.view.android;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.text.TextPaint;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,7 +23,7 @@ public class Android_Book_View extends Book_View {
     private Action_Bar_Handler action_bar_handler;
 
     public Android_Book_View(Book book, Context context, Shared_Prefs prefs, LinearLayout.LayoutParams fill_screen_params, int view_width, int view_height, int flip_style, Action_Bar_Handler action_bar_handler) {
-        super(view_width, view_height, prefs.get_book_font_size());
+        super(view_width, view_height, 25);
         this.prefs = prefs;
         this.context = context;
         this.action_bar_handler = action_bar_handler;
@@ -45,7 +41,7 @@ public class Android_Book_View extends Book_View {
         page_holder.setLayoutParams(fill_screen_params);
     }
     private void initialize_page_views() {
-        text_painter.setTextSize(prefs.get_book_font_size());
+        text_painter.setTextSize(prefs.get_book_font_scale());
         text_painter.setColor(standard_text_grey);
         prev_page = new Android_Page_View(context, this, prev_page_stack_id);
         current_page = new Android_Page_View(context, this, current_page_stack_id);

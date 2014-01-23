@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_drawer_open">Navigation Drawer Opened</string>
+    <string name="nav_drawer_closed">Navigation Drawer Closed</string>
+
+    <string name="text_size">Text Size</string>
+    <string name="portrait">Portrait</string>
+    <string name="landscape">Landscape</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/drawer_text_size_holder"
+    android:minHeight="@dimen/drawer_text_size_holder"
+    android:orientation="vertical"
+>
+    <TextView
+        android:id="@+id/drawer_text_size_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/navigation_drawer_header_text"
+        android:text="@string/text_size"
+        android:gravity="bottom|left"
+        android:paddingLeft="@dimen/large_padding"
+    />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+    >
+
+        <SeekBar
+                android:paddingTop="@dimen/medium_padding"
+                android:paddingBottom="@dimen/medium_padding"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:max="6"
+        ></SeekBar>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:text="1.0x"
+            android:textSize="15dip"
+            android:textColor="#fff"
+            android:padding="@dimen/medium_padding"
+        ></TextView>
+
+    </LinearLayout>
+
+</LinearLayout>

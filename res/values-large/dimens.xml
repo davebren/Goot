@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="xxsmall_padding">2dip</dimen>
+    <dimen name="xsmall_padding">4dip</dimen>
+    <dimen name="small_padding">6dip</dimen>
+    <dimen name="medium_padding">10dip</dimen>
+    <dimen name="large_padding">14dip</dimen>
+    <dimen name="xlarge_padding">20dip</dimen>
+    <dimen name="xxlarge_padding">27dip</dimen>
+
     <dimen name="simple_page_flipper_button_text">80dip</dimen>
 </resources>

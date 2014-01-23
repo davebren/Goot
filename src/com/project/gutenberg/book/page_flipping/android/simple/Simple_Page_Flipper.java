@@ -54,7 +54,7 @@ public class Simple_Page_Flipper extends Page_Flipper {
             lines_of_text[1] = current_chapter.next_page().get_page_text();
             if (!book.on_last_chapter()) {
                 lines_of_text[2] = book.peek_next_chapter().peek_current_page().get_page_text();
-            } lines_of_text[2] = new String[0];
+            } else lines_of_text[2] = new String[0];
         } else if (current_chapter.on_last_page()) {
             book.next_chapter();
             ((Android_Book_View)book_view).get_action_bar_handler().set_chapter_title(book.get_current_chapter_index());

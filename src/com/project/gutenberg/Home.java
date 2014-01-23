@@ -14,6 +14,7 @@ import android.widget.*;
 import com.project.gutenberg.book.pagination.Page_Splitter;
 import com.project.gutenberg.book.parsing.Epub_Parser;
 import com.project.gutenberg.book.view.android.Android_Book_View;
+import com.project.gutenberg.layout.navigation_drawer.Navigation_Adapter;
 import com.project.gutenberg.util.*;
 
 import nl.siegmann.epublib.epub.EpubReader;
@@ -43,7 +44,7 @@ public class Home extends RootActivity {
     @ViewById TextView home_settings_nav;
     @ViewById TextView home_donate_nav;
     @ViewById DrawerLayout drawer_layout;
-    @ViewById ListView drawer_list;
+    @ViewById ExpandableListView drawer_list;
 
     private boolean book_view_open = false;
     private Android_Book_View current_book_view;
@@ -57,7 +58,7 @@ public class Home extends RootActivity {
         super.onCreate(savedInstanceState);
         initialize_app();
         Paint text_painter = new Paint();
-        text_painter.setTextSize(prefs.get_book_font_size());
+        text_painter.setTextSize(prefs.get_book_font_scale());
         text_painter.setColor(Color.BLACK);
     }
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class Home extends RootActivity {
                 return false;
             }
         });
-        drawer_list.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, new String[] {"Drawer 1", "Drawer 2"}));
+        drawer_list.setAdapter(new Navigation_Adapter(this, drawer_list));
         drawer_toggle = new ActionBarDrawerToggle(this, drawer_layout,R.drawable.ic_drawer,R.string.nav_drawer_open,R.string.nav_drawer_closed) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);

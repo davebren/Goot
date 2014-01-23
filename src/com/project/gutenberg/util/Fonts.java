@@ -11,10 +11,10 @@ public class Fonts {
 
     }
     public Fonts(Shared_Prefs prefs, Context context) {
-        if (prefs.get_menu_font().equals("")) {
+        if (prefs.get_typeface().equals("")) {
             menu_font = null;
         } else {
-            menu_font = Typeface.createFromAsset(context.getAssets(), prefs.get_menu_font());
+            menu_font = Typeface.createFromAsset(context.getAssets(), "fonts/" + Typeface_Mappings.get_file_name(prefs.get_typeface()));
         }
 
     }

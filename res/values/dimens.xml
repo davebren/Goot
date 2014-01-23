@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <dimen name="xxsmall_padding">1dip</dimen>
+    <dimen name="xsmall_padding">3dip</dimen>
+    <dimen name="small_padding">5dip</dimen>
+    <dimen name="medium_padding">8dip</dimen>
+    <dimen name="large_padding">11dip</dimen>
+    <dimen name="xlarge_padding">16dip</dimen>
+    <dimen name="xxlarge_padding">22dip</dimen>
+    <dimen name="xxxlarge_padding">30dip</dimen>
+
     <dimen name="simple_page_flipper_button_text">50dip</dimen>
-    <dimen name="navigation_drawer_text">20dip</dimen>
+    <dimen name="navigation_drawer_header_text">20dip</dimen>
+    <dimen name="navigation_drawer_subheader_text">16dip</dimen>
+
+    <dimen name="drawer_text_size_holder">82dip</dimen>
+    <dimen name="drawer_typeface_header">82dip</dimen>
+    <dimen name="drawer_typeface_child_header">60dip</dimen>
+
 </resources>

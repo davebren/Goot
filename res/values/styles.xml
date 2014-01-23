@@ -12,6 +12,8 @@
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Action_bar_style</item>
         <item name="android:actionMenuTextAppearance">@style/action_bar_text_case</item>
         <item name="android:actionBarWidgetTheme">@style/Theme.Action_bar_style.Widget</item>
+        <item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
+
     </style>
     <style name="nav_header">
         <item name="android:layout_width">fill_parent</item>
@@ -22,6 +24,7 @@
     </style>
     <style name="drawer">
         <item name="android:divider">@drawable/list_divider_holo_dark</item>
+        <item name="android:childDivider">@drawable/list_divider_holo_dark</item>
         <item name="android:background">@drawable/ab_solid_action_bar_style</item>
         <item name="android:listSelector">@drawable/selectable_background_action_bar_style</item>
     </style>

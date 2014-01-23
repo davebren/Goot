@@ -4,54 +4,44 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 public class Shared_Prefs {
-     private static final String APP_SHARED_PREFS = "project.gutendroid"; //  Name of the file -.xml
-     private SharedPreferences app_shared_preferences;
-     private Editor prefs_editor;
-     
-     
+    private static final String APP_SHARED_PREFS = "project.gutendroid"; //  Name of the file -.xml
+    private SharedPreferences app_shared_preferences;
+    private Editor prefs_editor;
 
-     public Shared_Prefs(Context context)
-     {
-         app_shared_preferences = context.getSharedPreferences(APP_SHARED_PREFS, Activity.MODE_PRIVATE);
-         prefs_editor = app_shared_preferences.edit();
-         
-     }
-     public SharedPreferences get_default() {
-    	 return app_shared_preferences;
-     }
-
-     public boolean get_mute_sound() {
-    	 return app_shared_preferences.getBoolean("mute_sound", false);
-     }
-     public void set_mute_sound(boolean mute) {
-    	 prefs_editor.putBoolean("mute_sound", mute).commit();
-     }
-
-     public String get_menu_font() {
-         return app_shared_preferences.getString("menu_font", "");
-     }
-    public void set_menu_font(String font) {
-        prefs_editor.putString("menu_font", font).commit();
+    public Shared_Prefs(Context context) {
+        app_shared_preferences = context.getSharedPreferences(APP_SHARED_PREFS, Activity.MODE_PRIVATE);
+        prefs_editor = app_shared_preferences.edit();
     }
-    public void set_book_font(String font) {
-        prefs_editor.putString("book_font", font).commit();
+    public SharedPreferences get_default() {
+        return app_shared_preferences;
     }
-    public String get_book_font() {
-        return app_shared_preferences.getString("book_font", null);
+    public String get_typeface() {
+        return app_shared_preferences.getString("typeface","Roboto Regular");
     }
-    public void set_book_font_size(int font_size) {
-        prefs_editor.putInt("book_font_size", font_size).commit();
+    public void set_typeface(String typeface) {
+        prefs_editor.putString("typeface",typeface).commit();
     }
-    public int get_book_font_size() {
-        return app_shared_preferences.getInt("book_font_size", 25);
+    public String get_orientation() {
+        return app_shared_preferences.getString("orientation","portrait");
     }
-    // TODO change to integer value indicating small, medium, large, xlarge.
-    public int get_text_size() {
-        return 25;
+    public void set_orientation(String orientation) {
+        prefs_editor.putString("orientation",orientation).commit();
     }
-
+    public boolean get_mute_sound() {
+     return app_shared_preferences.getBoolean("mute_sound", false);
+    }
+    public void set_mute_sound(boolean mute) {
+     prefs_editor.putBoolean("mute_sound", mute).commit();
+    }
+    public void set_book_font_scale(float font_size) {
+        prefs_editor.putFloat("book_font_size", font_size).commit();
+    }
+    public float get_book_font_scale() {
+        return app_shared_preferences.getFloat("book_font_size", 1.0f);
+    }
     public int get_last_chapter(int book_id) {
         return app_shared_preferences.getInt("last_chapter_" + book_id, 0);
     }
@@ -61,7 +51,6 @@ public class Shared_Prefs {
     public int get_last_word(int book_id) {
         return app_shared_preferences.getInt("last_word_" + book_id, 0);
     }
-
     public void set_last_chapter(int book_id, int chapter) {
         prefs_editor.putInt("last_chapter_" + book_id, chapter).commit();
     }

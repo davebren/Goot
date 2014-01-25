@@ -15,6 +15,8 @@ import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.pagination.Page_Splitter;
 import com.project.gutenberg.book.parsing.Epub_Parser;
 import com.project.gutenberg.book.view.android.Android_Book_View;
+import com.project.gutenberg.layout.Action_Bar_Handler;
+import com.project.gutenberg.layout.Title_Browser;
 import com.project.gutenberg.layout.navigation_drawer.Navigation_Adapter;
 import com.project.gutenberg.util.*;
 

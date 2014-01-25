@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Line_Splitter {
-    private static int average_words_per_line;
-
     public static Object[] split(Line_Measurer line_measurer, Book_Formatting formatting, String[] words, Integer word_index, Integer paragraph_index, Integer line_count,Integer[] text_boundaries, String[] lines_of_text, float[] word_widths) {
         Action_Time_Analysis.start("split");
         Object[] return_object =  build_forward_(line_measurer,formatting,words,word_index,paragraph_index,line_count,text_boundaries,lines_of_text, word_widths);
@@ -76,16 +74,6 @@ public class Line_Splitter {
         }
         return widths;
     }
-    public static String[] fast_split(String s) {
-        List<String> list = new ArrayList<String>();
-        int pos = 0, end;
-        while ((end = s.indexOf(' ', pos)) >= 0) {
-            list.add(s.substring(pos, end));
-            pos = end + 1;
-        }
-        return s.split(" ");
-        //return list.toArray(new String[list.size()]);
-    }
     private static int split_single_word(String word, float word_width, Line_Measurer measurer, Book_Formatting formatting) {
         for (int i=0; i < word.length(); i++) {
             if (measurer.measure_width(word.substring(0,i)) > formatting.get_line_width()) {
@@ -96,7 +84,6 @@ public class Line_Splitter {
     }
     public static String[] fast_split(final String text, char separator) {
         final List<String> result = new ArrayList<String>();
-
         if (text != null && text.length() > 0) {
             int index1 = 0;
             int index2 = text.indexOf(separator);
@@ -106,14 +93,10 @@ public class Line_Splitter {
                 index1 = index2 + 1;
                 index2 = text.indexOf(separator, index1);
             }
-
             if (index1 < text.length() - 1) {
                 result.add(text.substring(index1));
             }
         }
-
         return result.toArray(new String[result.size()]);
     }
-
-
 }

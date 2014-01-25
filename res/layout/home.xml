@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <com.project.gutenberg.Size_Change_Callback_Linear_Layout
+        <com.project.gutenberg.util.Size_Change_Callback_Linear_Layout
             android:id="@+id/home"
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -37,7 +37,7 @@
                     <TextView android:id="@+id/home_donate_nav" style="@style/nav_header" android:text="@string/nav_donate_header"/>
                 </LinearLayout>
             </com.project.gutenberg.android_utils.Disabler_Scroll_View>
-        </com.project.gutenberg.Size_Change_Callback_Linear_Layout>
+        </com.project.gutenberg.util.Size_Change_Callback_Linear_Layout>
     </FrameLayout>
     <ExpandableListView android:id="@+id/drawer_list"
               android:layout_width="240dp"

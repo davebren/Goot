@@ -1,7 +1,8 @@
-package com.project.gutenberg;
+package com.project.gutenberg.layout;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
+import com.project.gutenberg.R;
 import com.project.gutenberg.util.Response_Callback;
 
 public class Title_Adapter extends ArrayAdapter<String>  {

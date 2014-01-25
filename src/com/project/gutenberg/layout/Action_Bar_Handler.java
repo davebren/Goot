@@ -1,4 +1,4 @@
-package com.project.gutenberg;
+package com.project.gutenberg.layout;
 
 import android.app.ActionBar;
 import android.util.Log;
@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import com.project.gutenberg.R;
 import com.project.gutenberg.book.view.android.Android_Book_View;
 
 public class Action_Bar_Handler {

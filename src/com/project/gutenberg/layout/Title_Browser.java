@@ -1,11 +1,11 @@
-package com.project.gutenberg;
+package com.project.gutenberg.layout;
 
 import android.app.Activity;
-import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.project.gutenberg.R;
+import com.project.gutenberg.layout.Title_Adapter;
 import com.project.gutenberg.util.Response_Callback;
 
 public class Title_Browser {

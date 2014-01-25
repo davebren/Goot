@@ -30,6 +30,10 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
 
     private TextView font_size_seekbar_label;
 
+    private String initial_orientation;
+    private float initial_font_scale;
+    private String initial_typeface;
+
     public Navigation_Adapter(Context context, ExpandableListView list_view) {
         this.context = context;
         this.list_view = list_view;
@@ -38,6 +42,9 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         list_view.setOnGroupClickListener(group_listener);
         list_view.setOnChildClickListener(child_listener);
+        initial_orientation = prefs.get_orientation();
+        initial_font_scale = prefs.get_book_font_scale();
+        initial_typeface = prefs.get_typeface();
     }
     public int getGroupCount() {return 4;}
     public int getChildrenCount(int groupPosition) {
@@ -86,13 +93,13 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         LinearLayout row = (LinearLayout)inflater.inflate(R.layout.drawer_typeface,null);
         TextView header = (TextView)row.findViewById(R.id.drawer_typeface_header);
         header.setText(prefs.get_typeface());
-        header.setTypeface(Typeface.createFromAsset(assets,"fonts/"+Typeface_Mappings.get_file_name(prefs.get_typeface())));
+        header.setTypeface(Typeface.createFromAsset(assets, Typeface_Mappings.get_file_name(prefs.get_typeface())));
         return row;
     }
     private View typeface_child(int position) {
         LinearLayout row = (LinearLayout)inflater.inflate(R.layout.drawer_typeface_child,null);
         TextView header = (TextView)row.findViewById(R.id.drawer_typeface_child_header);
-        header.setTypeface(Typeface.createFromAsset(assets,"fonts/"+Typeface_Mappings.mappings[position][1]));
+        header.setTypeface(Typeface.createFromAsset(assets,Typeface_Mappings.mappings[position][1]));
         header.setText(Typeface_Mappings.mappings[position][0]);
         return row;
     }
@@ -156,5 +163,22 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         public void onStartTrackingTouch(SeekBar seekBar) {}
         public void onStopTrackingTouch(SeekBar seekBar) {}
     };
+
+    public boolean changes_made() {
+        boolean change_made = false;
+        if (!initial_orientation.equals(prefs.get_orientation())) {
+            change_made = true;
+            initial_orientation = prefs.get_orientation();
+        }
+        if (initial_font_scale != prefs.get_book_font_scale()) {
+            change_made = true;
+            initial_font_scale = prefs.get_book_font_scale();
+        }
+        if (!initial_typeface.equals(prefs.get_typeface())) {
+            change_made = true;
+            initial_typeface = prefs.get_typeface();
+        }
+        return change_made;
+    }
 
 }

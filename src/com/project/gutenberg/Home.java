@@ -34,7 +34,6 @@ public class Home extends RootActivity {
     private final Activity context = this;
     public static int screen_height;
     public static int screen_width;
-    private static Fonts fonts;
     private Action_Bar_Handler action_bar_handler;
 
     @ViewById Size_Change_Callback_Linear_Layout home;
@@ -56,6 +55,7 @@ public class Home extends RootActivity {
     protected static int pure_activity_width;
 
     private ActionBarDrawerToggle drawer_toggle;
+    private Navigation_Adapter drawer_adapter;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +78,7 @@ public class Home extends RootActivity {
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);
-        action_bar_handler = new Action_Bar_Handler(menu, getActionBar());
+        action_bar_handler = new Action_Bar_Handler(menu, getActionBar(), this);
         action_bar_handler.set_home_view_menu();
         return super.onCreateOptionsMenu(menu);
     }
@@ -89,24 +89,20 @@ public class Home extends RootActivity {
     @AfterViews
     void setup_views() {
         home.set_response_callback(size_change_callback);
-        drawer_list.setAdapter(new Navigation_Adapter(this, drawer_list));
+        drawer_adapter = new Navigation_Adapter(this,drawer_list);
+        drawer_list.setAdapter(drawer_adapter);
         drawer_toggle = new ActionBarDrawerToggle(this, drawer_layout,R.drawable.ic_drawer,R.string.nav_drawer_open,R.string.nav_drawer_closed) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(getTitle());
-                invalidateOptionsMenu();
+                if (drawer_adapter.changes_made()) refresh_book();
             }
             public void onDrawerOpened(View drawerView) {
-                Log.d("gutendroid", "onDrawerOpened");
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(getTitle());
-                invalidateOptionsMenu();
             }
         };
         drawer_layout.setDrawerListener(drawer_toggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        //drawer_layout.setOnItemClickListener(new DrawerItemClickListener());
     }
     private void initialize_app() {
         prefs = new Shared_Prefs(context);
@@ -116,7 +112,6 @@ public class Home extends RootActivity {
         screen_width = display.getWidth();
         pure_activity_height = screen_height;
         pure_activity_width = screen_width;
-        fonts = new Fonts(prefs, context);
     }
     private Response_Callback<Integer[]> size_change_callback = new Response_Callback<Integer[]>() {
         public void on_response(Integer[] dimensions) {
@@ -130,15 +125,15 @@ public class Home extends RootActivity {
     }
     Response_Callback<Void> book_opened_callback = new Response_Callback<Void>() {
         public void on_response(Void v) {
-            nl.siegmann.epublib.domain.Book b = null;
-            try {b = new EpubReader().readEpub(getAssets().open("pg2753.epub"));
-            } catch(IOException e) {}
-            Epub_Parser parser = new Epub_Parser(b, 1, 0, 0);
-            current_book = parser.parse_book();
             open_book();
         }
     };
     private void open_book() {
+        nl.siegmann.epublib.domain.Book b = null;
+        try {b = new EpubReader().readEpub(getAssets().open("pg2753.epub"));
+        } catch(IOException e) {}
+        Epub_Parser parser = new Epub_Parser(b);
+        current_book = parser.parse_book();
         home.removeAllViews();
         LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
         current_book_view = new Android_Book_View(current_book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0, action_bar_handler);
@@ -158,6 +153,7 @@ public class Home extends RootActivity {
                     action_bar_handler.initialize_spinner_chapters(current_book.get_chapters(),prefs.get_last_chapter(-1));
                     action_bar_handler.set_page(current_book.get_page_number());
                     action_bar_handler.set_book_title(current_book.get_title());
+                    action_bar_handler.set_total_pages(current_book.get_number_of_pages());
                 }
             });
         }
@@ -165,18 +161,25 @@ public class Home extends RootActivity {
     public void onBackPressed() {
         if (current_book == null) super.onBackPressed();
         else {
-            home.removeView(current_book_view.get_page_holder());
-            Integer[] boundaries = current_book.close();
-            Action_Bar_Handler.ignore_spinner_selection=true;
-            prefs.set_last_chapter(-1,boundaries[0]);
-            prefs.set_last_paragraph(-1, boundaries[1]);
-            prefs.set_last_word(-1,boundaries[2]);
-            home.addView(home_scroll_view);
-            current_book = null;
+            close_book();
         }
     }
+    private void close_book() {
+        home.removeView(current_book_view.get_page_holder());
+        Integer[] boundaries = current_book.close();
+        Action_Bar_Handler.ignore_spinner_selection=true;
+        prefs.set_last_chapter(-1, boundaries[0]);
+        prefs.set_last_paragraph(-1, boundaries[1]);
+        prefs.set_last_word(-1, boundaries[2]);
+        home.addView(home_scroll_view);
+        current_book = null;
+        current_book_view = null;
+    }
     private void refresh_book() {
-        if (current_book != null) open_book();
+        if (current_book != null) {
+            close_book();
+            open_book();
+        }
     }
 
 }

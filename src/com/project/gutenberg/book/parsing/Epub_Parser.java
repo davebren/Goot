@@ -29,12 +29,6 @@ public class Epub_Parser implements Book_Parser {
     public Epub_Parser(nl.siegmann.epublib.domain.Book epub) {
         this.epub = epub;
     }
-    public Epub_Parser(nl.siegmann.epublib.domain.Book epub, int current_chapter, int current_paragraph, int current_word) {
-        this.current_chapter = current_chapter;
-        this.current_paragraph = current_paragraph;
-        this.current_word = current_word;
-        this.epub = epub;
-    }
     public Book parse_book() {
         String book_title = epub.getTitle();
         String book_author = epub.getMetadata().getAuthors().get(0).getLastname();
@@ -49,12 +43,10 @@ public class Epub_Parser implements Book_Parser {
         HashMap<Integer, Void> removed_chapters = new HashMap<Integer, Void>();
         for (int i=0; i < epub_spine.size(); i++) {
             chapters.addLast(new Chapter(this, i));
-            if (i-removed_chapters.size() == current_chapter) {
-                chapters.getLast().set_paragraphs(parse_chapter(i));
-                if (chapters.getLast().get_paragraphs().size() == 0) {
-                    chapters.removeLast();
-                    removed_chapters.put(i,null);
-                }
+            chapters.getLast().set_paragraphs(parse_chapter(i));
+            if (chapters.getLast().get_paragraphs().size() == 0) {
+                chapters.removeLast();
+                removed_chapters.put(i,null);
             }
         }
         String[] chapter_titles = new String[chapters.size()];

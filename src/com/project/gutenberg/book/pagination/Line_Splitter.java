@@ -36,7 +36,6 @@ public class Line_Splitter {
                 line_count++;
                 line_words_added=0;
                 if (line_count == lines_of_text.length) { // paragraph cutoff
-                    Log.d("gutendroid", "paragraph cutoff");
                     text_boundaries[3] = text_boundaries[0];
                     text_boundaries[4] = paragraph_index;
                     text_boundaries[5] = i;

@@ -2,7 +2,9 @@ package com.project.gutenberg.book.view.android;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,6 +16,7 @@ import com.project.gutenberg.book.page_flipping.android.simple.Simple_Page_Flipp
 import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
 import com.project.gutenberg.book.view.Book_View;
 import com.project.gutenberg.Shared_Prefs;
+import com.project.gutenberg.util.Typeface_Mappings;
 
 public class Android_Book_View extends Book_View {
     protected int background_color = Color.parseColor("#f7f5f5");
@@ -45,6 +48,10 @@ public class Android_Book_View extends Book_View {
     private void initialize_page_views() {
         text_painter.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.book_default_font_size)*prefs.get_book_font_scale());
         text_painter.setColor(standard_text_grey);
+        String typeface = prefs.get_typeface();
+        String typeface_path = Typeface_Mappings.get_file_name(typeface);
+        Log.d("gutendroid", "typeface: "+ typeface + ", " + typeface_path);
+        text_painter.setTypeface(Typeface.createFromAsset(context.getAssets(), Typeface_Mappings.get_file_name(prefs.get_typeface())));
         prev_page = new Android_Page_View(context, this, prev_page_stack_id);
         current_page = new Android_Page_View(context, this, current_page_stack_id);
         next_page = new Android_Page_View(context, this, next_page_stack_id);
@@ -63,19 +70,13 @@ public class Android_Book_View extends Book_View {
         Chapter current_chapter = book.get_current_chapter();
         lines_of_text[1] = current_chapter.peek_current_page().get_page_text();
         if (!book.get_current_chapter().on_first_page()) lines_of_text[0] = current_chapter.peek_previous_page().get_page_text();
-        else if (!book.on_first_chapter()) book.peek_previous_chapter().peek_last_page().get_page_text();
+        else if (!book.on_first_chapter()) lines_of_text[0] = book.peek_previous_chapter().peek_last_page().get_page_text();
         else lines_of_text[0] = new String[0];
 
         if (!book.get_current_chapter().on_last_page()) lines_of_text[2] = current_chapter.peek_next_page().get_page_text();
-        else if (!book.on_last_chapter()) book.peek_next_chapter().peek_current_page().get_page_text();
+        else if (!book.on_last_chapter()) lines_of_text[2] = book.peek_next_chapter().peek_current_page().get_page_text();
         else lines_of_text[2] = new String[0];
-
         set_prev_current_next_page_lines(lines_of_text);
-
-        prev_page.invalidate();
-        current_page.invalidate();
-        next_page.invalidate();
-
     }
     public Action_Bar_Handler get_action_bar_handler() {
         return action_bar_handler;

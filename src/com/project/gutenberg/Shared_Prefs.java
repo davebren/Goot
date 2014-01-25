@@ -19,7 +19,7 @@ public class Shared_Prefs {
         return app_shared_preferences;
     }
     public String get_typeface() {
-        return app_shared_preferences.getString("typeface","Roboto Regular");
+        return app_shared_preferences.getString("typeface","Roboto Light");
     }
     public void set_typeface(String typeface) {
         prefs_editor.putString("typeface",typeface).commit();

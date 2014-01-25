@@ -70,6 +70,13 @@ public class Book {
         }
         return page_sum + chapters.get(current_chapter).get_list_relative_current_page_index()+1;
     }
+    public int get_number_of_pages() {
+        int page_sum = 0;
+        for (int i=0; i < chapters.size(); i++) {
+            page_sum += chapters.get(i).number_of_pages();
+        }
+        return page_sum;
+    }
     public Integer[] close() {
         return get_current_chapter().get_current_page_boundaries();
     }

@@ -1,14 +1,12 @@
 package com.project.gutenberg.layout;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.SearchView;
-import android.widget.Spinner;
+import android.widget.*;
 import com.project.gutenberg.R;
 import com.project.gutenberg.book.view.android.Android_Book_View;
 
@@ -22,11 +20,16 @@ public class Action_Bar_Handler {
     private final double spinner_portion = 0.75;
     private String[] chapter_titles;
     private Android_Book_View book_view;
+    int total_pages=0;
+    int current_page=0;
+    Context context;
     public static boolean ignore_spinner_selection = true;
 
-    public Action_Bar_Handler(Menu menu, ActionBar action_bar) {
+    public Action_Bar_Handler(Menu menu, ActionBar action_bar, Context context) {
+        this.context = context;
         this.action_bar = action_bar;
         page_indicator =  menu.findItem(R.id.menu_page_indicator);
+        page_indicator.setOnMenuItemClickListener(page_indicator_click_listener);
         chapter_indicator = menu.findItem(R.id.menu_chapter_indicator);
         chapter_indicator_spinner = (Spinner)chapter_indicator.getActionView();
         chapter_indicator_spinner.setMinimumHeight((int)(action_bar.getHeight()*spinner_portion));
@@ -42,6 +45,7 @@ public class Action_Bar_Handler {
     }
     public void set_home_view_menu() {
         action_bar.setTitle("GutenDroid");
+
         search_item.setVisible(true);
         page_indicator.setVisible(false);
         chapter_indicator.setVisible(false);
@@ -61,7 +65,11 @@ public class Action_Bar_Handler {
         action_bar.setTitle(title + " by " + author);
     }
     public void set_page(int page_number) {
-        page_indicator.setTitle("page " + page_number);
+        current_page = page_number;
+        page_indicator.setTitle("page\n" + page_number);
+    }
+    public void set_total_pages(int total_pages) {
+        this.total_pages = total_pages;
     }
     public void set_chapter_title(int chapter_index) {
         if (chapter_titles != null && chapter_titles.length > chapter_index && chapter_index > -1) {
@@ -70,15 +78,22 @@ public class Action_Bar_Handler {
         }
     }
     public void initialize_spinner_chapters(String[] chapter_titles, int current_chapter) {
+        for (int i=0; i < chapter_titles.length; i++) {
+            if (chapter_titles[i].length() > 14) {
+                chapter_titles[i] = chapter_titles[i].substring(0,14) + "...";
+            }
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(action_bar.getThemedContext(),
                 android.R.layout.simple_spinner_item, android.R.id.text1,
                 chapter_titles);
         chapter_indicator_spinner.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        chapter_indicator_spinner.setPrompt(chapter_titles[current_chapter]);
+        chapter_indicator_spinner.setSelection(current_chapter);
+        Log.d("gutendroid","set spinner title: " + chapter_titles[current_chapter] + ", " + current_chapter);
         this.chapter_titles = chapter_titles;
         chapter_indicator_spinner.setOnItemSelectedListener(spinner_listener);
     }
+
     private AdapterView.OnItemSelectedListener spinner_listener = new AdapterView.OnItemSelectedListener() {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if (ignore_spinner_selection) {
@@ -95,6 +110,12 @@ public class Action_Bar_Handler {
             return true;
         }
         public boolean onQueryTextSubmit(String query) {
+            return true;
+        }
+    };
+    MenuItem.OnMenuItemClickListener page_indicator_click_listener = new MenuItem.OnMenuItemClickListener() {
+        public boolean onMenuItemClick(MenuItem item) {
+            Toast.makeText(context, "page " + current_page + " out of " + total_pages, 2500).show();
             return true;
         }
     };

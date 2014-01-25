@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="book_default_font_size">20px</dimen>
 
     <dimen name="xxsmall_padding">1dip</dimen>
     <dimen name="xsmall_padding">3dip</dimen>

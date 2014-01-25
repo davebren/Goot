@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.project.gutenberg.Action_Bar_Handler;
+import com.project.gutenberg.R;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.page_flipping.android.simple.Simple_Page_Flipper;
 import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
@@ -23,7 +24,7 @@ public class Android_Book_View extends Book_View {
     private Action_Bar_Handler action_bar_handler;
 
     public Android_Book_View(Book book, Context context, Shared_Prefs prefs, LinearLayout.LayoutParams fill_screen_params, int view_width, int view_height, int flip_style, Action_Bar_Handler action_bar_handler) {
-        super(view_width, view_height, 25);
+        super(view_width, view_height, (int)(context.getResources().getDimensionPixelSize(R.dimen.book_default_font_size)*prefs.get_book_font_scale()));
         this.prefs = prefs;
         this.context = context;
         this.action_bar_handler = action_bar_handler;
@@ -41,7 +42,7 @@ public class Android_Book_View extends Book_View {
         page_holder.setLayoutParams(fill_screen_params);
     }
     private void initialize_page_views() {
-        text_painter.setTextSize(prefs.get_book_font_scale());
+        text_painter.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.book_default_font_size)*prefs.get_book_font_scale());
         text_painter.setColor(standard_text_grey);
         prev_page = new Android_Page_View(context, this, prev_page_stack_id);
         current_page = new Android_Page_View(context, this, current_page_stack_id);

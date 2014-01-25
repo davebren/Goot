@@ -19,11 +19,7 @@ public class RootActivity extends Activity
     
     protected void onCreate(Bundle savedInstanceState)
     {
-        //Log.d("root", "create, " + TAG);
-       // Log.d("root", "try to match, " + CountStuffActivity.class.getName());
-
         if (TAG.equals(Home.class.getName())) {
-           // Log.d("root", "remove_all, " + CountStuffActivity.class.getName());
             for (Activity_Tag a : activities) {
             		if (a.a != null) {
                 		a.a.finish();

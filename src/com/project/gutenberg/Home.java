@@ -1,6 +1,7 @@
 package com.project.gutenberg;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -56,13 +57,20 @@ public class Home extends RootActivity {
 
     private ActionBarDrawerToggle drawer_toggle;
     private Navigation_Adapter drawer_adapter;
+    Response_Callback<Void> action_bar_ready_callback;
 
     public void onCreate(Bundle savedInstanceState) {
+        prefs = new Shared_Prefs(context);
+        if (prefs.get_orientation().equals("portrait"))setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        TAG = Home.class.getName();
+        Display display = getWindowManager().getDefaultDisplay();
+        screen_height = display.getHeight();
+        screen_width = display.getWidth();
+        pure_activity_height = screen_height;
+        pure_activity_width = screen_width;
         super.onCreate(savedInstanceState);
-        initialize_app();
-        Paint text_painter = new Paint();
-        text_painter.setTextSize(getResources().getDimensionPixelSize(R.dimen.book_default_font_size)*prefs.get_book_font_scale());
-        text_painter.setColor(Color.BLACK);
+
     }
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -77,13 +85,19 @@ public class Home extends RootActivity {
         return super.onOptionsItemSelected(item);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("gutendroid","onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.home_menu, menu);
         action_bar_handler = new Action_Bar_Handler(menu, getActionBar(), this);
         action_bar_handler.set_home_view_menu();
+        if (action_bar_ready_callback != null) action_bar_ready_callback.on_response(null);
         return super.onCreateOptionsMenu(menu);
     }
     public void onDestroy() {
         Action_Time_Analysis.log();
+        if (current_book != null) {
+            Log.d("gutendroid", "onDestroy set open book");
+            prefs.set_open_book(-1);
+        }
         super.onDestroy();
     }
     @AfterViews
@@ -94,6 +108,12 @@ public class Home extends RootActivity {
         drawer_toggle = new ActionBarDrawerToggle(this, drawer_layout,R.drawable.ic_drawer,R.string.nav_drawer_open,R.string.nav_drawer_closed) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
+                if (drawer_adapter.orientation_change()) {
+                    drawer_adapter.changes_made();
+                    if (prefs.get_orientation().equals("portrait"))setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    return;
+                }
                 if (drawer_adapter.changes_made()) refresh_book();
             }
             public void onDrawerOpened(View drawerView) {
@@ -103,15 +123,15 @@ public class Home extends RootActivity {
         drawer_layout.setDrawerListener(drawer_toggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-    }
-    private void initialize_app() {
-        prefs = new Shared_Prefs(context);
-        TAG = Home.class.getName();
-        Display display = getWindowManager().getDefaultDisplay();
-        screen_height = display.getHeight();
-        screen_width = display.getWidth();
-        pure_activity_height = screen_height;
-        pure_activity_width = screen_width;
+        if (prefs.get_open_book() != -999)  {
+            if (action_bar_handler == null) {
+                action_bar_ready_callback = new Response_Callback<Void>() {
+                    public void on_response(Void aVoid) {
+                        refresh_book();
+                    }
+                };
+            } else refresh_book();
+        }
     }
     private Response_Callback<Integer[]> size_change_callback = new Response_Callback<Integer[]>() {
         public void on_response(Integer[] dimensions) {
@@ -129,6 +149,7 @@ public class Home extends RootActivity {
         }
     };
     private void open_book() {
+        Log.d("gutendroid","open book");
         nl.siegmann.epublib.domain.Book b = null;
         try {b = new EpubReader().readEpub(getAssets().open("pg2753.epub"));
         } catch(IOException e) {}
@@ -165,7 +186,8 @@ public class Home extends RootActivity {
         }
     }
     private void close_book() {
-        home.removeView(current_book_view.get_page_holder());
+        Log.d("gutendroid","close_book");
+        home.removeAllViews();
         Integer[] boundaries = current_book.close();
         Action_Bar_Handler.ignore_spinner_selection=true;
         prefs.set_last_chapter(-1, boundaries[0]);
@@ -174,12 +196,13 @@ public class Home extends RootActivity {
         home.addView(home_scroll_view);
         current_book = null;
         current_book_view = null;
+        prefs.set_open_book(-999);
     }
     private void refresh_book() {
         if (current_book != null) {
             close_book();
-            open_book();
         }
+        open_book();
     }
 
 }

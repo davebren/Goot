@@ -163,7 +163,9 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         public void onStartTrackingTouch(SeekBar seekBar) {}
         public void onStopTrackingTouch(SeekBar seekBar) {}
     };
-
+    public boolean orientation_change() {
+        return !initial_orientation.equals(prefs.get_orientation());
+    }
     public boolean changes_made() {
         boolean change_made = false;
         if (!initial_orientation.equals(prefs.get_orientation())) {

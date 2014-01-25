@@ -7,16 +7,13 @@ import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
 public class Shared_Prefs {
-    private static final String APP_SHARED_PREFS = "project.gutendroid"; //  Name of the file -.xml
+    private static final String APP_SHARED_PREFS = "project.gutendroid";
     private SharedPreferences app_shared_preferences;
     private Editor prefs_editor;
 
     public Shared_Prefs(Context context) {
         app_shared_preferences = context.getSharedPreferences(APP_SHARED_PREFS, Activity.MODE_PRIVATE);
         prefs_editor = app_shared_preferences.edit();
-    }
-    public SharedPreferences get_default() {
-        return app_shared_preferences;
     }
     public String get_typeface() {
         return app_shared_preferences.getString("typeface","Roboto Light");
@@ -60,15 +57,10 @@ public class Shared_Prefs {
     public void set_last_word(int book_id, int word) {
         prefs_editor.putInt("last_word_" + book_id, word).commit();
     }
-    public String get_page_flip_style() {
-        return app_shared_preferences.getString("page_flip_style","slide");
+    public int get_open_book() {
+        return app_shared_preferences.getInt("open_book",-999);
     }
-    public void set_page_flip_style(String style) {
-        prefs_editor.putString("page_flip_style",style);
+    public void set_open_book(int book_id) {
+        prefs_editor.putInt("open_book",book_id).commit();
     }
-
-
-
-
-
 }

@@ -23,6 +23,6 @@ public class Size_Change_Callback_Linear_Layout extends LinearLayout {
     }
     public void onSizeChanged (int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        response_callback.on_response(new Integer[] {w,h,oldw,oldh});
+        if (response_callback != null)response_callback.on_response(new Integer[] {w,h,oldw,oldh});
     }
 }

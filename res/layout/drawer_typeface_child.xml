@@ -15,7 +15,6 @@
               android:gravity="center_vertical|left"
               android:paddingLeft="@dimen/xxxlarge_padding"
     />
-
 </LinearLayout>
 
 

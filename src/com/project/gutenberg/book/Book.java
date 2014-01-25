@@ -70,4 +70,11 @@ public class Book {
         }
         return page_sum + chapters.get(current_chapter).get_list_relative_current_page_index()+1;
     }
+    public Integer[] close() {
+        return get_current_chapter().get_current_page_boundaries();
+    }
+    public void set_containing_page(int chapter, int paragraph, int word) {
+        current_chapter=chapter;
+        chapters.get(chapter).set_containing_page(paragraph,word);
+    }
 }

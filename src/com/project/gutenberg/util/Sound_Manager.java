@@ -10,6 +10,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
+import com.project.gutenberg.Shared_Prefs;
 
 public class Sound_Manager {
 	

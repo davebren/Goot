@@ -6,13 +6,14 @@ import android.text.TextPaint;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.layout.Action_Bar_Handler;
 import com.project.gutenberg.R;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.page_flipping.android.simple.Simple_Page_Flipper;
 import com.project.gutenberg.book.pagination.android.Android_Line_Measurer;
 import com.project.gutenberg.book.view.Book_View;
-import com.project.gutenberg.util.Shared_Prefs;
+import com.project.gutenberg.Shared_Prefs;
 
 public class Android_Book_View extends Book_View {
     protected int background_color = Color.parseColor("#f7f5f5");
@@ -56,17 +57,25 @@ public class Android_Book_View extends Book_View {
     public void initialize_page_flipper() {
         page_flipper = new Simple_Page_Flipper(this, context, prev_page, current_page, next_page, book);
     }
-    public void loading_hook_completed_receiver(String[] lines_of_text, int stack_id) {
-        if (stack_id == -1) {
-            this.set_prev_current_next_page_lines(lines_of_text, 0);
-            prev_page.invalidate();
-        } else if (stack_id == 0) {
-            this.set_prev_current_next_page_lines(lines_of_text, 1);
-            current_page.invalidate();
-        } else if (stack_id == 1) {
-            this.set_prev_current_next_page_lines(lines_of_text, 2);
-            next_page.invalidate();
-        }
+    public void loading_hook_completed_receiver(String[] lines_of_text, int stack_id) {}
+    public void loading_hook_completed_receiver(Book book) {
+        String[][] lines_of_text = new String[3][];
+        Chapter current_chapter = book.get_current_chapter();
+        lines_of_text[1] = current_chapter.peek_current_page().get_page_text();
+        if (!book.get_current_chapter().on_first_page()) lines_of_text[0] = current_chapter.peek_previous_page().get_page_text();
+        else if (!book.on_first_chapter()) book.peek_previous_chapter().peek_last_page().get_page_text();
+        else lines_of_text[0] = new String[0];
+
+        if (!book.get_current_chapter().on_last_page()) lines_of_text[2] = current_chapter.peek_next_page().get_page_text();
+        else if (!book.on_last_chapter()) book.peek_next_chapter().peek_current_page().get_page_text();
+        else lines_of_text[2] = new String[0];
+
+        set_prev_current_next_page_lines(lines_of_text);
+
+        prev_page.invalidate();
+        current_page.invalidate();
+        next_page.invalidate();
+
     }
     public Action_Bar_Handler get_action_bar_handler() {
         return action_bar_handler;

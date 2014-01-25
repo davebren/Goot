@@ -6,4 +6,5 @@
     <string name="text_size">Text Size</string>
     <string name="portrait">Portrait</string>
     <string name="landscape">Landscape</string>
+    <string name="value_for_value">Value for Value</string>
 </resources>

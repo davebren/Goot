@@ -31,14 +31,6 @@ public class Line_Splitter {
                     lines_of_text[line_count] = first_part;
                     words[i] = words[i].substring(overflow_index,words[i].length());
                     word_widths[i] = word_widths[i]- line_measurer.measure_width(first_part);
-                    i--;
-                    line_count++;
-                    lines_of_text[line_count] = "";
-                    current_width=0;
-                    Log.d("gutendroid", "long word split: " + first_part + " --- " +  words[i+1]);
-                    Log.d("gutendroid", "long word split: " + i+1 + ", " + line_count + ", " + lines_of_text.length);
-                    line_words_added=0;
-                    continue;
                 }
                 i--;
                 line_count++;

@@ -22,7 +22,7 @@ public class Action_Bar_Handler {
     private final double spinner_portion = 0.75;
     private String[] chapter_titles;
     private Android_Book_View book_view;
-    private boolean ignore_spinner_selection = true;
+    public static boolean ignore_spinner_selection = true;
 
     public Action_Bar_Handler(Menu menu, ActionBar action_bar) {
         this.action_bar = action_bar;

@@ -142,18 +142,35 @@ public class Home extends RootActivity {
         home.removeAllViews();
         LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
         current_book_view = new Android_Book_View(current_book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0, action_bar_handler);
-        Page_Splitter page_splitter = new Page_Splitter(current_book_view, current_book, current_book_view.get_formatting(), current_book_view.get_line_measurer(), 0, 0, 0);
-        page_splitter.paginate();
-        home.addView(current_book_view.get_page_holder());
-        action_bar_handler.set_book_view_menu(current_book_view);
-        action_bar_handler.initialize_spinner_chapters(current_book.get_chapters(),0);
-        action_bar_handler.set_page(1);
-        action_bar_handler.set_book_title(current_book.get_title());
+        Page_Splitter page_splitter = new Page_Splitter(current_book_view, current_book, current_book_view.get_formatting(), current_book_view.get_line_measurer(), prefs.get_last_chapter(-1), prefs.get_last_paragraph(-1), prefs.get_last_word(-1));
+        page_splitter.paginate(pages_loaded_callback);
+
     }
+    private Response_Callback<Void> pages_loaded_callback = new Response_Callback<Void>() {
+        public void on_response(Void v) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    current_book.set_containing_page(prefs.get_last_chapter(-1),prefs.get_last_paragraph(-1),prefs.get_last_word(-1));
+                    current_book_view.loading_hook_completed_receiver(current_book);
+                    home.addView(current_book_view.get_page_holder());
+                    Action_Bar_Handler.ignore_spinner_selection=true;
+                    action_bar_handler.set_book_view_menu(current_book_view);
+                    action_bar_handler.initialize_spinner_chapters(current_book.get_chapters(),prefs.get_last_chapter(-1));
+                    action_bar_handler.set_page(current_book.get_page_number());
+                    action_bar_handler.set_book_title(current_book.get_title());
+                }
+            });
+        }
+    };
     public void onBackPressed() {
         if (current_book == null) super.onBackPressed();
         else {
             home.removeView(current_book_view.get_page_holder());
+            Integer[] boundaries = current_book.close();
+            Action_Bar_Handler.ignore_spinner_selection=true;
+            prefs.set_last_chapter(-1,boundaries[0]);
+            prefs.set_last_paragraph(-1, boundaries[1]);
+            prefs.set_last_word(-1,boundaries[2]);
             home.addView(home_scroll_view);
             current_book = null;
         }

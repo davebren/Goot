@@ -25,6 +25,7 @@
     >
 
         <SeekBar
+            android:id="@+id/drawer_text_size_seekbar"
                 android:paddingTop="@dimen/medium_padding"
                 android:paddingBottom="@dimen/medium_padding"
                 android:layout_width="0dip"
@@ -33,6 +34,7 @@
                 android:max="6"
         ></SeekBar>
         <TextView
+            android:id="@+id/drawer_text_size_seekbar_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left|center_vertical"

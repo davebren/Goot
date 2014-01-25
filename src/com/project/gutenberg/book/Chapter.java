@@ -90,6 +90,9 @@ public class Chapter {
         }
         return null;
     }
+    public synchronized Integer[] get_current_page_boundaries() {
+        return boundaries.get(list_relative_current_page_index);
+    }
     public synchronized void add_page(boolean before, Page p){
         if (pages.size() == 0) {
             first_loaded_page = 0;
@@ -180,5 +183,16 @@ public class Chapter {
     }
     public synchronized void set_first_page() {
         list_relative_current_page_index = 0;
+    }
+    public void set_containing_page(int paragraph, int word) {
+        for (int i=0; i < boundaries.size(); i++) {
+            Integer[] boundary = boundaries.get(i);
+            if (boundary[1] >= paragraph) {
+                if (boundary[2] >= word) {
+                    list_relative_current_page_index = i;return;
+                }
+            }
+        }
+        list_relative_current_page_index=0;
     }
 }

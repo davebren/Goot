@@ -1,4 +1,4 @@
-package com.project.gutenberg.util;
+package com.project.gutenberg;
 
 import android.app.Activity;
 import android.content.Context;

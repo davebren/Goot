@@ -10,5 +10,9 @@
     <string name="nav_settings_header">Settings</string>
     <string name="nav_donate_header">Donate</string>
 
+    <string name="message_from_david">A message from David</string>
+    <string name="one_per_month">One dollar a month</string>
+    <string name="five_per_month">Five dollars a month</string>
+    <string name="twenty_per_month">Twenty dollars a month</string>
 
 </resources>

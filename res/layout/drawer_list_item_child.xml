@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_typeface_child_header"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/drawer_typeface_child_header"
+    android:textColor="@android:color/white"
+    android:textSize="@dimen/navigation_drawer_subheader_text"
+    android:minHeight="@dimen/drawer_typeface_child_header"
+    android:gravity="center_vertical|left"
+    android:paddingLeft="@dimen/xxxlarge_padding"
+    >
+</TextView>
+
+
+
+

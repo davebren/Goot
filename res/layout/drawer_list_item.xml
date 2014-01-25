@@ -2,10 +2,13 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_text_size_header"
     android:layout_width="match_parent"
-    android:layout_height="80dip"
+    android:layout_height="@dimen/drawer_typeface_header"
+    android:minHeight="@dimen/drawer_typeface_header"
     android:textColor="@android:color/white"
     android:textSize="@dimen/navigation_drawer_header_text"
-    android:gravity="center"
+    android:gravity="center_vertical|left"
+    android:paddingLeft="@dimen/large_padding"
+
 />
 
 

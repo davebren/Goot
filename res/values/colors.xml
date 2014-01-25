@@ -3,4 +3,6 @@
     <color name="action_bar_text">#ffffff</color>
     <color name="transparent">#00000000</color>
 
+    <color name="value">#FFD9AD</color>
+
 </resources>

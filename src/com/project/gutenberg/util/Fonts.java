@@ -3,6 +3,7 @@ package com.project.gutenberg.util;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import com.project.gutenberg.Shared_Prefs;
 
 public class Fonts {
     public Typeface menu_font;

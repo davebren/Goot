@@ -8,6 +8,7 @@ import com.project.gutenberg.book.view.Book_Formatting;
 import com.project.gutenberg.book.view.Book_View;
 import com.project.gutenberg.util.Action_Time_Analysis;
 import com.project.gutenberg.util.Debug;
+import com.project.gutenberg.util.Response_Callback;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -34,10 +35,10 @@ public class Page_Splitter {
         this.book.set_current_chapter(this.current_chapter);
         prev_current_next_page_lines = new String[3][formatting.get_lines_per_page()];
     }
-    public void paginate() {
-        initialize_open_pages();
-        book_view.set_prev_current_next_page_lines(prev_current_next_page_lines);
-        new Load_All_Pages();
+    public void paginate(Response_Callback<Void> pages_loaded_callback) {
+        //initialize_open_pages();
+        //book_view.set_prev_current_next_page_lines(prev_current_next_page_lines);
+        new Load_All_Pages(pages_loaded_callback);
     }
     private void initialize_open_pages() {
         Action_Time_Analysis.start("initialize_open_pages");
@@ -337,8 +338,10 @@ public class Page_Splitter {
         get_next_page_lines(i);
     }
     private class Load_All_Pages extends Thread {
-        Load_All_Pages() {
+        Response_Callback<Void> pages_loaded_callback;
+        Load_All_Pages(Response_Callback<Void> pages_loaded_callback) {
             super();
+            this.pages_loaded_callback = pages_loaded_callback;
             start();
         }
         public void run() {
@@ -384,6 +387,7 @@ public class Page_Splitter {
                     break A;
                 }
             }
+            pages_loaded_callback.on_response(null);
             Debug.log("pages loaded in " + (System.currentTimeMillis() -start_time) + " ms.");
             Action_Time_Analysis.end("Load_All_Pages.run");
         }

@@ -2,7 +2,6 @@
 
     <string name="app_name">Gutendroid</string>
     <string name="menu_search">Search</string>
-
     <string name="nav_title_header">browse by title</string>
     <string name="nav_author_header">author</string>
     <string name="nav_category_header">category</string>

@@ -1,6 +1,10 @@
 Project GutenDroid: An Android E-Reader for Project Gutenberg
 
-    Copyright (C) David Breneisen
+ 
+License
+-------   
+
+    Copyright (C) 2014 David Breneisen
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

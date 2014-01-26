@@ -10,11 +10,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import com.GutenApplication;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.pagination.Page_Splitter;
 import com.project.gutenberg.book.parsing.Epub_Parser;
 import com.project.gutenberg.book.view.android.Android_Book_View;
-import com.project.gutenberg.layout.Action_Bar_Handler;
+import com.project.gutenberg.layout.action_bar.Action_Bar_Handler;
+import com.project.gutenberg.layout.browsing.Catalog_Adapter;
 import com.project.gutenberg.layout.navigation_drawer.Drawer_Adapter;
 import com.project.gutenberg.util.*;
 
@@ -23,7 +28,9 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 @EActivity(R.layout.home)
 public class Home extends RootActivity {
@@ -60,7 +67,6 @@ public class Home extends RootActivity {
         pure_activity_height = screen_height;
         pure_activity_width = screen_width;
         super.onCreate(savedInstanceState);
-
     }
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -93,7 +99,7 @@ public class Home extends RootActivity {
     @AfterViews
     void setup_views() {
         home.set_response_callback(size_change_callback);
-        home_navigation_adapter = new Home_Navigation_Adapter(this);
+        home_navigation_adapter = new Home_Navigation_Adapter(this, ((GutenApplication)getApplicationContext()).catalog.get_cursor());
         home_navigation_list.setAdapter(home_navigation_adapter);
         drawer_adapter = new Drawer_Adapter(this,drawer_list);
         drawer_list.setAdapter(drawer_adapter);
@@ -192,5 +198,4 @@ public class Home extends RootActivity {
         }
         open_book();
     }
-
 }

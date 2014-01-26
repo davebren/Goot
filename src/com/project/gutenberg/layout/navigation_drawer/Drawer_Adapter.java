@@ -103,7 +103,6 @@ public class Drawer_Adapter extends BaseExpandableListAdapter {
         TextView header = (TextView)row.findViewById(R.id.drawer_typeface_child_header);
         header.setTypeface(Typeface.createFromAsset(assets,Typeface_Mappings.mappings[position][1]));
         header.setText(Typeface_Mappings.mappings[position][0]);
-        header.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
         return row;
     }
     private View orientation_header() {

@@ -1,6 +1,7 @@
 Project GutenDroid: An Android E-Reader for Project Gutenberg
 
- 
+
+
 License
 -------   
 

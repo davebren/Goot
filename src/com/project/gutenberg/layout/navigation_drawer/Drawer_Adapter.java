@@ -10,12 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.GutenApplication;
 import com.project.gutenberg.R;
 import com.project.gutenberg.Shared_Prefs;
 import com.project.gutenberg.util.Seekbar_Converter;
 import com.project.gutenberg.util.Typeface_Mappings;
 
-public class Navigation_Adapter extends BaseExpandableListAdapter {
+public class Drawer_Adapter extends BaseExpandableListAdapter {
     private LayoutInflater inflater;
     private Shared_Prefs prefs;
     private AssetManager assets;
@@ -34,7 +35,7 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
     private float initial_font_scale;
     private String initial_typeface;
 
-    public Navigation_Adapter(Context context, ExpandableListView list_view) {
+    public Drawer_Adapter(Context context, ExpandableListView list_view) {
         this.context = context;
         this.list_view = list_view;
         prefs = new Shared_Prefs(context);
@@ -69,7 +70,6 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
     }
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (groupPosition == typeface_position) return typeface_child(childPosition);
-        if (groupPosition == orientation_position) return orientation_child();
         if (groupPosition == value_for_value_position) return value_for_value_child(childPosition);
         return null;
     }
@@ -86,6 +86,8 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         seekbar.setProgress(seekbar_position);
         font_size_seekbar_label = (TextView)row.findViewById(R.id.drawer_text_size_seekbar_label);
         font_size_seekbar_label.setText(Seekbar_Converter.convert_seekbar_position_to_label(seekbar_position));
+        font_size_seekbar_label.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
+        ((TextView)row.findViewById(R.id.drawer_text_size_header)).setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
         seekbar.setOnSeekBarChangeListener(font_scale_change_listener);
         return row;
     }
@@ -101,24 +103,16 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         TextView header = (TextView)row.findViewById(R.id.drawer_typeface_child_header);
         header.setTypeface(Typeface.createFromAsset(assets,Typeface_Mappings.mappings[position][1]));
         header.setText(Typeface_Mappings.mappings[position][0]);
+        header.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
         return row;
     }
     private View orientation_header() {
-        LinearLayout row = (LinearLayout)inflater.inflate(R.layout.drawer_typeface,null);
-        TextView header = (TextView)row.findViewById(R.id.drawer_typeface_header);
-        String orientation_text= "";
-        if (prefs.get_orientation().equalsIgnoreCase("portrait")) orientation_text = context.getResources().getString(R.string.portrait);
-        if (prefs.get_orientation().equalsIgnoreCase("landscape")) orientation_text = context.getResources().getString(R.string.landscape);
-        header.setText(orientation_text);
-        return row;
-    }
-    private View orientation_child() {
-        LinearLayout row = (LinearLayout)inflater.inflate(R.layout.drawer_typeface_child,null);
-        TextView header = (TextView)row.findViewById(R.id.drawer_typeface_child_header);
-        String orientation_text= "";
-        if (prefs.get_orientation().equals("portrait")) orientation_text = context.getResources().getString(R.string.landscape);
-        if (prefs.get_orientation().equals("landscape")) orientation_text = context.getResources().getString(R.string.portrait);
-        header.setText(orientation_text);
+        LinearLayout row = (LinearLayout)inflater.inflate(R.layout.drawer_orientation,null);
+        ToggleButton orientation_switch = (ToggleButton)row.findViewById(R.id.drawer_orientation_switch);
+        if (prefs.get_orientation().equalsIgnoreCase("portrait")) orientation_switch.setChecked(false);
+        else orientation_switch.setChecked(true);
+        orientation_switch.setOnCheckedChangeListener(orientation_listener);
+        ((TextView)row.findViewById(R.id.drawer_orientation_label)).setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
         return row;
     }
     private View value_for_value_header() {
@@ -126,6 +120,7 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         Spannable spannable = new SpannableString(context.getResources().getString(R.string.value_for_value));
         spannable.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.value)), 0, 5, 0);
         row.setText(spannable);
+        row.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
         return row;
     }
     private View value_for_value_child(int position) {
@@ -134,6 +129,7 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         if (position == 1)row.setText(context.getResources().getText(R.string.one_per_month));
         if (position == 2)row.setText(context.getResources().getText(R.string.five_per_month));
         if (position == 3)row.setText(context.getResources().getText(R.string.twenty_per_month));
+        row.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
         return row;
     }
     private ExpandableListView.OnGroupClickListener group_listener = new ExpandableListView.OnGroupClickListener() {
@@ -143,11 +139,6 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
     };
     private ExpandableListView.OnChildClickListener child_listener = new ExpandableListView.OnChildClickListener() {
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-            if (groupPosition == orientation_position) {
-                if (prefs.get_orientation().equalsIgnoreCase("portrait")) {prefs.set_orientation("landscape");
-                } else if (prefs.get_orientation().equalsIgnoreCase("landscape")) prefs.set_orientation("portrait");
-                notifyDataSetChanged();
-            }
             if (groupPosition == typeface_position) {
                 prefs.set_typeface(Typeface_Mappings.mappings[childPosition][0]);
                 notifyDataSetChanged();
@@ -162,6 +153,12 @@ public class Navigation_Adapter extends BaseExpandableListAdapter {
         }
         public void onStartTrackingTouch(SeekBar seekBar) {}
         public void onStopTrackingTouch(SeekBar seekBar) {}
+    };
+    private ToggleButton.OnCheckedChangeListener orientation_listener = new ToggleButton.OnCheckedChangeListener() {
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked) prefs.set_orientation("landscape");
+            else prefs.set_orientation("portrait");
+        }
     };
     public boolean orientation_change() {
         return !initial_orientation.equals(prefs.get_orientation());

@@ -19,4 +19,7 @@
     <dimen name="drawer_typeface_header">82dip</dimen>
     <dimen name="drawer_typeface_child_header">60dip</dimen>
 
+    <dimen name="home_navigation_group_item_size">55dip</dimen>
+    <dimen name="home_navigation_group_item_text">23dip</dimen>
+
 </resources>

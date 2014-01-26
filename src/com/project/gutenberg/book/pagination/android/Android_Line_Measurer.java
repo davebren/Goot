@@ -28,4 +28,17 @@ public class Android_Line_Measurer implements Line_Measurer {
         Action_Time_Analysis.end("Android_Line_Measurer.measure_width");
         return width;
     }
+    public float[] char_widths(String s) {
+        float[] widths = new float[s.length()];
+        for (int i=0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            Float char_width = precomputed_widths.get(c);
+            if (char_width == null) {
+                char_width = text_paint.measureText(""+c);
+                precomputed_widths.put(c,char_width);
+            }
+            widths[i] = char_width;
+        }
+        return widths;
+    }
 }

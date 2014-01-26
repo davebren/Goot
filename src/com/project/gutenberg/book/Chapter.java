@@ -118,18 +118,6 @@ public class Chapter {
             boundaries.addLast(b);
         }
     }
-    public synchronized boolean is_first_page_loaded() {
-        return first_page_loaded;
-    }
-    public synchronized boolean is_last_page_loaded() {
-        return last_page_loaded;
-    }
-    public synchronized int get_first_loaded_page_index() {
-        return first_loaded_page;
-    }
-    public synchronized int get_last_loaded_page_index() {
-        return last_loaded_page;
-    }
     public synchronized int get_list_relative_current_page_index() {
         return list_relative_current_page_index;
     }
@@ -154,15 +142,6 @@ public class Chapter {
     }
     public synchronized Page peek_last_page() {
         return pages.get(pages.size()-1);
-    }
-    public synchronized void add_loading_hook(int page_stack_index, boolean next, Book_View book_view) {
-        loading_hook = true;
-        loading_hook_stack_index = page_stack_index;
-        loading_hook_next = next;
-        loading_hook_book_view = book_view;
-    }
-    public synchronized boolean get_loading_hook_status() {
-        return loading_hook;
     }
     public synchronized boolean on_last_page() {
         return last_page_loaded && pages.size()-1 == list_relative_current_page_index;

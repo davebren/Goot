@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="@dimen/drawer_typeface_header"
+              android:minHeight="@dimen/drawer_typeface_header"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              android:paddingRight="@dimen/medium_padding"
+>
+    <TextView
+              android:id="@+id/drawer_orientation_label"
+              android:layout_width="0dip"
+              android:layout_height="fill_parent"
+              android:layout_weight="1"
+              android:textColor="@android:color/white"
+              android:textSize="@dimen/navigation_drawer_header_text"
+              android:text="@string/landscape"
+              android:gravity="center_vertical|left"
+              android:paddingLeft="@dimen/large_padding"
+    />
+    <ToggleButton
+            android:id="@+id/drawer_orientation_switch"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@drawable/kitkat_btn_toggle_holo_dark"
+            android:textColor="#f7f5f5"
+    ></ToggleButton>
+</LinearLayout>
+
+
+
+

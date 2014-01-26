@@ -3,8 +3,6 @@ package com.project.gutenberg;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -17,13 +15,11 @@ import com.project.gutenberg.book.pagination.Page_Splitter;
 import com.project.gutenberg.book.parsing.Epub_Parser;
 import com.project.gutenberg.book.view.android.Android_Book_View;
 import com.project.gutenberg.layout.Action_Bar_Handler;
-import com.project.gutenberg.layout.Title_Browser;
-import com.project.gutenberg.layout.navigation_drawer.Navigation_Adapter;
+import com.project.gutenberg.layout.navigation_drawer.Drawer_Adapter;
 import com.project.gutenberg.util.*;
 
 import nl.siegmann.epublib.epub.EpubReader;
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -38,14 +34,7 @@ public class Home extends RootActivity {
     private Action_Bar_Handler action_bar_handler;
 
     @ViewById Size_Change_Callback_Linear_Layout home;
-    @ViewById ScrollView home_scroll_view;
-    @ViewById LinearLayout home_outer;
-    @ViewById TextView home_title_nav;
-    @ViewById TextView home_author_nav;
-    @ViewById TextView home_category_nav;
-    @ViewById TextView home_year_nav;
-    @ViewById TextView home_settings_nav;
-    @ViewById TextView home_donate_nav;
+    @ViewById ExpandableListView home_navigation_list;
     @ViewById DrawerLayout drawer_layout;
     @ViewById ExpandableListView drawer_list;
 
@@ -56,7 +45,8 @@ public class Home extends RootActivity {
     protected static int pure_activity_width;
 
     private ActionBarDrawerToggle drawer_toggle;
-    private Navigation_Adapter drawer_adapter;
+    private Drawer_Adapter drawer_adapter;
+    Home_Navigation_Adapter home_navigation_adapter;
     Response_Callback<Void> action_bar_ready_callback;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -103,7 +93,9 @@ public class Home extends RootActivity {
     @AfterViews
     void setup_views() {
         home.set_response_callback(size_change_callback);
-        drawer_adapter = new Navigation_Adapter(this,drawer_list);
+        home_navigation_adapter = new Home_Navigation_Adapter(this);
+        home_navigation_list.setAdapter(home_navigation_adapter);
+        drawer_adapter = new Drawer_Adapter(this,drawer_list);
         drawer_list.setAdapter(drawer_adapter);
         drawer_toggle = new ActionBarDrawerToggle(this, drawer_layout,R.drawable.ic_drawer,R.string.nav_drawer_open,R.string.nav_drawer_closed) {
             public void onDrawerClosed(View view) {
@@ -139,10 +131,6 @@ public class Home extends RootActivity {
             pure_activity_width = dimensions[0];
         }
     };
-    @Click(R.id.home_title_nav) void title_nav_click() {
-        home.removeAllViews();
-        home.addView(new Title_Browser(context, book_opened_callback).get_list_view());
-    }
     Response_Callback<Void> book_opened_callback = new Response_Callback<Void>() {
         public void on_response(Void v) {
             open_book();
@@ -158,7 +146,7 @@ public class Home extends RootActivity {
         home.removeAllViews();
         LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
         current_book_view = new Android_Book_View(current_book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0, action_bar_handler);
-        Page_Splitter page_splitter = new Page_Splitter(current_book_view, current_book, current_book_view.get_formatting(), current_book_view.get_line_measurer(), prefs.get_last_chapter(-1), prefs.get_last_paragraph(-1), prefs.get_last_word(-1));
+        Page_Splitter page_splitter = new Page_Splitter(current_book, current_book_view.get_formatting(), current_book_view.get_line_measurer(), prefs.get_last_chapter(-1));
         page_splitter.paginate(pages_loaded_callback);
 
     }
@@ -193,7 +181,7 @@ public class Home extends RootActivity {
         prefs.set_last_chapter(-1, boundaries[0]);
         prefs.set_last_paragraph(-1, boundaries[1]);
         prefs.set_last_word(-1, boundaries[2]);
-        home.addView(home_scroll_view);
+        home.addView(home_navigation_list);
         current_book = null;
         current_book_view = null;
         prefs.set_open_book(-999);

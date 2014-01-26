@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/home_navigation_group_item_size"
+              android:minHeight="@dimen/home_navigation_group_item_size"
+              android:textSize="@dimen/home_navigation_group_item_text"
+              android:gravity="center"
+    >
+
+</TextView>

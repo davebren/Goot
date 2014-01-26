@@ -11,7 +11,7 @@ public class Cores {
      * Requires: Ability to peruse the filesystem at "/sys/devices/system/cpu"
      * @return The number of cores, or 1 if failed to get result
      */
-    private static int getNumCores() {
+    public static int getNumCores() {
         //Private Class to display only CPU devices in the directory listing
         class CpuFilter implements FileFilter {
             @Override

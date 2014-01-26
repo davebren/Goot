@@ -1,12 +1,12 @@
 package com.project.gutenberg.book.page_flipping.android.simple;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import com.project.gutenberg.R;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.Chapter;
@@ -21,10 +21,12 @@ public class Simple_Page_Flipper extends Page_Flipper {
     final Button_Animator left_button_animator = new Button_Animator();
     final Button_Animation_Listener left_animation_listener = new Button_Animation_Listener();
     final Button_Animation_Listener right_animation_listener = new Button_Animation_Listener();
+    Context context;
 
     public Simple_Page_Flipper(Android_Book_View book_view, Context context, Page_View prev_page, Page_View current_page, Page_View next_page, Book book) {
         super(book_view, prev_page, current_page, next_page, book);
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context = context;
         final View buttons = inflater.inflate(R.layout.simple_page_flipper_buttons,null);
         right_button = (Button)buttons.findViewById(R.id.simple_page_flipper_right);
         left_button = (Button)buttons.findViewById(R.id.simple_page_flipper_left);
@@ -59,6 +61,7 @@ public class Simple_Page_Flipper extends Page_Flipper {
             book.next_chapter();
             ((Android_Book_View)book_view).get_action_bar_handler().set_chapter_title(book.get_current_chapter_index());
             lines_of_text[1] = book.get_current_chapter().peek_current_page().get_page_text();
+            Toast.makeText(context,book.get_current_chapter().get_title(), 2500).show();
             if (!book.get_current_chapter().on_last_page()) {
                 lines_of_text[2] = book.get_current_chapter().peek_next_page().get_page_text();
             } else lines_of_text[2] = new String[0];

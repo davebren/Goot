@@ -2,13 +2,18 @@ package com.project.gutenberg.layout;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import com.GutenApplication;
 import com.project.gutenberg.R;
 import com.project.gutenberg.book.view.android.Android_Book_View;
+import com.project.gutenberg.util.Typeface_Span;
 
 public class Action_Bar_Handler {
     private ActionBar action_bar;
@@ -44,29 +49,36 @@ public class Action_Bar_Handler {
         this.book_view = book_view;
     }
     public void set_home_view_menu() {
-        action_bar.setTitle("GutenDroid");
-
-        search_item.setVisible(true);
+        set_title(context.getString(R.string.app_name));
+        search_item.setVisible(false);
         page_indicator.setVisible(false);
         chapter_indicator.setVisible(false);
         chapter_titles = null;
+    }
+    public void set_browse_menu() {
+        search_item.setVisible(true);
     }
     public void set_title_browsing_menu() {
-        action_bar.setTitle("Browse By Title");
+        set_title("Browse By Title");
         search_item.setVisible(true);
         page_indicator.setVisible(false);
         chapter_indicator.setVisible(false);
         chapter_titles = null;
     }
-    public void set_book_title(String title) {
-        action_bar.setTitle(title);
+    private void set_title(String title) {
+        SpannableString s = new SpannableString(title);
+        s.setSpan(new Typeface_Span(((GutenApplication)context.getApplicationContext()).typeface), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        action_bar.setTitle(s);
     }
-    public void set_title_author(String title, String author) {
-        action_bar.setTitle(title + " by " + author);
+
+    public void set_book_title(String title) {
+        set_title(title);
     }
     public void set_page(int page_number) {
         current_page = page_number;
-        page_indicator.setTitle("page\n" + page_number);
+        SpannableString s = new SpannableString("page\n" + page_number);
+        s.setSpan(new Typeface_Span(((GutenApplication)context.getApplicationContext()).typeface), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        page_indicator.setTitle(s);
     }
     public void set_total_pages(int total_pages) {
         this.total_pages = total_pages;
@@ -89,7 +101,6 @@ public class Action_Bar_Handler {
         chapter_indicator_spinner.setAdapter(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chapter_indicator_spinner.setSelection(current_chapter);
-        Log.d("gutendroid","set spinner title: " + chapter_titles[current_chapter] + ", " + current_chapter);
         this.chapter_titles = chapter_titles;
         chapter_indicator_spinner.setOnItemSelectedListener(spinner_listener);
     }

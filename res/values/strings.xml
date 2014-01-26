@@ -1,14 +1,12 @@
 <resources>
 
-    <string name="app_name">GutenDroid</string>
+    <string name="app_name">Gutendroid</string>
     <string name="menu_search">Search</string>
 
-    <string name="nav_title_header">Browse: By Title</string>
-    <string name="nav_author_header">Author</string>
-    <string name="nav_category_header">Category</string>
-    <string name="nav_year_header">Year</string>
-    <string name="nav_settings_header">Settings</string>
-    <string name="nav_donate_header">Donate</string>
+    <string name="nav_title_header">browse by title</string>
+    <string name="nav_author_header">author</string>
+    <string name="nav_category_header">category</string>
+    <string name="nav_downloads_header">downloads</string>
 
     <string name="message_from_david">A message from David</string>
     <string name="one_per_month">One dollar a month</string>

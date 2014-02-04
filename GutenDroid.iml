@@ -36,15 +36,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/epublib-core-latest.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/jsoup-1.7.2.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -70,6 +61,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="sqlite_assets_helper" />
+    <orderEntry type="module" module-name="main" />
   </component>
 </module>
 

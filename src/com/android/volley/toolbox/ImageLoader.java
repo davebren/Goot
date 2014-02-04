@@ -148,7 +148,7 @@ public class ImageLoader {
      * @param requestUrl The url of the remote image
      * @param maxWidth The maximum width of the returned image.
      * @param maxHeight The maximum height of the returned image.
-     * @return True if the item exists in cache, false otherwise.
+     * @return True if the item file_exists in cache, false otherwise.
      */
     public boolean isCached(String requestUrl, int maxWidth, int maxHeight) {
         throwIfNotOnMainThread();
@@ -304,7 +304,7 @@ public class ImageLoader {
 
         /**
          * Constructs a BitmapContainer object.
-         * @param bitmap The final bitmap (if it exists).
+         * @param bitmap The final bitmap (if it file_exists).
          * @param requestUrl The requested URL for this container.
          * @param cacheKey The cache key that identifies the requested URL for this container.
          */

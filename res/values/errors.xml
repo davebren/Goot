@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="open_book_file_not_found">File could not be located, please download the book again.</string>
+    <string name="open_book_io_exception">File could not be opened, is it already in use?</string>
+    <string name="open_book_corrupted_file">File is corrupted, please download the book again.</string>
+</resources>

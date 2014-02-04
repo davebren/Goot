@@ -64,14 +64,25 @@ public class Android_Book_View extends Book_View {
     public void initialize_page_flipper() {
         page_flipper = new Simple_Page_Flipper(this, context, prev_page, current_page, next_page, book);
     }
-    public void loading_hook_completed_receiver(String[] lines_of_text, int stack_id) {}
+    public void loading_hook_completed_receiver(String[] lines_of_text, int stack_id) {
+
+    }
     public void loading_hook_completed_receiver(Book book) {
         String[][] lines_of_text = new String[3][];
         Chapter current_chapter = book.get_current_chapter();
         lines_of_text[1] = current_chapter.peek_current_page().get_page_text();
-        if (!book.get_current_chapter().on_first_page()) lines_of_text[0] = current_chapter.peek_previous_page().get_page_text();
-        else if (!book.on_first_chapter()) lines_of_text[0] = book.peek_previous_chapter().peek_last_page().get_page_text();
-        else lines_of_text[0] = new String[0];
+        if (!book.get_current_chapter().on_first_page()) {
+            Log.d("gutendroid", "loading_hook.0");
+            lines_of_text[0] = current_chapter.peek_previous_page().get_page_text();
+        }
+        else if (!book.on_first_chapter()) {
+            Log.d("gutendroid", "loading_hook.1");
+            lines_of_text[0] = book.peek_previous_chapter().peek_last_page().get_page_text();
+        }
+        else {
+            Log.d("gutendroid", "loading_hook.2");
+            lines_of_text[0] = new String[0];
+        }
 
         if (!book.get_current_chapter().on_last_page()) lines_of_text[2] = current_chapter.peek_next_page().get_page_text();
         else if (!book.on_last_chapter()) lines_of_text[2] = book.peek_next_chapter().peek_current_page().get_page_text();

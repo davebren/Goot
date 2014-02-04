@@ -7,7 +7,7 @@ import android.view.*;
 import android.widget.*;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.pagination.Page_Splitter;
-import com.project.gutenberg.book.parsing.Epub_Parser;
+import com.project.gutenberg.book.parsing.epub_parser.Epub_Parser;
 import com.project.gutenberg.book.view.android.Android_Book_View;
 import com.project.gutenberg.util.*;
 

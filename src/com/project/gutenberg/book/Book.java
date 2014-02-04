@@ -1,5 +1,6 @@
 package com.project.gutenberg.book;
 
+import android.util.Log;
 import com.project.gutenberg.util.Action_Time_Analysis;
 
 import java.util.LinkedList;
@@ -81,6 +82,7 @@ public class Book {
         return get_current_chapter().get_current_page_boundaries();
     }
     public void set_containing_page(int chapter, int paragraph, int word) {
+        Log.d("gutendroid", "set_containing_page, " + chapter + ", " + paragraph + ", " + word);
         current_chapter=chapter;
         chapters.get(chapter).set_containing_page(paragraph,word);
     }

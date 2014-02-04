@@ -1,11 +1,13 @@
 <resources>
 
-    <string name="app_name">Gutendroid</string>
+    <string name="app_name">Gutendroid: E-Reader for Project Gutenberg</string>
     <string name="menu_search">Search</string>
     <string name="nav_title_header">browse by title</string>
     <string name="nav_author_header">author</string>
     <string name="nav_category_header">category</string>
     <string name="nav_downloads_header">downloads</string>
+
+    <string name="open">open</string>
 
     <string name="message_from_david">A message from David</string>
     <string name="one_per_month">One dollar a month</string>

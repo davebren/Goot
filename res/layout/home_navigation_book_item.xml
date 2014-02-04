@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.project.gutenberg.layout.Downloader_Layout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:minHeight="@dimen/home_navigation_group_item_size"
+>   <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+    >
+        <TextView
+            android:id="@+id/home_navigation_book_item_left"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/home_navigation_child_item_text"
+            android:gravity="top|left"
+            android:paddingLeft="@dimen/large_padding"
+        ></TextView>
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            ></Space>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+        >
+            <Space
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="3"
+                ></Space>
+            <TextView
+                android:id="@+id/home_navigation_book_item_right"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:textSize="@dimen/home_navigation_child_item_text"
+                android:gravity="center_vertical|right"
+                android:paddingLeft="@dimen/large_padding"
+                android:paddingRight="@dimen/large_padding"
+                ></TextView>
+        </LinearLayout>
+        <Button
+            android:id="@+id/home_navigation_book_item_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open"
+            android:visibility="gone"
+        ></Button>
+
+    </LinearLayout>
+</com.project.gutenberg.layout.Downloader_Layout>

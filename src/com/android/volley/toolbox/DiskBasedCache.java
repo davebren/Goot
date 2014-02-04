@@ -99,7 +99,7 @@ public class DiskBasedCache implements Cache {
     }
 
     /**
-     * Returns the cache entry with the specified key if it exists, null otherwise.
+     * Returns the cache entry with the specified key if it file_exists, null otherwise.
      */
     @Override
     public synchronized Entry get(String key) {
@@ -211,7 +211,7 @@ public class DiskBasedCache implements Cache {
     }
 
     /**
-     * Removes the specified key from the cache if it exists.
+     * Removes the specified key from the cache if it file_exists.
      */
     @Override
     public synchronized void remove(String key) {

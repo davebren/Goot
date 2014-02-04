@@ -1,8 +1,9 @@
-package com.project.gutenberg.book.parsing;
+package com.project.gutenberg.book.parsing.epub_parser;
 
 import android.util.Log;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.Chapter;
+import com.project.gutenberg.book.parsing.Book_Parser;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.Spine;
 import nl.siegmann.epublib.domain.TOCReference;
@@ -18,10 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Epub_Parser implements Book_Parser {
-    private int current_chapter = 0;
-    private int current_paragraph = 0;
-    private int current_word = 0;
-
     private nl.siegmann.epublib.domain.Book epub;
     private Spine spine;
     private LinkedList<Chapter> chapters;
@@ -31,17 +28,25 @@ public class Epub_Parser implements Book_Parser {
     }
     public Book parse_book() {
         String book_title = epub.getTitle();
-        String book_author = epub.getMetadata().getAuthors().get(0).getLastname();
+        String book_author = "Unknown";
+        if (epub.getMetadata().getAuthors().size() != 0)
+            book_author = epub.getMetadata().getAuthors().get(0).getLastname();
         spine = new Spine(epub.getTableOfContents());
+        if (spine.size() == 0) return null;
         List<TOCReference> table_of_contents = epub.getTableOfContents().getTocReferences();
         initialize_chapters(spine, table_of_contents);
         Book book = new Book(book_title, book_author, chapters);
         return book;
     }
     private void initialize_chapters(Spine epub_spine, List<TOCReference> table_of_contents) {
+        Log.d("gutendroid", "initialize_chapters: empty? " + epub_spine.isEmpty());
+        Log.d("gutendroid", "initialize_chapters: spine size = " + epub_spine.size());
+        Log.d("gutendroid","initialize_chapters: epub contents size = " + epub.getContents().size());
         chapters = new LinkedList<Chapter>();
         HashMap<Integer, Void> removed_chapters = new HashMap<Integer, Void>();
+        HashMap<String, Integer> unique_toc = new HashMap<String,Integer>();
         for (int i=0; i < epub_spine.size(); i++) {
+            Log.d("gutendroid", "spine resource: " + epub_spine.getResource(i).getId());
             chapters.addLast(new Chapter(this, i));
             chapters.getLast().set_paragraphs(parse_chapter(i));
             if (chapters.getLast().get_paragraphs().size() == 0) {
@@ -49,16 +54,29 @@ public class Epub_Parser implements Book_Parser {
                 removed_chapters.put(i,null);
             }
         }
+        for (int i=0; i < table_of_contents.size(); i ++) {
+            String resource_id = table_of_contents.get(i).getResourceId();
+            if (!unique_toc.containsKey(resource_id)) unique_toc.put(resource_id,i);
+        }
+        List<TOCReference> temp_list = new LinkedList<TOCReference>();
+        for (int i=0; i < table_of_contents.size(); i++) {
+            if (unique_toc.containsValue(i)) temp_list.add(table_of_contents.get(i));
+        }
+        table_of_contents = temp_list;
+        Log.d("gutendroid", "initialize_chapters.0: " + epub_spine.size() + ", " + table_of_contents.size() + ", " + removed_chapters.size());
+
         String[] chapter_titles = new String[chapters.size()];
         if (table_of_contents != null && table_of_contents.size()>0) {
             String[] temp_titles = new String[chapters.size()];
             int chapters_skipped = 0;
             for (int i=0; i < table_of_contents.size(); i++) {
+                Log.d("gutendroid", "toc resource: " + table_of_contents.get(i).getResource().getId());
                 if (removed_chapters.containsKey(i)) {
                     chapters_skipped++;
                     continue;
                 }
                 String t = format_title(table_of_contents.get(i).getTitle());
+                Log.d("gutendroid", "initialize_chapters.1: " + i + ", " + chapters_skipped + ", " + temp_titles.length);
                 if (t != null) {
                     temp_titles[i-chapters_skipped] = t;
                 } else {
@@ -125,8 +143,9 @@ public class Epub_Parser implements Book_Parser {
             char c = s.charAt(j);
             if (c != 'I' && c != 'V' && c != 'X'
                     && c != 'L' && c != 'C' && c != 'D'
-                    && c != 'M') return false;
+                    && c != 'M' && c != '.') return false;
         }
         return true;
     }
+
 }

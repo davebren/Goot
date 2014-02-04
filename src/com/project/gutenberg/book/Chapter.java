@@ -166,8 +166,8 @@ public class Chapter {
     public void set_containing_page(int paragraph, int word) {
         for (int i=0; i < boundaries.size(); i++) {
             Integer[] boundary = boundaries.get(i);
-            if (boundary[1] >= paragraph) {
-                if (boundary[2] >= word) {
+            if (boundary[4] >= paragraph) {
+                if (boundary[5] >= word) {
                     list_relative_current_page_index = i;return;
                 }
             }

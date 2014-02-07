@@ -26,8 +26,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 @EActivity(R.layout.home)
 public class Home extends RootActivity {
@@ -82,6 +80,7 @@ public class Home extends RootActivity {
         getMenuInflater().inflate(R.menu.home_menu, menu);
         action_bar_handler = new Action_Bar_Handler(menu, getActionBar(), this);
         action_bar_handler.set_home_view_menu();
+        if (home_navigation_adapter != null) home_navigation_adapter.set_action_bar_handler(action_bar_handler);
         if (action_bar_ready_callback != null) action_bar_ready_callback.on_response(null);
         return super.onCreateOptionsMenu(menu);
     }
@@ -95,8 +94,9 @@ public class Home extends RootActivity {
     @AfterViews
     void setup_views() {
         home.set_response_callback(size_change_callback);
-        home_navigation_adapter = new Home_Navigation_Adapter(this, ((GutenApplication)getApplicationContext()).catalog.get_cursor(), home_navigation_list, book_opened_callback);
+        home_navigation_adapter = new Home_Navigation_Adapter(this, ((GutenApplication)getApplicationContext()).catalog.get_title_cursor(), home_navigation_list, book_opened_callback);
         home_navigation_list.setAdapter(home_navigation_adapter);
+        if (action_bar_handler != null) home_navigation_adapter.set_action_bar_handler(action_bar_handler);
         drawer_adapter = new Drawer_Adapter(this,drawer_list);
         drawer_list.setAdapter(drawer_adapter);
         drawer_toggle = new ActionBarDrawerToggle(this, drawer_layout,R.drawable.ic_drawer,R.string.nav_drawer_open,R.string.nav_drawer_closed) {
@@ -139,12 +139,13 @@ public class Home extends RootActivity {
         }
     };
     private void open_book(String book_id) {
-        Log.d("gutendroid","open book");
         nl.siegmann.epublib.domain.Book b = null;
         File file = new File(Environment.getExternalStorageDirectory().toString() + "/eskimo_apps/gutendroid/epub_no_images/"+ book_id + ".epub.noimages");
+        Log.d("gutendroid","open book " + book_id + ": " + file.exists());
         try {
             InputStream is = new FileInputStream(file);
             b = new EpubReader().readEpub(is);
+            is.close();
         } catch (FileNotFoundException e) {
             if (current_book == null) {
                 Toast.makeText(this,context.getString(R.string.open_book_file_not_found),3500).show();
@@ -192,6 +193,7 @@ public class Home extends RootActivity {
         if (current_book == null) super.onBackPressed();
         else {
             close_book();
+            prefs.set_open_book(-999);
         }
     }
     private void close_book() {
@@ -205,7 +207,6 @@ public class Home extends RootActivity {
         home.addView(home_navigation_list);
         current_book = null;
         current_book_view = null;
-        prefs.set_open_book(-999);
         action_bar_handler.set_home_view_menu();
     }
     private void refresh_book() {
@@ -214,4 +215,5 @@ public class Home extends RootActivity {
         }
         open_book("" + prefs.get_open_book());
     }
+
 }

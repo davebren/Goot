@@ -33,8 +33,13 @@ public class Catalog_DB extends SQLiteAssetHelper {
             cursor.moveToNext();
         }
     }
-    public Cursor get_cursor() {
+    public Cursor get_title_cursor() {
         Cursor cursor = db.query(title_table,null,null,null,null,null,null);
+        cursor.moveToFirst();
+        return cursor;
+    }
+    public Cursor get_title_cursor(String search) {
+        Cursor cursor = db.query(title_table,null,title_key +" LIKE '%"+search+"%'",null,null,null,null);
         cursor.moveToFirst();
         return cursor;
     }

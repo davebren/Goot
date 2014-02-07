@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Gutendroid: E-Reader for Project Gutenberg</string>
+    <string name="app_name">Gutendroid E-Books</string>
     <string name="menu_search">Search</string>
     <string name="nav_title_header">browse by title</string>
     <string name="nav_author_header">author</string>

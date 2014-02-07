@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.GutenApplication;
+import com.project.gutenberg.Home_Navigation_Adapter;
 import com.project.gutenberg.R;
 import com.project.gutenberg.book.view.android.Android_Book_View;
 import com.project.gutenberg.util.Typeface_Span;
@@ -29,6 +30,9 @@ public class Action_Bar_Handler {
     int current_page=0;
     Context context;
     public static boolean ignore_spinner_selection = true;
+    private boolean title_browsing_showing = false;
+
+    private Home_Navigation_Adapter home_navigation_adapter;
 
     public Action_Bar_Handler(Menu menu, ActionBar action_bar, Context context) {
         this.context = context;
@@ -41,6 +45,9 @@ public class Action_Bar_Handler {
         search_item = menu.findItem(R.id.menu_search);
         search_view = (SearchView)search_item.getActionView();
         search_view.setOnQueryTextListener(query_listener);
+    }
+    public void set_home_navigation_adapter(Home_Navigation_Adapter home_navigation_adapter) {
+        this.home_navigation_adapter = home_navigation_adapter;
     }
     public void set_book_view_menu(Android_Book_View book_view) {
         search_item.setVisible(false);
@@ -56,10 +63,19 @@ public class Action_Bar_Handler {
         chapter_titles = null;
     }
     public void set_browse_menu() {
+        action_bar.setTitle("");
         search_item.setVisible(true);
     }
     public void set_title_browsing_menu() {
+        title_browsing_showing = true;
         set_title("Browse By Title");
+        search_item.setVisible(true);
+        page_indicator.setVisible(false);
+        chapter_indicator.setVisible(false);
+        chapter_titles = null;
+    }
+    public void set_author_browsing_menu() {
+        set_title("Browse By Author");
         search_item.setVisible(true);
         page_indicator.setVisible(false);
         chapter_indicator.setVisible(false);
@@ -119,6 +135,9 @@ public class Action_Bar_Handler {
     };
     SearchView.OnQueryTextListener query_listener = new SearchView.OnQueryTextListener() {
         public boolean onQueryTextChange(String query) {
+            if (title_browsing_showing && home_navigation_adapter != null) {
+                home_navigation_adapter.filter_title(query);
+            }
             return true;
         }
         public boolean onQueryTextSubmit(String query) {

@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.GutenApplication;
+import com.project.gutenberg.catalog.database.Catalog_DB;
 import com.project.gutenberg.layout.Downloader_Layout;
+import com.project.gutenberg.layout.action_bar.Action_Bar_Handler;
 import com.project.gutenberg.library.Book_Resource;
 import com.project.gutenberg.util.Response_Callback;
 
@@ -42,10 +44,14 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     Handler handler;
     Response_Callback<String> book_opened_callback;
 
+    Action_Bar_Handler action_bar_handler;
+    Catalog_DB catalog_db;
+
 
     public Home_Navigation_Adapter(Context context, Cursor by_title_cursor, ExpandableListView list_view, Response_Callback<String> book_opened_callback) {
         this.context = context;
         this.book_opened_callback = book_opened_callback;
+        catalog_db = ((GutenApplication)context.getApplicationContext()).catalog;
         context_wrapper = new ContextWrapper(context);
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.by_title_cursor = by_title_cursor;
@@ -59,6 +65,36 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         if (!directory.exists()) directory.mkdirs();
         handler = new Handler();
         handler.postDelayed(check_download_status,25);
+    }
+    int previous_expanded_group = -1;
+    public void onGroupExpanded(int groupPosition){
+        if(groupPosition != previous_expanded_group && previous_expanded_group != -1){
+            list_view.collapseGroup(previous_expanded_group);
+        }
+        super.onGroupExpanded(groupPosition);
+        previous_expanded_group = groupPosition;
+        if (action_bar_handler == null) return;
+        if (groupPosition == by_title_index) action_bar_handler.set_title_browsing_menu();
+        if (groupPosition == by_author_index) action_bar_handler.set_author_browsing_menu();
+    }
+    public void onGroupCollapsed(int groupPosition) {
+        super.onGroupCollapsed(groupPosition);
+        if (groupPosition == previous_expanded_group) {
+            previous_expanded_group = -1;
+            action_bar_handler.set_home_view_menu();
+        }
+    }
+    public void set_action_bar_handler(Action_Bar_Handler action_bar_handler) {
+        action_bar_handler.set_home_navigation_adapter(this);
+        this.action_bar_handler = action_bar_handler;
+        if (previous_expanded_group == -1) return;
+        if (previous_expanded_group == by_title_index) action_bar_handler.set_title_browsing_menu();
+        if (previous_expanded_group == by_author_index) action_bar_handler.set_author_browsing_menu();
+    }
+    public void filter_title(String search) {
+        by_title_cursor = catalog_db.get_title_cursor(search);
+        by_title_count = by_title_cursor.getCount();
+        notifyDataSetChanged();
     }
     public int getGroupCount() {
         return 4;
@@ -169,6 +205,7 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
                 if (status != DownloadManager.STATUS_PAUSED && status != DownloadManager.STATUS_PENDING && status != DownloadManager.STATUS_RUNNING) {
                     download_ids.remove(entry.getKey());
                     downloaded_books.put(entry.getKey(),null);
+                    make_file_read_only(entry.getKey() + ".epub.noimages");
                 }
                 notifyDataSetChanged();
             }
@@ -178,5 +215,9 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     public boolean file_exists(String name){
         String path = Environment.getExternalStorageDirectory().toString() + "/eskimo_apps/gutendroid/epub_no_images/" + name;
         return new File(path).exists();
+    }
+    public boolean make_file_read_only(String name){
+        String path = Environment.getExternalStorageDirectory().toString() + "/eskimo_apps/gutendroid/epub_no_images/" + name;
+        return new File(path).setReadOnly();
     }
 }

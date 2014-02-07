@@ -1,4 +1,4 @@
-package com.project.gutenberg;
+package com.project.gutenberg.catalog.browsing;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.GutenApplication;
+import com.project.gutenberg.R;
 import com.project.gutenberg.catalog.database.Catalog_DB;
 import com.project.gutenberg.layout.Downloader_Layout;
 import com.project.gutenberg.layout.action_bar.Action_Bar_Handler;
@@ -28,15 +29,20 @@ import java.util.Map;
 public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     Context context;
     LayoutInflater inflater;
+
     Cursor by_title_cursor;
+    Cursor by_downloads_cursor;
+
     int by_title_count;
+    int by_downloads_count;
     Typeface typeface;
     ExpandableListView list_view;
 
     final int by_title_index = 0;
     final int by_author_index = 1;
     final int by_category_index = 2;
-    final int by_downloads_index = 3;
+    final int by_downloads_index = 2;
+
     DownloadManager download_manager;
     HashMap<String, Pair<Long,Double>> download_ids = new HashMap<String,Pair<Long,Double>>();
     HashMap<String, Void> downloaded_books = new HashMap<String,Void>();
@@ -55,6 +61,8 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         context_wrapper = new ContextWrapper(context);
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.by_title_cursor = by_title_cursor;
+        by_downloads_cursor = catalog_db.get_title_cursor(Downloaded_Retriever.retrieve_book_ids());
+        by_downloads_count = by_downloads_cursor.getCount();
         by_title_cursor.moveToFirst();
         by_title_count = by_title_cursor.getCount();
         typeface = ((GutenApplication)context.getApplicationContext()).typeface;
@@ -76,6 +84,7 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         if (action_bar_handler == null) return;
         if (groupPosition == by_title_index) action_bar_handler.set_title_browsing_menu();
         if (groupPosition == by_author_index) action_bar_handler.set_author_browsing_menu();
+        if (groupPosition == by_downloads_index) action_bar_handler.set_downloads_browsing_menu();
     }
     public void onGroupCollapsed(int groupPosition) {
         super.onGroupCollapsed(groupPosition);
@@ -90,17 +99,24 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         if (previous_expanded_group == -1) return;
         if (previous_expanded_group == by_title_index) action_bar_handler.set_title_browsing_menu();
         if (previous_expanded_group == by_author_index) action_bar_handler.set_author_browsing_menu();
+        if (previous_expanded_group == by_downloads_index) action_bar_handler.set_downloads_browsing_menu();
     }
-    public void filter_title(String search) {
+    public void filter_titles(String search) {
         by_title_cursor = catalog_db.get_title_cursor(search);
         by_title_count = by_title_cursor.getCount();
         notifyDataSetChanged();
     }
+    public void filter_downloads(String search) {
+        by_downloads_cursor = catalog_db.get_title_cursor(search,Downloaded_Retriever.retrieve_book_ids());
+        by_downloads_count = by_downloads_cursor.getCount();
+        notifyDataSetChanged();
+    }
     public int getGroupCount() {
-        return 4;
+        return 3;
     }
     public int getChildrenCount(int groupPosition) {
-        if (groupPosition == 0) return by_title_count;
+        if (groupPosition == by_title_index) return by_title_count;
+        if (groupPosition == by_downloads_index) return by_downloads_count;
         return 0;
     }
     public Object getGroup(int groupPosition) {
@@ -124,10 +140,10 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     public View getGroupView(int index, boolean isExpanded, View row, ViewGroup parent) {
         if (row == null) row = inflater.inflate(R.layout.home_navigation_group_item,null);
         String s = "";
-        if (index == 0) s = context.getResources().getString(R.string.nav_title_header);
-        if (index == 1) s = context.getResources().getString(R.string.nav_author_header);
-        if (index == 2) s = context.getResources().getString(R.string.nav_category_header);
-        if (index == 3) s = context.getResources().getString(R.string.nav_downloads_header);
+        if (index == by_title_index) s = context.getResources().getString(R.string.nav_title_header);
+        if (index == by_author_index) s = context.getResources().getString(R.string.nav_author_header);
+        //if (index == by_category_index) s = context.getResources().getString(R.string.nav_category_header);
+        if (index == by_downloads_index) s = context.getResources().getString(R.string.nav_downloads_header);
         ((TextView)row).setText(s);
         ((TextView)row).setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
         return row;
@@ -135,6 +151,7 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
         Cursor cursor=null;
         if (groupPosition == by_title_index) cursor = by_title_cursor;
+        else if (groupPosition == by_downloads_index) cursor = by_downloads_cursor;
         else return null;
         cursor.moveToPosition(childPosition);
         return getChildView(new Book_Resource(cursor), view);
@@ -165,6 +182,7 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
             Cursor cursor=null;
             if (groupPosition == by_title_index) cursor = by_title_cursor;
+            if (groupPosition == by_downloads_index) cursor = by_downloads_cursor;
             cursor.moveToPosition(childPosition);
             Book_Resource book = new Book_Resource(cursor);
             if (download_ids.containsKey(book.getId())) return true;

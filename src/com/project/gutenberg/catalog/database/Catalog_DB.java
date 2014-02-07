@@ -16,6 +16,7 @@ public class Catalog_DB extends SQLiteAssetHelper {
     private final String author_table = "books_by_author";
     private final String title_key = "title";
     private final String author_key = "author";
+    private final String id_key = "id";
 
     public Catalog_DB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,5 +43,25 @@ public class Catalog_DB extends SQLiteAssetHelper {
         Cursor cursor = db.query(title_table,null,title_key +" LIKE '%"+search+"%'",null,null,null,null);
         cursor.moveToFirst();
         return cursor;
+    }
+    public Cursor get_title_cursor(String[] ids) {
+        Cursor cursor = db.query(title_table,null,id_key + " in" + get_in_paramters(ids) + " ",ids,null,null,null);
+        cursor.moveToFirst();
+        return cursor;
+    }
+    public Cursor get_title_cursor(String query, String[] ids) {
+        Cursor cursor = db.query(title_table,null,id_key + " in" + get_in_paramters(ids) + " AND " + title_key + " LIKE + '%" + query + "%'",ids,null,null,null);
+        cursor.moveToFirst();
+        return cursor;
+    }
+    public String get_in_paramters(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        for (int i=0; i < args.length; i++) {
+            sb.append("?");
+            if (i != args.length -1) sb.append(",");
+        }
+        sb.append(")");
+        return sb.toString();
     }
 }

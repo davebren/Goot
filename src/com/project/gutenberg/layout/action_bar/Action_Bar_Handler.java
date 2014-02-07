@@ -4,14 +4,12 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.GutenApplication;
-import com.project.gutenberg.Home_Navigation_Adapter;
+import com.project.gutenberg.catalog.browsing.Home_Navigation_Adapter;
 import com.project.gutenberg.R;
 import com.project.gutenberg.book.view.android.Android_Book_View;
 import com.project.gutenberg.util.Typeface_Span;
@@ -31,6 +29,7 @@ public class Action_Bar_Handler {
     Context context;
     public static boolean ignore_spinner_selection = true;
     private boolean title_browsing_showing = false;
+    private boolean downloads_browsing_showing = false;
 
     private Home_Navigation_Adapter home_navigation_adapter;
 
@@ -81,12 +80,19 @@ public class Action_Bar_Handler {
         chapter_indicator.setVisible(false);
         chapter_titles = null;
     }
+    public void set_downloads_browsing_menu() {
+        downloads_browsing_showing = true;
+        set_title("Downloads");
+        search_item.setVisible(true);
+        page_indicator.setVisible(false);
+        chapter_indicator.setVisible(false);
+        chapter_titles = null;
+    }
     private void set_title(String title) {
         SpannableString s = new SpannableString(title);
         s.setSpan(new Typeface_Span(((GutenApplication)context.getApplicationContext()).typeface), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         action_bar.setTitle(s);
     }
-
     public void set_book_title(String title) {
         set_title(title);
     }
@@ -136,7 +142,10 @@ public class Action_Bar_Handler {
     SearchView.OnQueryTextListener query_listener = new SearchView.OnQueryTextListener() {
         public boolean onQueryTextChange(String query) {
             if (title_browsing_showing && home_navigation_adapter != null) {
-                home_navigation_adapter.filter_title(query);
+                home_navigation_adapter.filter_titles(query);
+            }
+            if (downloads_browsing_showing && home_navigation_adapter != null) {
+                home_navigation_adapter.filter_downloads(query);
             }
             return true;
         }

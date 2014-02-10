@@ -124,10 +124,10 @@ public class Drawer_Adapter extends BaseExpandableListAdapter {
     }
     private View value_for_value_child(int position) {
         TextView row = (TextView)inflater.inflate(R.layout.drawer_list_item_child,null);
-        if (position == 0)row.setText(context.getResources().getText(R.string.message_from_david));
-        if (position == 1)row.setText(context.getResources().getText(R.string.one_per_month));
-        if (position == 2)row.setText(context.getResources().getText(R.string.five_per_month));
-        if (position == 3)row.setText(context.getResources().getText(R.string.twenty_per_month));
+        //if (position == 0)row.setText(context.getResources().getText(R.string.message_from_david));
+        if (position == 0)row.setText(context.getResources().getText(R.string.one_per_month));
+        if (position == 1)row.setText(context.getResources().getText(R.string.five_per_month));
+        if (position == 2)row.setText(context.getResources().getText(R.string.twenty_per_month));
         row.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
         return row;
     }
@@ -141,6 +141,9 @@ public class Drawer_Adapter extends BaseExpandableListAdapter {
             if (groupPosition == typeface_position) {
                 prefs.set_typeface(Typeface_Mappings.mappings[childPosition][0]);
                 notifyDataSetChanged();
+            }
+            if (groupPosition == value_for_value_position) {
+
             }
             return true;
         }

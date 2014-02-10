@@ -16,7 +16,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.GutenApplication;
 import com.project.gutenberg.R;
-import com.project.gutenberg.catalog.database.Catalog_DB;
+import com.project.gutenberg.catalog.database.Catalog_By_Author_DB;
+import com.project.gutenberg.catalog.database.Catalog_By_Title_DB;
 import com.project.gutenberg.layout.Downloader_Layout;
 import com.project.gutenberg.layout.action_bar.Action_Bar_Handler;
 import com.project.gutenberg.library.Book_Resource;
@@ -31,10 +32,13 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     LayoutInflater inflater;
 
     Cursor by_title_cursor;
+    Cursor by_author_cursor;
     Cursor by_downloads_cursor;
 
     int by_title_count;
     int by_downloads_count;
+    int by_author_count;
+
     Typeface typeface;
     ExpandableListView list_view;
 
@@ -51,20 +55,24 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     Response_Callback<String> book_opened_callback;
 
     Action_Bar_Handler action_bar_handler;
-    Catalog_DB catalog_db;
+    Catalog_By_Title_DB catalog_by_title_db;
+    Catalog_By_Author_DB catalog_by_author_db;
 
+    int previous_expanded_group = -1;
 
-    public Home_Navigation_Adapter(Context context, Cursor by_title_cursor, ExpandableListView list_view, Response_Callback<String> book_opened_callback) {
+    public Home_Navigation_Adapter(Context context, ExpandableListView list_view, Response_Callback<String> book_opened_callback) {
         this.context = context;
         this.book_opened_callback = book_opened_callback;
-        catalog_db = ((GutenApplication)context.getApplicationContext()).catalog;
+        catalog_by_title_db = ((GutenApplication)context.getApplicationContext()).catalog_by_title;
+        catalog_by_author_db = ((GutenApplication)context.getApplicationContext()).catalog_by_author;
         context_wrapper = new ContextWrapper(context);
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.by_title_cursor = by_title_cursor;
-        by_downloads_cursor = catalog_db.get_title_cursor(Downloaded_Retriever.retrieve_book_ids());
+        this.by_title_cursor = ((GutenApplication)context.getApplicationContext()).catalog_by_title.get_title_cursor();
+        this.by_author_cursor = ((GutenApplication)context.getApplicationContext()).catalog_by_author.get_author_cursor();
+        by_downloads_cursor = catalog_by_title_db.get_title_cursor(Downloaded_Retriever.retrieve_book_ids());
         by_downloads_count = by_downloads_cursor.getCount();
-        by_title_cursor.moveToFirst();
         by_title_count = by_title_cursor.getCount();
+        by_author_count = by_author_cursor.getCount();
         typeface = ((GutenApplication)context.getApplicationContext()).typeface;
         this.list_view = list_view;
         list_view.setOnChildClickListener(child_listener);
@@ -74,12 +82,14 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         handler = new Handler();
         handler.postDelayed(check_download_status,25);
     }
-    int previous_expanded_group = -1;
+    public int get_previous_expanded_group() {
+        return previous_expanded_group;
+    }
     public void onGroupExpanded(int groupPosition){
+        super.onGroupExpanded(groupPosition);
         if(groupPosition != previous_expanded_group && previous_expanded_group != -1){
             list_view.collapseGroup(previous_expanded_group);
         }
-        super.onGroupExpanded(groupPosition);
         previous_expanded_group = groupPosition;
         if (action_bar_handler == null) return;
         if (groupPosition == by_title_index) action_bar_handler.set_title_browsing_menu();
@@ -102,13 +112,18 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         if (previous_expanded_group == by_downloads_index) action_bar_handler.set_downloads_browsing_menu();
     }
     public void filter_titles(String search) {
-        by_title_cursor = catalog_db.get_title_cursor(search);
+        by_title_cursor = catalog_by_title_db.get_title_cursor(search);
         by_title_count = by_title_cursor.getCount();
         notifyDataSetChanged();
     }
     public void filter_downloads(String search) {
-        by_downloads_cursor = catalog_db.get_title_cursor(search,Downloaded_Retriever.retrieve_book_ids());
+        by_downloads_cursor = catalog_by_title_db.get_title_cursor(search,Downloaded_Retriever.retrieve_book_ids());
         by_downloads_count = by_downloads_cursor.getCount();
+        notifyDataSetChanged();
+    }
+    public void filter_authors(String search) {
+        by_author_cursor = catalog_by_author_db.get_author_cursor(search);
+        by_author_count = by_author_cursor.getCount();
         notifyDataSetChanged();
     }
     public int getGroupCount() {
@@ -117,6 +132,7 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     public int getChildrenCount(int groupPosition) {
         if (groupPosition == by_title_index) return by_title_count;
         if (groupPosition == by_downloads_index) return by_downloads_count;
+        if (groupPosition == by_author_index) return by_author_count;
         return 0;
     }
     public Object getGroup(int groupPosition) {
@@ -126,7 +142,7 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         return null;
     }
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groupPosition;
     }
     public long getChildId(int groupPosition, int childPosition) {
         return 0;
@@ -152,6 +168,7 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         Cursor cursor=null;
         if (groupPosition == by_title_index) cursor = by_title_cursor;
         else if (groupPosition == by_downloads_index) cursor = by_downloads_cursor;
+        else if (groupPosition == by_author_index) cursor = by_author_cursor;
         else return null;
         cursor.moveToPosition(childPosition);
         return getChildView(new Book_Resource(cursor), view);
@@ -183,6 +200,7 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
             Cursor cursor=null;
             if (groupPosition == by_title_index) cursor = by_title_cursor;
             if (groupPosition == by_downloads_index) cursor = by_downloads_cursor;
+            if (groupPosition == by_author_index) cursor = by_author_cursor;
             cursor.moveToPosition(childPosition);
             Book_Resource book = new Book_Resource(cursor);
             if (download_ids.containsKey(book.getId())) return true;

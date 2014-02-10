@@ -95,7 +95,7 @@ public class Home extends RootActivity {
     @AfterViews
     void setup_views() {
         home.set_response_callback(size_change_callback);
-        home_navigation_adapter = new Home_Navigation_Adapter(this, ((GutenApplication)getApplicationContext()).catalog.get_title_cursor(), home_navigation_list, book_opened_callback);
+        home_navigation_adapter = new Home_Navigation_Adapter(this, home_navigation_list, book_opened_callback);
         home_navigation_list.setAdapter(home_navigation_adapter);
         if (action_bar_handler != null) home_navigation_adapter.set_action_bar_handler(action_bar_handler);
         drawer_adapter = new Drawer_Adapter(this,drawer_list);
@@ -191,11 +191,12 @@ public class Home extends RootActivity {
         }
     };
     public void onBackPressed() {
-        if (current_book == null) super.onBackPressed();
-        else {
+        if (current_book != null) {
             close_book();
             prefs.set_open_book(-999);
-        }
+        } else if (home_navigation_adapter.get_previous_expanded_group() != -1) {
+            home_navigation_list.collapseGroup(home_navigation_adapter.get_previous_expanded_group());
+        } else  super.onBackPressed();
     }
     private void close_book() {
         Log.d("gutendroid","close_book");

@@ -30,6 +30,7 @@ public class Action_Bar_Handler {
     public static boolean ignore_spinner_selection = true;
     private boolean title_browsing_showing = false;
     private boolean downloads_browsing_showing = false;
+    private boolean author_browsing_showing = false;
 
     private Home_Navigation_Adapter home_navigation_adapter;
 
@@ -74,6 +75,7 @@ public class Action_Bar_Handler {
         chapter_titles = null;
     }
     public void set_author_browsing_menu() {
+        author_browsing_showing = true;
         set_title("Browse By Author");
         search_item.setVisible(true);
         page_indicator.setVisible(false);
@@ -146,6 +148,9 @@ public class Action_Bar_Handler {
             }
             if (downloads_browsing_showing && home_navigation_adapter != null) {
                 home_navigation_adapter.filter_downloads(query);
+            }
+            if (author_browsing_showing && home_navigation_adapter != null) {
+                home_navigation_adapter.filter_authors(query);
             }
             return true;
         }

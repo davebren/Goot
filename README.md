@@ -1,4 +1,4 @@
-Project GutenDroid: An Android E-Reader for Project Gutenberg
+Goot: An Android E-Reader for Project Gutenberg
 
 
 

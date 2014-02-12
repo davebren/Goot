@@ -10,9 +10,7 @@ import java.util.List;
 
 public class Line_Splitter {
     public static Object[] split(Line_Measurer line_measurer, Book_Formatting formatting, String[] words, Integer word_index, Integer paragraph_index, Integer line_count,Integer[] text_boundaries, String[] lines_of_text, float[] word_widths) {
-        Action_Time_Analysis.start("split");
         Object[] return_object =  build_forward_(line_measurer,formatting,words,word_index,paragraph_index,line_count,text_boundaries,lines_of_text, word_widths);
-        Action_Time_Analysis.end("split");
         return return_object;
     }
     public static Object[] build_forward_(Line_Measurer line_measurer, Book_Formatting formatting, String[] words, int word_index, int paragraph_index, int line_count,Integer[] text_boundaries, String[] lines_of_text, float[] word_widths) {

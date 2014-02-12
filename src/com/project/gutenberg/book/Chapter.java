@@ -166,7 +166,6 @@ public class Chapter {
     public void set_containing_page(int paragraph, int word) {
         for (int i=0; i < boundaries.size(); i++) {
             Integer[] boundary = boundaries.get(i);
-            Log.d("gutendroid","Chapter.set_containing_page (" + i + "): " + boundary[4] + " >= " + paragraph + ", " + boundary[5] + " > " + word);
             if (boundary[4] > paragraph) {
                 list_relative_current_page_index = i;return;
             }

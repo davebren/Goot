@@ -39,14 +39,10 @@ public class Epub_Parser implements Book_Parser {
         return book;
     }
     private void initialize_chapters(Spine epub_spine, List<TOCReference> table_of_contents) {
-        Log.d("gutendroid", "initialize_chapters: empty? " + epub_spine.isEmpty());
-        Log.d("gutendroid", "initialize_chapters: spine size = " + epub_spine.size());
-        Log.d("gutendroid","initialize_chapters: epub contents size = " + epub.getContents().size());
         chapters = new LinkedList<Chapter>();
         HashMap<Integer, Void> removed_chapters = new HashMap<Integer, Void>();
         HashMap<String, Integer> unique_toc = new HashMap<String,Integer>();
         for (int i=0; i < epub_spine.size(); i++) {
-            Log.d("gutendroid", "spine resource: " + epub_spine.getResource(i).getId());
             chapters.addLast(new Chapter(this, i));
             chapters.getLast().set_paragraphs(parse_chapter(i));
             if (chapters.getLast().get_paragraphs().size() == 0) {
@@ -63,20 +59,17 @@ public class Epub_Parser implements Book_Parser {
             if (unique_toc.containsValue(i)) temp_list.add(table_of_contents.get(i));
         }
         table_of_contents = temp_list;
-        Log.d("gutendroid", "initialize_chapters.0: " + epub_spine.size() + ", " + table_of_contents.size() + ", " + removed_chapters.size());
 
         String[] chapter_titles = new String[chapters.size()];
         if (table_of_contents != null && table_of_contents.size()>0) {
             String[] temp_titles = new String[chapters.size()];
             int chapters_skipped = 0;
             for (int i=0; i < table_of_contents.size(); i++) {
-                Log.d("gutendroid", "toc resource: " + table_of_contents.get(i).getResource().getId());
                 if (removed_chapters.containsKey(i)) {
                     chapters_skipped++;
                     continue;
                 }
                 String t = format_title(table_of_contents.get(i).getTitle());
-                Log.d("gutendroid", "initialize_chapters.1: " + i + ", " + chapters_skipped + ", " + temp_titles.length);
                 if (t != null) {
                     temp_titles[i-chapters_skipped] = t;
                 } else {

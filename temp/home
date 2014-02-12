@@ -22,7 +22,7 @@ import java.io.IOException;
 @EActivity(R.layout.home)
 public class Home extends RootActivity {
     protected static Shared_Prefs prefs;
-    private Context context;
+    private Context home;
     public static int screen_height;
     public static int screen_width;
     private static Fonts fonts;
@@ -70,7 +70,7 @@ public class Home extends RootActivity {
     @AfterViews
     void setup_views() {
         Log.d("gutendroid", "setup_views");
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) home.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         home.set_response_callback(size_change_callback);
         home_scroll_view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -82,8 +82,8 @@ public class Home extends RootActivity {
         });
     }
     private void initialize_app() {
-        context = this;
-        prefs = new Shared_Prefs(context);
+        home = this;
+        prefs = new Shared_Prefs(home);
         TAG = Home.class.getName();
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -92,7 +92,7 @@ public class Home extends RootActivity {
         pure_activity_height = screen_height;
         pure_activity_width = screen_width;
 
-        fonts = new Fonts(prefs, context);
+        fonts = new Fonts(prefs, home);
         fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
     }
     private void expand_primary_nav(int index) {
@@ -127,11 +127,11 @@ public class Home extends RootActivity {
         expanded_primary_nav[browse_title_index] = !expanded_primary_nav[browse_title_index];
     }
     private class Title_Adapter extends ArrayAdapter<Object> {
-        private Context context;
+        private Context home;
         String[] titles;
-        public Title_Adapter(Context context, Object[] titles) {
-            super(context, R.layout.home_menu_row, titles);
-            this.context = context;
+        public Title_Adapter(Context home, Object[] titles) {
+            super(home, R.layout.home_menu_row, titles);
+            this.home = home;
             this.titles = (String[])titles;
         }
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -164,7 +164,7 @@ public class Home extends RootActivity {
                 current_book_holder = (LinearLayout)view;
 
                 // TODO change arguments to book details retrieved from database.
-               // book_view = new Book_View(context, inflater, false, "", getAssets(), fill_screen_params, -1, action_bar_handler);
+               // book_view = new Book_View(home, inflater, false, "", getAssets(), fill_screen_params, -1, action_bar_handler);
                 //((LinearLayout)view).addView(book_view.get_view());
                 nl.siegmann.epublib.domain.Book b = null;
                 try {
@@ -174,7 +174,7 @@ public class Home extends RootActivity {
                 }
                 Epub_Parser parser = new Epub_Parser(b, 1, 0, 0);
                 Book book = parser.parse_book();
-                book_view = new Android_Book_View(book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0);
+                book_view = new Android_Book_View(book, home, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0);
                 Page_Splitter page_splitter = new Page_Splitter(book_view, book, book_view.get_formatting(), book_view.get_line_measurer(), 1, 0, 0);
                 page_splitter.paginate();
 

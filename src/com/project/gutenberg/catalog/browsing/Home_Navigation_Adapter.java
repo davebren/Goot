@@ -25,6 +25,7 @@ import com.project.gutenberg.util.Response_Callback;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
@@ -212,7 +213,6 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
     private Button.OnClickListener open_book_listener = new Button.OnClickListener() {
         public void onClick(View v) {
             String book_id = (String)v.getTag();
-            Log.d("gutendroid","open book: " + book_id);
             book_opened_callback.on_response(book_id);
         }
     };
@@ -221,31 +221,38 @@ public class Home_Navigation_Adapter extends BaseExpandableListAdapter {
         request.setTitle(book.getTitle()).setDestinationInExternalPublicDir("/eskimo_apps/gutendroid/epub_no_images/", "" + book.getId() + ".epub.noimages");
         long download_id = download_manager.enqueue(request);
         download_ids.put(book.getId(),new Pair<Long,Double>(download_id,0.0));
+
     }
     private Runnable check_download_status = new Runnable() {
-        public synchronized void run() {
-            Log.d("gutendroid","check_download_status: " + download_ids.size());
+        public void run() {
             if (download_ids.size() == 0) return;
+                LinkedList<Pair<String,Double>> entries_to_modify = new LinkedList<Pair<String, Double>>();
+                LinkedList<String> entries_to_remove = new LinkedList<String>();
             for (Map.Entry<String, Pair<Long,Double>> entry : download_ids.entrySet()) {
                 DownloadManager.Query q = new DownloadManager.Query();
                 q.setFilterById(entry.getValue().first);
                 Cursor cursor = download_manager.query(q);
+                if (cursor == null) continue;
                 cursor.moveToFirst();
                 double bytes_downloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
                 double bytes_total = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
                 double percentage = bytes_downloaded / bytes_total;
-                Log.d("gutendroid", "download : " + percentage);
-                Pair<Long, Double> val = new Pair<Long,Double>(entry.getValue().first, percentage);
-                download_ids.put(entry.getKey(), val);
+                entries_to_modify.add(new Pair<String, Double>(entry.getKey(), percentage));
                 int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
                 if (status != DownloadManager.STATUS_PAUSED && status != DownloadManager.STATUS_PENDING && status != DownloadManager.STATUS_RUNNING) {
-                    download_ids.remove(entry.getKey());
+                    entries_to_remove.add(entry.getKey());
                     downloaded_books.put(entry.getKey(),null);
                     make_file_read_only(entry.getKey() + ".epub.noimages");
                 }
                 notifyDataSetChanged();
             }
-            handler.postDelayed(this,25);
+            for (Pair<String,Double> entry : entries_to_modify) {
+                download_ids.put(entry.first, new Pair<Long,Double>(download_ids.get(entry.first).first,entry.second));
+            }
+            for (String entry : entries_to_remove) {
+                download_ids.remove(entry);
+            }
+            handler.postDelayed(this,40);
         }
     } ;
     public boolean file_exists(String name){

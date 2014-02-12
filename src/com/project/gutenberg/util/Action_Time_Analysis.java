@@ -26,9 +26,9 @@ public class Action_Time_Analysis {
         times.put(action_key,val);
     }
     public static void log() {
-        Log.d(app_name, "------------- ACTION TIME ANALYSIS -------------");
+        //Log.d(app_name, "------------- ACTION TIME ANALYSIS -------------");
         for (Map.Entry<String,Long[]> entry : times.entrySet()) {
-            Log.d("gutendroid","------ action: " + entry.getKey() + " -- executed " + entry.getValue()[0] + " times, " + entry.getValue()[1] + "ms, mean = " + entry.getValue()[1]/entry.getValue()[0]);
+            //Log.d("gutendroid","------ action: " + entry.getKey() + " -- executed " + entry.getValue()[0] + " times, " + entry.getValue()[1] + "ms, mean = " + entry.getValue()[1]/entry.getValue()[0]);
         }
     }
 }

@@ -20,7 +20,6 @@ public class Downloader_Layout extends LinearLayout {
         super(context, attrs, defStyle);
     }
     public void set_percentage(double percentage) {
-        if (percentage != 0) Log.d("gutendroid", "set percentage: " + percentage);
         this.percentage = percentage;
     }
     public void onDraw(Canvas c) {

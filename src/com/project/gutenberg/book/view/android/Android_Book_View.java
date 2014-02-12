@@ -50,7 +50,6 @@ public class Android_Book_View extends Book_View {
         text_painter.setColor(standard_text_grey);
         String typeface = prefs.get_typeface();
         String typeface_path = Typeface_Mappings.get_file_name(typeface);
-        Log.d("gutendroid", "typeface: "+ typeface + ", " + typeface_path);
         text_painter.setTypeface(Typeface.createFromAsset(context.getAssets(), Typeface_Mappings.get_file_name(prefs.get_typeface())));
         prev_page = new Android_Page_View(context, this, prev_page_stack_id);
         current_page = new Android_Page_View(context, this, current_page_stack_id);
@@ -72,15 +71,12 @@ public class Android_Book_View extends Book_View {
         Chapter current_chapter = book.get_current_chapter();
         lines_of_text[1] = current_chapter.peek_current_page().get_page_text();
         if (!book.get_current_chapter().on_first_page()) {
-            Log.d("gutendroid", "loading_hook.0");
             lines_of_text[0] = current_chapter.peek_previous_page().get_page_text();
         }
         else if (!book.on_first_chapter()) {
-            Log.d("gutendroid", "loading_hook.1");
             lines_of_text[0] = book.peek_previous_chapter().peek_last_page().get_page_text();
         }
         else {
-            Log.d("gutendroid", "loading_hook.2");
             lines_of_text[0] = new String[0];
         }
 

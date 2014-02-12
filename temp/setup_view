@@ -1,6 +1,6 @@
     void setup_views() {
         Log.d("gutendroid", "setup_views");
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) home.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         home.set_response_callback(size_change_callback);
         home_scroll_view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -48,7 +48,7 @@
         for (int i=0; i < titles.length; i++) {
             titles[i] = "" + i;
         }
-        Title_Adapter browse_titles_adapter = new Title_Adapter(context, titles);
+        Title_Adapter browse_titles_adapter = new Title_Adapter(home, titles);
         browse_titles_list.setAdapter(browse_titles_adapter);
         browse_titles_list.setOnItemClickListener(title_click);
 

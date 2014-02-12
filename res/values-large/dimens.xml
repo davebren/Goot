@@ -9,4 +9,9 @@
     <dimen name="xxlarge_padding">27dip</dimen>
 
     <dimen name="simple_page_flipper_button_text">80dip</dimen>
+
+    <dimen name="home_navigation_group_item_size">60dip</dimen>
+    <dimen name="home_navigation_group_item_text">25dip</dimen>
+    <dimen name="home_navigation_child_item_text">54dip</dimen>
+    <dimen name="home_navigation_child_item_text">21dip</dimen>
 </resources>

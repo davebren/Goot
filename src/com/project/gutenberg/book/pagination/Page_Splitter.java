@@ -32,7 +32,6 @@ public class Page_Splitter {
         }
     }
     private String[] get_next_page_lines(Integer[] prev_boundaries) {
-        Action_Time_Analysis.start("get_next_page_lines");
         Integer[] text_boundaries = new Integer[6];
 
         String[] lines_of_text = new String[formatting.get_lines_per_page()];
@@ -60,14 +59,10 @@ public class Page_Splitter {
             if (paragraph == null || paragraph.equals("")) {
                 lines_of_text[line_count] = "";
             } else {
-                Action_Time_Analysis.start("get_next_page_lines.split");
                 String[] words = Line_Splitter.fast_split(paragraph, ' ');
-                Action_Time_Analysis.end("get_next_page_lines.split");
                 if (words.length == 0) continue;
                 words[0] = "    " + words[0];
-                Action_Time_Analysis.start("get_next_page_lines.word_widths");
                 float[] word_widths = Line_Splitter.word_widths(words, line_measurer);
-                Action_Time_Analysis.end("get_next_page_lines.word_widths");
                 int word_index = 0;
                 if (reading_first_paragraph) {
                     if (!(text_boundaries[2] >= words.length-1)) {
@@ -102,7 +97,6 @@ public class Page_Splitter {
         }
         book.get_chapter(text_boundaries[0]).add_page(false, new Page(lines_of_text));
         book.get_chapter(text_boundaries[0]).add_boundary(false, text_boundaries);
-        Action_Time_Analysis.end("get_next_page_lines");
         return lines_of_text;
     }
     private boolean load_prev_and_next_pages(int chapter) {
@@ -141,11 +135,9 @@ public class Page_Splitter {
             start();
         }
         public void run() {
-            Action_Time_Analysis.start("Load_All_Pages.run");
             long start_time = System.currentTimeMillis();
             boolean stop_loop;
             A: while(true) {
-                Action_Time_Analysis.start("Load_All_Pages.loop2");
                 stop_loop = true;
                 for (int i=0; i < book.number_of_chapters(); i++) {
                     if (i%cores != mod) continue;
@@ -153,7 +145,6 @@ public class Page_Splitter {
                         stop_loop = false;
                     }
                 }
-                Action_Time_Analysis.end("Load_All_Pages.loop2");
                 if (stop_loop) {
                     break A;
                 }
@@ -163,8 +154,6 @@ public class Page_Splitter {
                 pages_loaded_callback.on_response(null);
                 cores_finished = 0;
             }
-            Debug.log("pages loaded in " + (System.currentTimeMillis() - start_time) + " ms.");
-            Action_Time_Analysis.end("Load_All_Pages.run");
         }
     }
 

@@ -1,6 +1,7 @@
 package com.project.gutenberg;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -66,6 +67,7 @@ public class Home extends RootActivity {
     }
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        if (drawer_toggle == null)return;
         drawer_toggle.syncState();
     }
     public void onConfigurationChanged(Configuration config) {
@@ -77,7 +79,6 @@ public class Home extends RootActivity {
         return super.onOptionsItemSelected(item);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("gutendroid","onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.home_menu, menu);
         action_bar_handler = new Action_Bar_Handler(menu, getActionBar(), this);
         action_bar_handler.set_home_view_menu();
@@ -87,9 +88,6 @@ public class Home extends RootActivity {
     }
     public void onDestroy() {
         Action_Time_Analysis.log();
-        if (current_book != null) {
-            Log.d("gutendroid", "onDestroy set open book");
-        }
         super.onDestroy();
     }
     @AfterViews
@@ -142,7 +140,6 @@ public class Home extends RootActivity {
     private void open_book(String book_id) {
         nl.siegmann.epublib.domain.Book b = null;
         File file = new File(Environment.getExternalStorageDirectory().toString() + "/eskimo_apps/gutendroid/epub_no_images/"+ book_id + ".epub.noimages");
-        Log.d("gutendroid","open book " + book_id + ": " + file.exists());
         try {
             InputStream is = new FileInputStream(file);
             b = new EpubReader().readEpub(is);
@@ -165,7 +162,9 @@ public class Home extends RootActivity {
             file.delete();
             return;
         }
-        home.removeAllViews();
+        home.removeView(home_navigation_list);
+        ProgressBar progress = (ProgressBar)home.findViewById(R.id.home_progress);
+        progress.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screen_height - getActionBar().getHeight());
         current_book_view = new Android_Book_View(current_book, context, prefs, fill_screen_params, screen_width, fill_screen_params.height, 0, action_bar_handler);
         Page_Splitter page_splitter = new Page_Splitter(current_book, current_book_view.get_formatting(), current_book_view.get_line_measurer(), prefs.get_last_chapter(prefs.get_open_book()));
@@ -173,12 +172,15 @@ public class Home extends RootActivity {
         prefs.set_open_book(Integer.valueOf(book_id));
 
     }
+
     private Response_Callback<Void> pages_loaded_callback = new Response_Callback<Void>() {
         public void on_response(Void v) {
             runOnUiThread(new Runnable() {
                 public void run() {
                     current_book.set_containing_page(prefs.get_last_chapter(prefs.get_open_book()),prefs.get_last_paragraph(prefs.get_open_book()),prefs.get_last_word(prefs.get_open_book()));
                     current_book_view.loading_hook_completed_receiver(current_book);
+                    ProgressBar progress = (ProgressBar)home.findViewById(R.id.home_progress);
+                    progress.setVisibility(View.GONE);
                     home.addView(current_book_view.get_page_holder());
                     Action_Bar_Handler.ignore_spinner_selection=true;
                     action_bar_handler.set_book_view_menu(current_book_view);
@@ -199,8 +201,7 @@ public class Home extends RootActivity {
         } else  super.onBackPressed();
     }
     private void close_book() {
-        Log.d("gutendroid","close_book");
-        home.removeAllViews();
+        home.removeView(current_book_view.get_page_holder());
         Integer[] boundaries = current_book.close();
         Action_Bar_Handler.ignore_spinner_selection=true;
         prefs.set_last_chapter(prefs.get_open_book(), boundaries[0]);
@@ -216,6 +217,9 @@ public class Home extends RootActivity {
             close_book();
         }
         open_book("" + prefs.get_open_book());
+    }
+    public void on_active_subscription() {
+        Toast.makeText(this, getString(R.string.thank_you),3500).show();
     }
 
 }

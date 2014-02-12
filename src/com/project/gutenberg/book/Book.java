@@ -20,11 +20,9 @@ public class Book {
         return book_title;
     }
     public Chapter get_chapter(int index) {
-        Action_Time_Analysis.start("Book.get_chapter");
         try {
             return chapters.get(index);
         } catch(IndexOutOfBoundsException e1) {} catch(NullPointerException e2) {}
-        Action_Time_Analysis.end("Book.get_chapter");
         return null;
     }
     public int number_of_chapters() {
@@ -82,7 +80,6 @@ public class Book {
         return get_current_chapter().get_current_page_boundaries();
     }
     public void set_containing_page(int chapter, int paragraph, int word) {
-        Log.d("gutendroid", "set_containing_page, " + chapter + ", " + paragraph + ", " + word);
         current_chapter=chapter;
         chapters.get(chapter).set_containing_page(paragraph,word);
     }

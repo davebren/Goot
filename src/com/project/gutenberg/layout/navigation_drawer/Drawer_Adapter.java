@@ -11,21 +11,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.GutenApplication;
+import com.project.gutenberg.Home;
 import com.project.gutenberg.R;
 import com.project.gutenberg.Shared_Prefs;
 import com.project.gutenberg.util.Seekbar_Converter;
 import com.project.gutenberg.util.Typeface_Mappings;
+import com.project.gutenberg.util.billing.Subscription;
 
 public class Drawer_Adapter extends BaseExpandableListAdapter {
     private LayoutInflater inflater;
     private Shared_Prefs prefs;
     private AssetManager assets;
-    private Context context;
+    private Home home;
 
     private final int orientation_position=0;
     private final int text_size_position=1;
     private final int typeface_position=2;
     private final int value_for_value_position=3;
+
+    private final int one_dollar_position = 0;
+    private final int five_dollar_position = 1;
+    private final int twenty_dollar_position = 2;
 
     private ExpandableListView list_view;
 
@@ -35,12 +41,12 @@ public class Drawer_Adapter extends BaseExpandableListAdapter {
     private float initial_font_scale;
     private String initial_typeface;
 
-    public Drawer_Adapter(Context context, ExpandableListView list_view) {
-        this.context = context;
+    public Drawer_Adapter(Home home, ExpandableListView list_view) {
+        this.home = home;
         this.list_view = list_view;
-        prefs = new Shared_Prefs(context);
-        assets = context.getAssets();
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        prefs = new Shared_Prefs(home);
+        assets = home.getAssets();
+        inflater = (LayoutInflater) home.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         list_view.setOnGroupClickListener(group_listener);
         list_view.setOnChildClickListener(child_listener);
         initial_orientation = prefs.get_orientation();
@@ -86,8 +92,8 @@ public class Drawer_Adapter extends BaseExpandableListAdapter {
         seekbar.setProgress(seekbar_position);
         font_size_seekbar_label = (TextView)row.findViewById(R.id.drawer_text_size_seekbar_label);
         font_size_seekbar_label.setText(Seekbar_Converter.convert_seekbar_position_to_label(seekbar_position));
-        font_size_seekbar_label.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
-        ((TextView)row.findViewById(R.id.drawer_text_size_header)).setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
+        font_size_seekbar_label.setTypeface(((GutenApplication) home.getApplicationContext()).typeface);
+        ((TextView)row.findViewById(R.id.drawer_text_size_header)).setTypeface(((GutenApplication) home.getApplicationContext()).typeface);
         seekbar.setOnSeekBarChangeListener(font_scale_change_listener);
         return row;
     }
@@ -111,24 +117,24 @@ public class Drawer_Adapter extends BaseExpandableListAdapter {
         if (prefs.get_orientation().equalsIgnoreCase("portrait")) orientation_switch.setChecked(false);
         else orientation_switch.setChecked(true);
         orientation_switch.setOnCheckedChangeListener(orientation_listener);
-        ((TextView)row.findViewById(R.id.drawer_orientation_label)).setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
+        ((TextView)row.findViewById(R.id.drawer_orientation_label)).setTypeface(((GutenApplication) home.getApplicationContext()).typeface);
         return row;
     }
     private View value_for_value_header() {
         TextView row = (TextView)inflater.inflate(R.layout.drawer_list_item,null);
-        Spannable spannable = new SpannableString(context.getResources().getString(R.string.value_for_value));
-        spannable.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.value)), 0, 5, 0);
+        Spannable spannable = new SpannableString(home.getResources().getString(R.string.value_for_value));
+        spannable.setSpan(new ForegroundColorSpan(home.getResources().getColor(R.color.value)), 0, 5, 0);
         row.setText(spannable);
-        row.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
+        row.setTypeface(((GutenApplication) home.getApplicationContext()).typeface);
         return row;
     }
     private View value_for_value_child(int position) {
         TextView row = (TextView)inflater.inflate(R.layout.drawer_list_item_child,null);
-        //if (position == 0)row.setText(context.getResources().getText(R.string.message_from_david));
-        if (position == 0)row.setText(context.getResources().getText(R.string.one_per_month));
-        if (position == 1)row.setText(context.getResources().getText(R.string.five_per_month));
-        if (position == 2)row.setText(context.getResources().getText(R.string.twenty_per_month));
-        row.setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
+        //if (position == 0)row.setText(home.getResources().getText(R.string.message_from_david));
+        if (position == 0)row.setText(home.getResources().getText(R.string.one_per_month));
+        if (position == 1)row.setText(home.getResources().getText(R.string.five_per_month));
+        if (position == 2)row.setText(home.getResources().getText(R.string.twenty_per_month));
+        row.setTypeface(((GutenApplication) home.getApplicationContext()).typeface);
         return row;
     }
     private ExpandableListView.OnGroupClickListener group_listener = new ExpandableListView.OnGroupClickListener() {
@@ -143,7 +149,9 @@ public class Drawer_Adapter extends BaseExpandableListAdapter {
                 notifyDataSetChanged();
             }
             if (groupPosition == value_for_value_position) {
-
+                if (childPosition == one_dollar_position) new Subscription(1,home);
+                if (childPosition == five_dollar_position) new Subscription(5,home);
+                if (childPosition == twenty_dollar_position) new Subscription(20,home);
             }
             return true;
         }

@@ -40,9 +40,9 @@ public class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
 		   final BitmapFactory.Options options = new BitmapFactory.Options();
 		   options.inPreferredConfig = Bitmap.Config.RGB_565;
 		   options.inJustDecodeBounds = false;
-		   if (Home.screen_width < 1600) {
+		   if (Home.screenWidth < 1600) {
 			   options.inScaled = true;
-			   if (Home.screen_width < 800) {
+			   if (Home.screenWidth < 800) {
 				   options.inSampleSize=2;
 			   } else {
 				   options.inSampleSize=2;				   

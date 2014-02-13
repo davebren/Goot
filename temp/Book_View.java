@@ -507,31 +507,31 @@ public class Book_View {
         }
     }
 
-    protected String get_title() {
+    protected String getTitle() {
         return book_title;
     }
     protected String get_author() {
         return book_author;
     }
-    protected LinearLayout get_page_holder() {
+    protected LinearLayout getPageHolder() {
         return outer_view;
     }
     protected void size_changed() {
     }
 
-    private void prev_page() {
+    private void prevPage() {
         Debug.log("prev page");
 
         if (page_with_currently_loaded == 0) {
 
         } else {
-            book_holder.addView(prev_page);
-            book_holder.removeView(next_page);
+            book_holder.addView(prevPage);
+            book_holder.removeView(nextPage);
 
-            Book_Page temp = next_page;
-            next_page = current_page;
-            current_page = prev_page;
-            prev_page = temp;
+            Book_Page temp = nextPage;
+            nextPage = currentPage;
+            currentPage = prevPage;
+            prevPage = temp;
 
             if (page_with_currently_loaded != 1) {
                 lines_of_text[0] = complete_lines_of_text.get(page_with_currently_loaded-2);
@@ -539,14 +539,14 @@ public class Book_View {
             lines_of_text[1] = complete_lines_of_text.get(page_with_currently_loaded-1);
             lines_of_text[2] = complete_lines_of_text.get(page_with_currently_loaded);
             page_with_currently_loaded--;
-            current_page.set_page_stack_id(0);
-            next_page.set_page_stack_id(1);
-            prev_page.set_page_stack_id(-1);
+            currentPage.setPageStackId(0);
+            nextPage.setPageStackId(1);
+            prevPage.setPageStackId(-1);
 
 
         }
     }
-    private void next_page() {
+    private void nextPage() {
         Debug.log("next page, " + "page_with_currently_loaded: " + page_with_currently_loaded + " / " + complete_lines_of_text.size());
 
         if (page_with_currently_loaded >= complete_lines_of_text.size()-1) {
@@ -556,11 +556,11 @@ public class Book_View {
 
             }
         } else {
-            book_holder.removeView(current_page);
-            book_holder.addView(current_page, 0);
-            Book_Page temp = current_page;
-            current_page = next_page;
-            next_page = temp;
+            book_holder.removeView(currentPage);
+            book_holder.addView(currentPage, 0);
+            Book_Page temp = currentPage;
+            currentPage = nextPage;
+            nextPage = temp;
 
             lines_of_text[0] = complete_lines_of_text.get(page_with_currently_loaded);
             lines_of_text[1] = complete_lines_of_text.get(page_with_currently_loaded+1);
@@ -569,8 +569,8 @@ public class Book_View {
             }
             page_with_currently_loaded++;
 
-            current_page.set_page_stack_id(0);
-            next_page.set_page_stack_id(1);
+            currentPage.setPageStackId(0);
+            nextPage.setPageStackId(1);
 
         }
     }

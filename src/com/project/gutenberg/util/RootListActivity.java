@@ -12,8 +12,8 @@ import java.util.LinkedList;
 public class RootListActivity extends ListActivity
 {
     protected String TAG=RootListActivity.class.getName();
-    protected static LinkedList<Activity_Tag> activities = new  LinkedList<Activity_Tag>();
-    protected static LinkedList<Activity_Tag> pref_activities = new LinkedList<Activity_Tag>();
+    protected static LinkedList<ActivityTag> activities = new  LinkedList<ActivityTag>();
+    protected static LinkedList<ActivityTag> pref_activities = new LinkedList<ActivityTag>();
     
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -22,12 +22,12 @@ public class RootListActivity extends ListActivity
 
         if (TAG.equals(Home.class.getName())) {
            // Log.d("root", "remove_all, " + CountStuffActivity.class.getName());
-            for (Activity_Tag a : activities) {
+            for (ActivityTag a : activities) {
             		if (a.a != null) {
                 		a.a.finish();
             		}
             }
-            for (Activity_Tag a : pref_activities) {
+            for (ActivityTag a : pref_activities) {
         		if (a.a != null) {
             		a.a.finish();
         		}
@@ -36,7 +36,7 @@ public class RootListActivity extends ListActivity
             pref_activities.clear();
         } else {
         	 int index = -1;
-	        for (Activity_Tag a : activities) {
+	        for (ActivityTag a : activities) {
 	        	index++;
 	        	if (a.TAG.equals(TAG)) {
 	        		if (a.a != null) {
@@ -48,7 +48,7 @@ public class RootListActivity extends ListActivity
 	        }
 
         }
-        activities.add(new Activity_Tag(TAG, this));
+        activities.add(new ActivityTag(TAG, this));
         super.onCreate(savedInstanceState);
 
     }
@@ -56,7 +56,7 @@ public class RootListActivity extends ListActivity
     protected void onDestroy()
     {
     	int index = -1;
-    	for (Activity_Tag a : activities) {
+    	for (ActivityTag a : activities) {
     		index++;
     		if (a.TAG.equals(TAG)) {
         		if (a.a != null) {

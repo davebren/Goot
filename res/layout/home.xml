@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <com.project.gutenberg.util.Size_Change_Callback_Linear_Layout
+        <com.project.gutenberg.util.SizeChangeCallbackLinearLayout
             android:id="@+id/home"
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -30,7 +30,7 @@
                 android:layout_height="fill_parent"
                 android:groupIndicator="@null"
                 />
-        </com.project.gutenberg.util.Size_Change_Callback_Linear_Layout>
+        </com.project.gutenberg.util.SizeChangeCallbackLinearLayout>
     </FrameLayout>
     <ExpandableListView android:id="@+id/drawer_list"
               android:layout_width="240dp"

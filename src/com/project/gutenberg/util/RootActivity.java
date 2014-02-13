@@ -14,18 +14,18 @@ import android.os.Bundle;
 public class RootActivity extends Activity
 {
     protected String TAG=RootActivity.class.getName();
-    protected static LinkedList<Activity_Tag> activities = new  LinkedList<Activity_Tag>();
-    protected static LinkedList<Activity_Tag> pref_activities = new LinkedList<Activity_Tag>();
+    protected static LinkedList<ActivityTag> activities = new  LinkedList<ActivityTag>();
+    protected static LinkedList<ActivityTag> pref_activities = new LinkedList<ActivityTag>();
     
     protected void onCreate(Bundle savedInstanceState)
     {
         if (TAG.equals(Home.class.getName())) {
-            for (Activity_Tag a : activities) {
+            for (ActivityTag a : activities) {
             		if (a.a != null) {
                 		a.a.finish();
             		}
             }
-            for (Activity_Tag a : pref_activities) {
+            for (ActivityTag a : pref_activities) {
         		if (a.a != null) {
             		a.a.finish();
         		}
@@ -34,7 +34,7 @@ public class RootActivity extends Activity
             pref_activities.clear();
         } else {
         	 int index = -1;
-	        for (Activity_Tag a : activities) {
+	        for (ActivityTag a : activities) {
 	        	index++;
 	        	if (a.TAG.equals(TAG)) {
 	        		if (a.a != null) {
@@ -46,7 +46,7 @@ public class RootActivity extends Activity
 	        }
 
         }
-        activities.add(new Activity_Tag(TAG, this));
+        activities.add(new ActivityTag(TAG, this));
         super.onCreate(savedInstanceState);
 
     }
@@ -54,7 +54,7 @@ public class RootActivity extends Activity
     protected void onDestroy()
     {
     	int index = -1;
-    	for (Activity_Tag a : activities) {
+    	for (ActivityTag a : activities) {
     		index++;
     		if (a.TAG.equals(TAG)) {
         		if (a.a != null) {

@@ -20,13 +20,9 @@ import com.project.gutenberg.layout.navigation_drawer.DrawerAdapter;
 import com.project.gutenberg.util.*;
 
 import nl.siegmann.epublib.epub.EpubReader;
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
 
 import java.io.*;
 
-@EActivity(R.layout.home)
 public class Home extends RootActivity {
     protected static SharedPrefs prefs;
     private final Activity context = this;
@@ -34,10 +30,10 @@ public class Home extends RootActivity {
     public static int screenWidth;
     private ActionBarHandler actionBarHandler;
 
-    @ViewById SizeChangeCallbackLinearLayout home;
-    @ViewById ExpandableListView home_navigation_list;
-    @ViewById DrawerLayout drawer_layout;
-    @ViewById ExpandableListView drawer_list;
+    SizeChangeCallbackLinearLayout home;
+    ExpandableListView homeNavigationList;
+    DrawerLayout drawerLayout;
+    ExpandableListView drawerList;
 
     private Book currentBook;
     private AndroidBookView currentBookView;
@@ -51,6 +47,11 @@ public class Home extends RootActivity {
     ResponseCallback<Void> actionBarReadyCallback;
 
     public void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.home);
+        home = (SizeChangeCallbackLinearLayout)findViewById(R.id.home);
+        homeNavigationList = (ExpandableListView)findViewById(R.id.home_navigation_list);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerList = (ExpandableListView)findViewById(R.id.drawer_list);
         prefs = new SharedPrefs(context);
         if (prefs.getOrientation().equals("portrait"))setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -61,6 +62,7 @@ public class Home extends RootActivity {
         pureActivityHeight = screenHeight;
         pureActivityWidth = screenWidth;
         super.onCreate(savedInstanceState);
+        setupViews();
     }
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -87,15 +89,14 @@ public class Home extends RootActivity {
         ActionTimeAnalysis.log();
         super.onDestroy();
     }
-    @AfterViews
     void setupViews() {
         home.setResponseCallback(sizeChangeCallback);
-        homeNavigationAdapter = new HomeNavigationAdapter(this, home_navigation_list, bookOpenedCallback);
-        home_navigation_list.setAdapter(homeNavigationAdapter);
+        homeNavigationAdapter = new HomeNavigationAdapter(this, homeNavigationList, bookOpenedCallback);
+        homeNavigationList.setAdapter(homeNavigationAdapter);
         if (actionBarHandler != null) homeNavigationAdapter.setActionBarHandler(actionBarHandler);
-        drawerAdapter = new DrawerAdapter(this,drawer_list);
-        drawer_list.setAdapter(drawerAdapter);
-        drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,R.drawable.ic_drawer,R.string.nav_drawer_open,R.string.nav_drawer_closed) {
+        drawerAdapter = new DrawerAdapter(this,drawerList);
+        drawerList.setAdapter(drawerAdapter);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.drawable.ic_drawer,R.string.nav_drawer_open,R.string.nav_drawer_closed) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 if (drawerAdapter.orientationChange()) {
@@ -110,9 +111,9 @@ public class Home extends RootActivity {
                 super.onDrawerOpened(drawerView);
             }
         };
-        drawer_layout.setDrawerListener(drawerToggle);
+        drawerLayout.setDrawerListener(drawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        drawer_layout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         if (prefs.getOpenBook() != -999)  {
             if (actionBarHandler == null) {
                 actionBarReadyCallback = new ResponseCallback<Void>() {
@@ -159,7 +160,7 @@ public class Home extends RootActivity {
             file.delete();
             return;
         }
-        home.removeView(home_navigation_list);
+        home.removeView(homeNavigationList);
         ProgressBar progress = (ProgressBar)home.findViewById(R.id.home_progress);
         progress.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams fillScreenParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, screenHeight - getActionBar().getHeight());
@@ -194,7 +195,7 @@ public class Home extends RootActivity {
             closeBook();
             prefs.setOpenBook(-999);
         } else if (homeNavigationAdapter.getPreviousExpandedGroup() != -1) {
-            home_navigation_list.collapseGroup(homeNavigationAdapter.getPreviousExpandedGroup());
+            homeNavigationList.collapseGroup(homeNavigationAdapter.getPreviousExpandedGroup());
         } else  super.onBackPressed();
     }
     private void closeBook() {
@@ -204,7 +205,7 @@ public class Home extends RootActivity {
         prefs.setLastChapter(prefs.getOpenBook(), boundaries[0]);
         prefs.setLastParagraph(prefs.getOpenBook(), boundaries[1]);
         prefs.setLastWord(prefs.getOpenBook(), boundaries[2]);
-        home.addView(home_navigation_list);
+        home.addView(homeNavigationList);
         currentBook = null;
         currentBookView = null;
         actionBarHandler.setHomeViewMenu();

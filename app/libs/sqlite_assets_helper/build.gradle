@@ -30,13 +30,3 @@ android {
         }
     }
 }
-
-dependencies {
-    compile files (
-            'libs/android-support-v4.jar',
-            'libs/epublib-core-latest.jar',
-            'libs/jsoup-1.7.2.jar',
-            'libs/slf4j-android-1.6.1-RC1.jar'
-    )
-    compile project(':libs/sqlite_assets_helper')
-}

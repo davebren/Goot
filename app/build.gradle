@@ -1,0 +1,41 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.2'
+    }
+}
+apply plugin: 'android'
+
+android {
+    target = 'android-19'
+    sourceSets {
+        main {
+            manifest {
+                srcFile 'AndroidManifest.xml'
+            }
+            java {
+                srcDir 'src'
+            }
+            res {
+                srcDir 'res'
+            }
+            assets {
+                srcDir 'assets'
+            }
+            resources {
+                srcDir 'src'
+            }
+        }
+    }
+}
+
+dependencies {
+    compile files (
+            'libs/android-support-v4.jar',
+            'epublib-core-latest.jar',
+            'jsoup-1.7.2.jar',
+            'slf4j-android-1.6.1-RC1.jar'
+    )
+}

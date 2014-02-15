@@ -1,1 +1,2 @@
-include ':libs/sqlite_assets_helper'
+include ':libs:sqlite_assets_helper'
+

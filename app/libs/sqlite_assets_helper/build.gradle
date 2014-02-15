@@ -6,7 +6,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:0.7.+'
     }
 }
-apply plugin: 'android'
+apply plugin: 'android-library'
 
 android {
     target = 'android-19'
@@ -21,12 +21,18 @@ android {
             res {
                 srcDir 'res'
             }
-            assets {
-                srcDir 'assets'
-            }
-            resources {
-                srcDir 'src'
-            }
         }
+
+    }
+    defaultConfig {
+        minSdkVersion 15
+        compileSdkVersion 17
+        targetSdkVersion 19
+        buildToolsVersion "17.0"
+        versionCode 1
+        versionName "1.0"
+    }
+    release {
+        runProguard false
     }
 }

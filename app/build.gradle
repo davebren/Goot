@@ -24,19 +24,30 @@ android {
             assets {
                 srcDir 'assets'
             }
-            resources {
-                srcDir 'src'
-            }
         }
+    }
+    defaultConfig {
+        minSdkVersion 15
+        compileSdkVersion 19
+        targetSdkVersion 19
+        buildToolsVersion "17.0"
+        versionCode 2
+        versionName "1.0.1"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
+
 dependencies {
-    compile files (
-            'libs/android-support-v4.jar',
-            'libs/epublib-core-latest.jar',
-            'libs/jsoup-1.7.2.jar',
-            'libs/slf4j-android-1.6.1-RC1.jar'
-    )
-    compile project(':libs/sqlite_assets_helper')
+    compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+
+    compile project(':libs:sqlite_assets_helper')
 }

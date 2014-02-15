@@ -21,7 +21,7 @@
 
     <dimen name="home_navigation_group_item_size">55dip</dimen>
     <dimen name="home_navigation_group_item_text">23dip</dimen>
-    <dimen name="home_navigation_child_item_text">51dip</dimen>
+    <dimen name="home_navigation_child_item_size">51dip</dimen>
     <dimen name="home_navigation_child_item_text">19dip</dimen>
 
 </resources>

@@ -38,4 +38,4 @@ gen-external-apklibs/
 
 # Gradle build output
 .gradle/
-
+build/

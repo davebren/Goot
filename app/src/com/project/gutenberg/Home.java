@@ -105,7 +105,8 @@ public class Home extends RootActivity {
                     else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     return;
                 }
-                if (drawerAdapter.changesMade()) refreshBook();
+                // Refresh book if changes are made & book is currently open
+                if (drawerAdapter.changesMade() && currentBook != null) refreshBook();
             }
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);

@@ -1,0 +1,41 @@
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+target/
+bin/
+gen/
+*.orig
+
+# Local configuration file (sdk path, etc)
+local.properties
+project.properties
+.settings/
+
+# Mac OSX files
+.DS_Store
+
+# trash left behind by the Ubuntu file explorer
+.directory
+
+# IntelliJ cookies
+.idea/
+*.iml
+out/
+gen-external-apklibs/
+*~
+
+# vim artifact
+*.swp
+
+# Gradle build output
+.gradle/
+

@@ -6,7 +6,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.project.gutenberg.catalog.database.CatalogByAuthorDB;
 import com.project.gutenberg.catalog.database.CatalogByTitleDB;
-//
+
 public class GutenApplication extends Application {
     public Typeface typeface;
     public RequestQueue volley;

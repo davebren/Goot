@@ -16,7 +16,6 @@ import com.project.gutenberg.R;
 import com.project.gutenberg.SharedPrefs;
 import com.project.gutenberg.util.SeekbarConverter;
 import com.project.gutenberg.util.TypefaceMappings;
-import com.project.gutenberg.util.billing.Subscription;
 
 public class DrawerAdapter extends BaseExpandableListAdapter {
     private LayoutInflater inflater;
@@ -149,9 +148,9 @@ public class DrawerAdapter extends BaseExpandableListAdapter {
                 notifyDataSetChanged();
             }
             if (groupPosition == value_for_value_position) {
-                if (childPosition == one_dollar_position) new Subscription(1,home);
-                if (childPosition == five_dollar_position) new Subscription(5,home);
-                if (childPosition == twenty_dollar_position) new Subscription(20,home);
+                //if (childPosition == one_dollar_position) new Subscription(1,home);
+                //if (childPosition == five_dollar_position) new Subscription(5,home);
+                //if (childPosition == twenty_dollar_position) new Subscription(20,home);
             }
             return true;
         }

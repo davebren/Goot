@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.project.gutenberg.book.Book;
@@ -201,11 +202,7 @@ public class Home extends RootActivity {
     }
     private void closeBook() {
         home.removeView(currentBookView.getPageHolder());
-        Integer[] boundaries = currentBook.close();
         ActionBarHandler.ignoreSpinnerSelection =true;
-        prefs.setLastChapter(prefs.getOpenBook(), boundaries[0]);
-        prefs.setLastParagraph(prefs.getOpenBook(), boundaries[1]);
-        prefs.setLastWord(prefs.getOpenBook(), boundaries[2]);
         home.addView(homeNavigationList);
         currentBook = null;
         currentBookView = null;

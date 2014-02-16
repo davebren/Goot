@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,7 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
     CatalogByTitleDB catalogByTitleDb;
     CatalogByAuthorDB catalogByAuthorDB;
 
-    int previousExpandedGroup = -1;
+    static int previousExpandedGroup = -1;
 
     public HomeNavigationAdapter(Context context, ExpandableListView listView, ResponseCallback<String> bookOpenedCallback) {
         this.context = context;

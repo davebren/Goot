@@ -104,13 +104,14 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
             actionBarHandler.setHomeViewMenu();
         }
     }
-    public void setActionBarHandler(ActionBarHandler actionBarHandler) {
+    public boolean setActionBarHandler(ActionBarHandler actionBarHandler) {
         actionBarHandler.setHomeNavigationAdapter(this);
         this.actionBarHandler = actionBarHandler;
-        if (previousExpandedGroup == -1) return;
+        if (previousExpandedGroup == -1) return false;
         if (previousExpandedGroup == by_title_index) actionBarHandler.setTitleBrowsingMenu();
         if (previousExpandedGroup == by_author_index) actionBarHandler.setAuthorBrowsingMenu();
         if (previousExpandedGroup == by_downloads_index) actionBarHandler.setDownloadsBrowsingMenu();
+        return true;
     }
     public void filterTitles(String search) {
         byTitleCursor = catalogByTitleDb.getTitleCursor(search);

@@ -206,7 +206,7 @@ public class Home extends RootActivity {
         home.addView(homeNavigationList);
         currentBook = null;
         currentBookView = null;
-        actionBarHandler.setHomeViewMenu();
+        if (!homeNavigationAdapter.setActionBarHandler(actionBarHandler)) actionBarHandler.setHomeViewMenu();
     }
     private void refreshBook() {
         if (currentBook != null) {

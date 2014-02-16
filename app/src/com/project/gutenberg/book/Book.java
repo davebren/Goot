@@ -73,7 +73,7 @@ public class Book {
         }
         return page_sum;
     }
-    public Integer[] close() {
+    public Integer[] getCurrentPageBoundaries() {
         return getCurrentChapter().getCurrentPageBoundaries();
     }
     public void setContainingPage(int chapter, int paragraph, int word) {

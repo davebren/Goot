@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.*;
@@ -79,12 +80,13 @@ public class Home extends RootActivity {
         return super.onOptionsItemSelected(item);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.home_menu, menu);
-        actionBarHandler = new ActionBarHandler(menu, getActionBar(), this);
+        actionBarHandler = new ActionBarHandler(menu,this);
         actionBarHandler.setHomeViewMenu();
         if (homeNavigationAdapter != null) homeNavigationAdapter.setActionBarHandler(actionBarHandler);
         if (actionBarReadyCallback != null) actionBarReadyCallback.onResponse(null);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
     public void onDestroy() {
         ActionTimeAnalysis.log();
@@ -216,6 +218,9 @@ public class Home extends RootActivity {
     }
     public void onActiveSubscription() {
         Toast.makeText(this, getString(R.string.thank_you),3500).show();
+    }
+    public void refreshActionBar(Menu menu) {
+        super.onCreateOptionsMenu(menu);
     }
 
 }

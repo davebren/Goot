@@ -8,13 +8,13 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.GutenApplication;
+import com.project.gutenberg.Home;
 import com.project.gutenberg.R;
 import com.project.gutenberg.catalog.database.CatalogByAuthorDB;
 import com.project.gutenberg.catalog.database.CatalogByTitleDB;
@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class HomeNavigationAdapter extends BaseExpandableListAdapter {
-    Context context;
+    Home home;
     LayoutInflater inflater;
 
     Cursor byTitleCursor;
@@ -61,23 +61,23 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
 
     static int previousExpandedGroup = -1;
 
-    public HomeNavigationAdapter(Context context, ExpandableListView listView, ResponseCallback<String> bookOpenedCallback) {
-        this.context = context;
+    public HomeNavigationAdapter(Home home, ExpandableListView listView, ResponseCallback<String> bookOpenedCallback) {
+        this.home = home;
         this.bookOpenedCallback = bookOpenedCallback;
-        catalogByTitleDb = ((GutenApplication)context.getApplicationContext()).catalogByTitleDB;
-        catalogByAuthorDB = ((GutenApplication)context.getApplicationContext()).catalogByAuthorDB;
-        contextWrapper = new ContextWrapper(context);
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.byTitleCursor = ((GutenApplication)context.getApplicationContext()).catalogByTitleDB.get_title_cursor();
-        this.byAuthorCursor = ((GutenApplication)context.getApplicationContext()).catalogByAuthorDB.getAuthorCursor();
+        catalogByTitleDb = ((GutenApplication) this.home.getApplicationContext()).catalogByTitleDB;
+        catalogByAuthorDB = ((GutenApplication) this.home.getApplicationContext()).catalogByAuthorDB;
+        contextWrapper = new ContextWrapper(this.home);
+        inflater = (LayoutInflater) this.home.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.byTitleCursor = ((GutenApplication) this.home.getApplicationContext()).catalogByTitleDB.get_title_cursor();
+        this.byAuthorCursor = ((GutenApplication) this.home.getApplicationContext()).catalogByAuthorDB.getAuthorCursor();
         byDownloadsCursor = catalogByTitleDb.get_title_cursor(DownloadedRetriever.retrieveBookIds());
         byDownloadsCount = byDownloadsCursor.getCount();
         byTitleCount = byTitleCursor.getCount();
         byAuthorCount = byAuthorCursor.getCount();
-        typeface = ((GutenApplication)context.getApplicationContext()).typeface;
+        typeface = ((GutenApplication) this.home.getApplicationContext()).typeface;
         this.listView = listView;
         listView.setOnChildClickListener(childListener);
-        downloadManager = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
+        downloadManager = (DownloadManager) this.home.getSystemService(Context.DOWNLOAD_SERVICE);
         File directory = new File(Environment.getExternalStorageDirectory() + "/eskimo_apps/gutendroid/epub_no_images/");
         if (!directory.exists()) directory.mkdirs();
         handler = new Handler();
@@ -96,6 +96,7 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
         if (groupPosition == by_title_index) actionBarHandler.setTitleBrowsingMenu();
         if (groupPosition == by_author_index) actionBarHandler.setAuthorBrowsingMenu();
         if (groupPosition == by_downloads_index) actionBarHandler.setDownloadsBrowsingMenu();
+        home.invalidateOptionsMenu();
     }
     public void onGroupCollapsed(int groupPosition) {
         super.onGroupCollapsed(groupPosition);
@@ -103,6 +104,7 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
             previousExpandedGroup = -1;
             actionBarHandler.setHomeViewMenu();
         }
+        home.invalidateOptionsMenu();
     }
     public boolean setActionBarHandler(ActionBarHandler actionBarHandler) {
         actionBarHandler.setHomeNavigationAdapter(this);
@@ -158,12 +160,12 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int index, boolean isExpanded, View row, ViewGroup parent) {
         if (row == null) row = inflater.inflate(R.layout.home_navigation_group_item,null);
         String s = "";
-        if (index == by_title_index) s = context.getResources().getString(R.string.nav_title_header);
-        if (index == by_author_index) s = context.getResources().getString(R.string.nav_author_header);
-        //if (index == by_category_index) s = context.getResources().getString(R.string.nav_category_header);
-        if (index == by_downloads_index) s = context.getResources().getString(R.string.nav_downloads_header);
+        if (index == by_title_index) s = home.getResources().getString(R.string.nav_title_header);
+        if (index == by_author_index) s = home.getResources().getString(R.string.nav_author_header);
+        //if (index == by_category_index) s = home.getResources().getString(R.string.nav_category_header);
+        if (index == by_downloads_index) s = home.getResources().getString(R.string.nav_downloads_header);
         ((TextView)row).setText(s);
-        ((TextView)row).setTypeface(((GutenApplication)context.getApplicationContext()).typeface);
+        ((TextView)row).setTypeface(((GutenApplication) home.getApplicationContext()).typeface);
         return row;
     }
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {

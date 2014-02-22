@@ -1,14 +1,17 @@
 package com.project.gutenberg.layout.action_bar;
 
 import android.app.ActionBar;
-import android.content.Context;
+import android.app.Activity;
+import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.GutenApplication;
+import com.project.gutenberg.Home;
 import com.project.gutenberg.book.view.android.AndroidBookView;
 import com.project.gutenberg.catalog.browsing.HomeNavigationAdapter;
 import com.project.gutenberg.R;
@@ -26,7 +29,7 @@ public class ActionBarHandler {
     private AndroidBookView bookView;
     int totalPages =0;
     int currentPage =0;
-    Context context;
+    Home activity;
     public static boolean ignoreSpinnerSelection = true;
     private boolean titleBrowsingShowing = false;
     private boolean downloadsBrowsingShowing = false;
@@ -34,9 +37,15 @@ public class ActionBarHandler {
 
     private HomeNavigationAdapter homeNavigationAdapter;
 
-    public ActionBarHandler(Menu menu, ActionBar actionBar, Context context) {
-        this.context = context;
-        this.actionBar = actionBar;
+    Menu menu;
+
+    public ActionBarHandler(Menu menu, Home activity) {
+        this.activity = activity;
+        this.menu = menu;
+        actionBar = activity.getActionBar();
+        setViews();
+    }
+    private void setViews() {
         pageIndicator =  menu.findItem(R.id.menu_page_indicator);
         pageIndicator.setOnMenuItemClickListener(pageIndicatorClickListener);
         chapterIndicator = menu.findItem(R.id.menu_chapter_indicator);
@@ -56,7 +65,7 @@ public class ActionBarHandler {
         this.bookView = book_view;
     }
     public void setHomeViewMenu() {
-        setTitle(context.getString(R.string.app_name));
+        setTitle(activity.getString(R.string.app_name));
         searchItem.setVisible(false);
         pageIndicator.setVisible(false);
         chapterIndicator.setVisible(false);
@@ -92,7 +101,7 @@ public class ActionBarHandler {
     }
     private void setTitle(String title) {
         SpannableString s = new SpannableString(title);
-        s.setSpan(new TypefaceSpan(((GutenApplication)context.getApplicationContext()).typeface), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        s.setSpan(new TypefaceSpan(((GutenApplication) activity.getApplicationContext()).typeface), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         actionBar.setTitle(s);
     }
     public void setBookTitle(String title) {
@@ -101,7 +110,7 @@ public class ActionBarHandler {
     public void setPage(int pageNumber) {
         currentPage = pageNumber;
         SpannableString s = new SpannableString("page\n" + pageNumber);
-        s.setSpan(new TypefaceSpan(((GutenApplication)context.getApplicationContext()).typeface), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        s.setSpan(new TypefaceSpan(((GutenApplication) activity.getApplicationContext()).typeface), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         pageIndicator.setTitle(s);
     }
     public void setTotalPages(int totalPages) {
@@ -160,7 +169,7 @@ public class ActionBarHandler {
     };
     MenuItem.OnMenuItemClickListener pageIndicatorClickListener = new MenuItem.OnMenuItemClickListener() {
         public boolean onMenuItemClick(MenuItem item) {
-            Toast.makeText(context, "page " + currentPage + " out of " + totalPages, 2500).show();
+            Toast.makeText(activity, "page " + currentPage + " out of " + totalPages, 2500).show();
             return true;
         }
     };

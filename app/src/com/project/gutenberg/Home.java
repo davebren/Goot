@@ -126,6 +126,7 @@ public class Home extends RootActivity {
                 actionBarReadyCallback = new ResponseCallback<Void>() {
                     public void onResponse(Void aVoid) {
                         Log.d("goot","refreshBook.0");
+                        if (prefs.getOpenBook() == -999) return;
                         refreshBook();
                     }
                 };

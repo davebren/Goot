@@ -35,8 +35,8 @@ public class SimplePageFlipper extends PageFlipper {
         leftButton = (Button)buttons.findViewById(R.id.simple_page_flipper_left);
         LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         book_view.getPageHolder().addView(buttons, fill_screen_params);
-        rightAnimationListener.set_view(rightButton);
-        leftAnimationListener.set_view(leftButton);
+        rightAnimationListener.setView(rightButton);
+        leftAnimationListener.setView(leftButton);
         rightButtonAnimator.getFadeOut().setAnimationListener(rightAnimationListener);
         leftButtonAnimator.getFadeOut().setAnimationListener(leftAnimationListener);
         rightButton.startAnimation(rightButtonAnimator.getFadeOut());
@@ -146,10 +146,10 @@ public class SimplePageFlipper extends PageFlipper {
     private View.OnTouchListener rightButtonListener = new View.OnTouchListener(){
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                if (!leftAnimationListener.is_animating())
+                if (!leftAnimationListener.isAnimating())
                     rightButton.setAlpha(0.35f);
             } else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                if (!rightAnimationListener.is_animating()) {
+                if (!rightAnimationListener.isAnimating()) {
                     rightButton.setAlpha(0f);
                     nextPage();
                 }
@@ -160,10 +160,10 @@ public class SimplePageFlipper extends PageFlipper {
     private View.OnTouchListener leftButtonListener = new View.OnTouchListener(){
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                if (!leftAnimationListener.is_animating())
+                if (!leftAnimationListener.isAnimating())
                     leftButton.setAlpha(0.35f);
             } else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                if (!leftAnimationListener.is_animating()) {
+                if (!leftAnimationListener.isAnimating()) {
                     leftButton.setAlpha(0f);
                     prevPage();
                 }

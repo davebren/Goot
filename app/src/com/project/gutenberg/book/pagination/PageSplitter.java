@@ -123,7 +123,6 @@ public class PageSplitter {
         ResponseCallback<Void> pagesLoadedCallback;
         int mod;
         int cores;
-
         LoadAllPages(ResponseCallback<Void> pagesLoadedCallback, int mod, int cores) {
             super();
             this.pagesLoadedCallback = pagesLoadedCallback;
@@ -132,7 +131,6 @@ public class PageSplitter {
             start();
         }
         public void run() {
-            long startTime = System.currentTimeMillis();
             boolean stopLoop;
             A: while(true) {
                 stopLoop = true;

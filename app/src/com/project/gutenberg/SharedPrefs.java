@@ -56,6 +56,11 @@ public class SharedPrefs {
     public void setLastWord(int book_id, int word) {
         prefsEditor.putInt("last_word_" + book_id, word).commit();
     }
+    public void setLastPage(int book_id, Integer[] boundaries) {
+        setLastChapter(book_id,boundaries[0]);
+        setLastParagraph(book_id,boundaries[1]);
+        setLastWord(book_id,boundaries[2]);
+    }
     public int getOpenBook() {
         return appSharedPreferences.getInt("open_book",-999);
     }

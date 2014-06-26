@@ -13,7 +13,6 @@ public class GutenApplication extends Application {
     public CatalogByTitleDB catalogByTitleDB;
     public CatalogByAuthorDB catalogByAuthorDB;
 
-
     public void onCreate() {
         typeface = Typeface.createFromAsset(getAssets(),"fonts/roboto_light.ttf");
         volley = Volley.newRequestQueue(this);

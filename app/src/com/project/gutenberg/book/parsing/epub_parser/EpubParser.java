@@ -3,6 +3,8 @@ package com.project.gutenberg.book.parsing.epub_parser;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.book.parsing.BookParser;
+import com.project.gutenberg.util.ResponseCallback;
+
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.Spine;
 import nl.siegmann.epublib.domain.TOCReference;
@@ -37,6 +39,22 @@ public class EpubParser implements BookParser {
         Book book = new Book(bookTitle, bookAuthor, chapters);
         return book;
     }
+    public void parseBook(ResponseCallback<Book> callback) {
+        new ParseThread(callback);
+    }
+    private class ParseThread extends Thread {
+        ResponseCallback<Book> callback;
+        ParseThread(ResponseCallback<Book> callback) {
+            super();
+            this.callback = callback;
+            start();
+        }
+        public void run() {
+            Book book = parseBook();
+            callback.onResponse(book);
+        }
+    }
+
     private void initializeChapters(Spine epubSpine, List<TOCReference> tableOfContents) {
         chapters = new LinkedList<Chapter>();
         HashMap<Integer, Void> removedChapters = new HashMap<Integer, Void>();
@@ -105,8 +123,7 @@ public class EpubParser implements BookParser {
             }
             is.close();
             res.close();
-        } catch (IOException e) {
-        }
+        } catch (IOException e) {}
         return para;
     }
 

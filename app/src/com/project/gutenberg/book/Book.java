@@ -50,6 +50,7 @@ public class Book {
         String[] ret = new String[chapters.size()];
         for (int i=0; i<chapters.size();i++) {
             ret[i] = chapters.get(i).getTitle();
+            if (ret[i] == null) ret[i] = "";
         }
         return ret;
     }
@@ -73,7 +74,7 @@ public class Book {
         }
         return page_sum;
     }
-    public Integer[] close() {
+    public Integer[] getCurrentPageBoundaries() {
         return getCurrentChapter().getCurrentPageBoundaries();
     }
     public void setContainingPage(int chapter, int paragraph, int word) {

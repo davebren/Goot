@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.project.gutenberg.R;
+import com.project.gutenberg.SharedPrefs;
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.book.page_flipping.PageFlipper;
@@ -22,9 +23,11 @@ public class SimplePageFlipper extends PageFlipper {
     final ButtonAnimationListener leftAnimationListener = new ButtonAnimationListener();
     final ButtonAnimationListener rightAnimationListener = new ButtonAnimationListener();
     Context context;
+    SharedPrefs prefs;
 
     public SimplePageFlipper(AndroidBookView book_view, Context context, PageView prev_page, PageView current_page, PageView next_page, Book book) {
         super(book_view, prev_page, current_page, next_page, book);
+        prefs = new SharedPrefs(context);
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
         final View buttons = inflater.inflate(R.layout.simple_page_flipper_buttons,null);
@@ -32,8 +35,8 @@ public class SimplePageFlipper extends PageFlipper {
         leftButton = (Button)buttons.findViewById(R.id.simple_page_flipper_left);
         LinearLayout.LayoutParams fill_screen_params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         book_view.getPageHolder().addView(buttons, fill_screen_params);
-        rightAnimationListener.set_view(rightButton);
-        leftAnimationListener.set_view(leftButton);
+        rightAnimationListener.setView(rightButton);
+        leftAnimationListener.setView(leftButton);
         rightButtonAnimator.getFadeOut().setAnimationListener(rightAnimationListener);
         leftButtonAnimator.getFadeOut().setAnimationListener(leftAnimationListener);
         rightButton.startAnimation(rightButtonAnimator.getFadeOut());
@@ -74,6 +77,7 @@ public class SimplePageFlipper extends PageFlipper {
         nextPage.setPageStackId(1);
         bookView.setPrevCurrentNextPageLines(linesOfText);
         ((AndroidBookView) bookView).getActionBarHandler().setPage(book.getPageNumber());
+        prefs.setLastPage(prefs.getOpenBook(),book.getCurrentPageBoundaries());
     }
     public void prevPage() {
         Chapter currentChapter = book.getCurrentChapter();
@@ -108,6 +112,7 @@ public class SimplePageFlipper extends PageFlipper {
         nextPage.setPageStackId(1);
         bookView.setPrevCurrentNextPageLines(linesOfText);
         ((AndroidBookView) bookView).getActionBarHandler().setPage(book.getPageNumber());
+        prefs.setLastPage(prefs.getOpenBook(),book.getCurrentPageBoundaries());
     }
     public void jumpToChapter(int chapterIndex) {
         String[][] linesOfText = new String[3][];
@@ -141,10 +146,10 @@ public class SimplePageFlipper extends PageFlipper {
     private View.OnTouchListener rightButtonListener = new View.OnTouchListener(){
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                if (!leftAnimationListener.is_animating())
+                if (!leftAnimationListener.isAnimating())
                     rightButton.setAlpha(0.35f);
             } else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                if (!rightAnimationListener.is_animating()) {
+                if (!rightAnimationListener.isAnimating()) {
                     rightButton.setAlpha(0f);
                     nextPage();
                 }
@@ -155,10 +160,10 @@ public class SimplePageFlipper extends PageFlipper {
     private View.OnTouchListener leftButtonListener = new View.OnTouchListener(){
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                if (!leftAnimationListener.is_animating())
+                if (!leftAnimationListener.isAnimating())
                     leftButton.setAlpha(0.35f);
             } else if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                if (!leftAnimationListener.is_animating()) {
+                if (!leftAnimationListener.isAnimating()) {
                     leftButton.setAlpha(0f);
                     prevPage();
                 }

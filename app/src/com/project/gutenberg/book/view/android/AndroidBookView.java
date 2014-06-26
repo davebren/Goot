@@ -32,6 +32,7 @@ public class AndroidBookView extends BookView {
         this.context = context;
         this.action_bar_handler = action_bar_handler;
         text_painter = new TextPaint();
+        text_painter.setAntiAlias(true);
 
         initialize_page_holder(fill_screen_params);
         initialize_page_views();

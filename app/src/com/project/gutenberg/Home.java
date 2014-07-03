@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -151,7 +152,7 @@ public class Home extends RootActivity {
         Log.d("goot","openBook: " + book_id);
         nl.siegmann.epublib.domain.Book b = null;
         final File file = new File(Environment.getExternalStorageDirectory().toString() + "/eskimo_apps/gutendroid/epub_no_images/"+ book_id + ".epub.noimages");
-        try {
+		try {
             InputStream is = new FileInputStream(file);
             b = new EpubReader().readEpub(is);
             is.close();
@@ -234,4 +235,29 @@ public class Home extends RootActivity {
     public void onActiveSubscription() {
         Toast.makeText(this, getString(R.string.thank_you),3500).show();
     }
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// If the menu button is pressed
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
+			event.startTracking();
+			return true;
+		}
+		return super.onKeyUp(keyCode, event);
+	}
+
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		// If the menu button is release and was not a long press
+		// then open the nav drawer, or go home.
+		if (keyCode == KeyEvent.KEYCODE_MENU && !event.isLongPress()) {
+			if (drawerLayout.isDrawerOpen(drawerList)) {
+				drawerLayout.closeDrawer(drawerList);
+			} else {
+				drawerLayout.openDrawer(drawerList);
+			}
+			return true;
+		}
+		return super.onKeyUp(keyCode, event);
+	}
 }

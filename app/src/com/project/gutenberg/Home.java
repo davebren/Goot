@@ -243,7 +243,7 @@ public class Home extends RootActivity {
 			event.startTracking();
 			return true;
 		}
-		return super.onKeyUp(keyCode, event);
+		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

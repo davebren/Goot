@@ -1,8 +1,7 @@
 Goot: An Android E-Reader for Project Gutenberg
 
 
-Development Forum:
-https://discussions.zoho.com/goot#Forum/development-forum
+**Development Forum:** https://discussions.zoho.com/goot#Forum/development-forum
 
 
 **A note to contributors about donations** to Goot Proper released by the company Eski:

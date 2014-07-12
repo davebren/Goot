@@ -1,5 +1,10 @@
 Goot: An Android E-Reader for Project Gutenberg
 
+
+Development Forum:
+https://discussions.zoho.com/goot#Forum/development-forum
+
+
 **A note to contributors about donations** to Goot Proper released by the company Eski:
 The GitHub Project and the released app in the Google Play Store by Eski are two separate entities.  Goot Proper intends to make use of a large majority of the open source project Goot.  Donations to Goot Proper will be managed by the independent developer David Breneisen.  At the end of the calendar year donation amounts will be accounted for on Goot's original GitHub Repository.  50% of all donations after the transaction fee is applied will then be donated to Project Gutenberg, which maintains the server hosting the books.  All other usages of donations will be accounted for in the end of year report.
 

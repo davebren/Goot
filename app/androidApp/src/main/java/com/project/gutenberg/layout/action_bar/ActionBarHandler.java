@@ -72,10 +72,6 @@ public class ActionBarHandler {
         chapterIndicator.setVisible(false);
         chapterTitles = null;
     }
-    public void setBrowseMenu() {
-        actionBar.setTitle("");
-        searchItem.setVisible(true);
-    }
     public void setTitleBrowsingMenu() {
         titleBrowsingShowing = true;
         setTitle("Browse By Title");

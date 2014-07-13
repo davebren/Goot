@@ -124,6 +124,7 @@ public class ActionBarHandler {
         }
     }
     public void initializeSpinnerChapters(String[] chapterTitles, int currentChapter) {
+        if (chapterTitles == null || chapterTitles.length == 0) return;
         for (int i=0; i < chapterTitles.length; i++) {
             if (chapterTitles[i].length() > 14) {
                 chapterTitles[i] = chapterTitles[i].substring(0,14) + "...";
@@ -170,7 +171,7 @@ public class ActionBarHandler {
     };
     MenuItem.OnMenuItemClickListener pageIndicatorClickListener = new MenuItem.OnMenuItemClickListener() {
         public boolean onMenuItemClick(MenuItem item) {
-            Toast.makeText(activity, "page " + currentPage + " out of " + totalPages, 2500).show();
+            Toast.makeText(activity, "page " + currentPage + " out of " + totalPages, Toast.LENGTH_SHORT).show();
             return true;
         }
     };

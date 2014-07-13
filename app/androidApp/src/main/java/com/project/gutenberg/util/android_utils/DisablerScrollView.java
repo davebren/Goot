@@ -1,4 +1,4 @@
-package com.project.gutenberg.android_utils;
+package com.project.gutenberg.util.android_utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

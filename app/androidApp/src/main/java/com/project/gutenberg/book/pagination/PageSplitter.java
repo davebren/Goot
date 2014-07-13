@@ -4,7 +4,7 @@ import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.Chapter;
 import com.project.gutenberg.book.Page;
 import com.project.gutenberg.book.view.BookFormatting;
-import com.project.gutenberg.util.Cores;
+import com.project.gutenberg.util.android_utils.Cores;
 import com.project.gutenberg.util.ResponseCallback;
 
 public class PageSplitter {

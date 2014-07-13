@@ -19,4 +19,7 @@
     <string name="loading">Loading</string>
     <string name="please_wait">Please wait while Goot formats your book</string>
 
+    <string name="downloading_message">Downloading </string>
+    <string name="download_error">Something went wrong downloading the book</string>
+
 </resources>

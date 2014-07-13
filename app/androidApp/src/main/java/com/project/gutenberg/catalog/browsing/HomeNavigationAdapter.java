@@ -8,11 +8,13 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import com.project.gutenberg.GutenApplication;
 import com.project.gutenberg.Home;
 import com.project.gutenberg.R;
@@ -21,9 +23,18 @@ import com.project.gutenberg.catalog.database.CatalogByTitleDB;
 import com.project.gutenberg.layout.DownloaderLayout;
 import com.project.gutenberg.layout.action_bar.ActionBarHandler;
 import com.project.gutenberg.library.BookResource;
+import com.project.gutenberg.util.FileUtils;
 import com.project.gutenberg.util.ResponseCallback;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -48,16 +59,14 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
     final int by_category_index = 2;
     final int by_downloads_index = 2;
 
-    DownloadManager downloadManager;
-    HashMap<String, Pair<Long,Double>> downloadIds = new HashMap<String,Pair<Long,Double>>();
-    HashMap<String, Void> downloadedBooks = new HashMap<String,Void>();
     ContextWrapper contextWrapper;
-    Handler handler;
     ResponseCallback<String> bookOpenedCallback;
 
     ActionBarHandler actionBarHandler;
     CatalogByTitleDB catalogByTitleDb;
     CatalogByAuthorDB catalogByAuthorDB;
+
+    Map<String, Float> downloading = new HashMap<String, Float>();
 
     static int previousExpandedGroup = -1;
 
@@ -77,11 +86,8 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
         typeface = ((GutenApplication) this.home.getApplicationContext()).typeface;
         this.listView = listView;
         listView.setOnChildClickListener(childListener);
-        downloadManager = (DownloadManager) this.home.getSystemService(Context.DOWNLOAD_SERVICE);
         File directory = new File(Environment.getExternalStorageDirectory() + "/eskimo_apps/gutendroid/epub_no_images/");
         if (!directory.exists()) directory.mkdirs();
-        handler = new Handler();
-        handler.postDelayed(checkDownloadStatus,25);
     }
     public int getPreviousExpandedGroup() {
         return previousExpandedGroup;
@@ -169,7 +175,7 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
         return row;
     }
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
-        Cursor cursor=null;
+        Cursor cursor = null;
         if (groupPosition == by_title_index) cursor = byTitleCursor;
         else if (groupPosition == by_downloads_index) cursor = byDownloadsCursor;
         else if (groupPosition == by_author_index) cursor = byAuthorCursor;
@@ -178,10 +184,7 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
         return getChildView(new BookResource(cursor), view);
     }
     private View getChildView(BookResource book, View view) {
-        if (view == null) view = inflater.inflate(R.layout.home_navigation_book_item,null);
-        if (downloadIds.containsKey(book.getId())) {
-            ((DownloaderLayout)view).setPercentage(downloadIds.get(book.getId()).second);
-        }
+        if (view == null) view = inflater.inflate(R.layout.home_navigation_book_item, null);
         TextView title = (TextView)view.findViewById(R.id.home_navigation_book_item_left);
         TextView author = (TextView)view.findViewById(R.id.home_navigation_book_item_right);
         Button open = (Button)view.findViewById(R.id.home_navigation_book_item_open);
@@ -201,15 +204,13 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
     }
     private ExpandableListView.OnChildClickListener childListener = new ExpandableListView.OnChildClickListener() {
         public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-            Cursor cursor=null;
+            Cursor cursor = null;
             if (groupPosition == by_title_index) cursor = byTitleCursor;
             if (groupPosition == by_downloads_index) cursor = byDownloadsCursor;
             if (groupPosition == by_author_index) cursor = byAuthorCursor;
             cursor.moveToPosition(childPosition);
             BookResource book = new BookResource(cursor);
-            if (downloadIds.containsKey(book.getId())) return true;
             downloadBook(book);
-            handler.postDelayed(checkDownloadStatus, 25);
             return true;
         }
     };
@@ -219,46 +220,31 @@ public class HomeNavigationAdapter extends BaseExpandableListAdapter {
             bookOpenedCallback.onResponse(bookId);
         }
     };
-    public void downloadBook(BookResource book) {
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse("http://www.gutenberg.org/ebooks/" + book.getId() + ".epub.noimages"));
-        String externalStorageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-        request.setTitle(book.getTitle()).setDestinationInExternalPublicDir(externalStorageDir + "/eskimo_apps/gutendroid/epub_no_images/", "" + book.getId() + ".epub.noimages");
-        long downloadId = downloadManager.enqueue(request);
-        downloadIds.put(book.getId(), new Pair<Long, Double>(downloadId, 0.0));
-
-    }
-    private Runnable checkDownloadStatus = new Runnable() {
-        public void run() {
-            if (downloadIds.size() == 0) return;
-                LinkedList<Pair<String,Double>> entriesToModify = new LinkedList<Pair<String, Double>>();
-                LinkedList<String> entriesToRemove = new LinkedList<String>();
-            for (Map.Entry<String, Pair<Long,Double>> entry : downloadIds.entrySet()) {
-                DownloadManager.Query q = new DownloadManager.Query();
-                q.setFilterById(entry.getValue().first);
-                Cursor cursor = downloadManager.query(q);
-                if (cursor == null) continue;
-                cursor.moveToFirst();
-                double bytesDownloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
-                double bytesTotal = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
-                double percentage = bytesDownloaded / bytesTotal;
-                entriesToModify.add(new Pair<String, Double>(entry.getKey(), percentage));
-                int status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
-                if (status != DownloadManager.STATUS_PAUSED && status != DownloadManager.STATUS_PENDING && status != DownloadManager.STATUS_RUNNING) {
-                    entriesToRemove.add(entry.getKey());
-                    downloadedBooks.put(entry.getKey(), null);
-                    makeFileReadOnly(entry.getKey() + ".epub.noimages");
-                }
-                notifyDataSetChanged();
-            }
-            for (Pair<String,Double> entry : entriesToModify) {
-                downloadIds.put(entry.first, new Pair<Long, Double>(downloadIds.get(entry.first).first, entry.second));
-            }
-            for (String entry : entriesToRemove) {
-                downloadIds.remove(entry);
-            }
-            handler.postDelayed(this,40);
+    public void downloadBook(final BookResource book) {
+        Toast.makeText(home, home.getString(R.string.downloading_message) + book.getTitle(), Toast.LENGTH_SHORT).show();
+        final String externalStorageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+        synchronized (downloading) {
+            downloading.put(book.getId(), 0f);
         }
-    } ;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("http://www.gutenberg.org/ebooks/" + book.getId() + ".epub.noimages").build();
+        client.newCall(request).enqueue(new Callback() {
+            public void onFailure(Request request, IOException e) {
+                Toast.makeText(home, home.getString(R.string.download_error), Toast.LENGTH_SHORT).show();
+            }
+            public void onResponse(Response response) throws IOException {
+                FileUtils.writeStreamToFile(response.body().byteStream(), externalStorageDir + "/eskimo_apps/gutendroid/epub_no_images/" + book.getId() + ".epub.noimages");
+                synchronized(downloading) {
+                    downloading.remove(book.getId());
+                }
+                home.runOnUiThread(new Runnable() {
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+    }
     public boolean fileExists(String name){
         String path = Environment.getExternalStorageDirectory().toString() + "/eskimo_apps/gutendroid/epub_no_images/" + name;
         return new File(path).exists();

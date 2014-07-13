@@ -5,4 +5,6 @@
 
     <color name="value">#FFD9AD</color>
 
+    <color name="progress_bar">#7ac876</color>
+
 </resources>

@@ -7,11 +7,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
+import android.view.Display;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.project.gutenberg.book.Book;
 import com.project.gutenberg.book.pagination.PageSplitter;
 import com.project.gutenberg.book.parsing.epub_parser.EpubParser;
@@ -19,11 +26,18 @@ import com.project.gutenberg.book.view.android.AndroidBookView;
 import com.project.gutenberg.catalog.browsing.HomeNavigationAdapter;
 import com.project.gutenberg.layout.action_bar.ActionBarHandler;
 import com.project.gutenberg.layout.navigation_drawer.DrawerAdapter;
-import com.project.gutenberg.util.*;
+import com.project.gutenberg.util.ActionTimeAnalysis;
+import com.project.gutenberg.util.ResponseCallback;
+import com.project.gutenberg.util.RootActivity;
+import com.project.gutenberg.util.SizeChangeCallbackLinearLayout;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import nl.siegmann.epublib.epub.EpubReader;
-
-import java.io.*;
 
 public class Home extends RootActivity {
     protected static SharedPrefs prefs;
@@ -233,5 +247,28 @@ public class Home extends RootActivity {
     }
     public void onActiveSubscription() {
         Toast.makeText(this, getString(R.string.thank_you),3500).show();
+    }
+    @Override
+   	public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // If the menu button is pressed
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            event.startTracking();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        // If the menu button is release and was not a long press
+        // then open the nav drawer, or go home.
+        if (keyCode == KeyEvent.KEYCODE_MENU && !event.isLongPress()) {
+            if (drawerLayout.isDrawerOpen(drawerList)) {
+                drawerLayout.closeDrawer(drawerList);
+            } else {
+                drawerLayout.openDrawer(drawerList);
+            }
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 }

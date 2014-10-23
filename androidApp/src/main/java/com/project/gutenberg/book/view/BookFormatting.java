@@ -8,6 +8,7 @@ public class BookFormatting {
     private int lineSpacing;
     private int linesPerPage;
     private int[] lineYCoordinates;
+    private int fontSize;
 
     public BookFormatting(int width, int height, int fontSize) {
         totalWidth = width;
@@ -16,19 +17,23 @@ public class BookFormatting {
     }
 
     public void initializeFormatting(int fontSize) {
-        marginWidth = (int)(totalWidth *0.05);
-        lineWidth = totalWidth - (marginWidth *2);
-        lineSpacing = (int)(fontSize*0.5);
+        marginWidth = (int) (totalWidth * 0.05);
+        lineWidth = totalWidth - (marginWidth * 2);
+        lineSpacing = (int) (fontSize * 0.5);
         int freeSpace = totalHeight;
-        int startingPosition = fontSize + lineSpacing *3;
-        freeSpace = freeSpace - (fontSize*2 + lineSpacing *4); // header, footer space.
-        linesPerPage = freeSpace/(fontSize+ lineSpacing);
+        int startingPosition = fontSize + lineSpacing * 3;
+        freeSpace = freeSpace - (fontSize * 2 + lineSpacing * 4); // header, footer space.
+        linesPerPage = freeSpace / (fontSize + lineSpacing);
+        if (linesPerPage < 1) {
+            initializeFormatting((int)(fontSize*.75));
+            return;
+        }
+        this.fontSize = fontSize;
         lineYCoordinates = new int[linesPerPage];
         lineYCoordinates[0] = startingPosition;
-        for (int i=1; i < lineYCoordinates.length; i++) {
-            lineYCoordinates[i] = lineYCoordinates[i-1]+fontSize+ lineSpacing;
+        for (int i = 1; i < lineYCoordinates.length; i++) {
+            lineYCoordinates[i] = lineYCoordinates[i - 1] + fontSize + lineSpacing;
         }
-
     }
     public int getLinesPerPage() {
         return linesPerPage;
@@ -44,5 +49,9 @@ public class BookFormatting {
     }
     public int getTotalWidth() {
         return totalWidth;
+    }
+
+    public int getFontSize() {
+        return fontSize;
     }
 }

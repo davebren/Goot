@@ -19,8 +19,8 @@ public abstract class BookView {
     protected Book book;
     protected int flipStyle;
 
-    protected BookView(int width, int height, int font_size) {
-        formatting = new BookFormatting(width, height, font_size);
+    protected BookView(int width, int height, int fontSize) {
+        formatting = new BookFormatting(width, height, fontSize);
         prevCurrentNextPageLines = new String[3][formatting.getLinesPerPage()];
     }
     public String[] getPageLines(int pageIndex) {

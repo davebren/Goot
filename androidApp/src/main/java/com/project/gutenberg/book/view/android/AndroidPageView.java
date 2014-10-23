@@ -17,7 +17,7 @@ class AndroidPageView extends PageView {
         this.bookView = bookView;
         page = new Page(context);
         this.pageStackId = pageStackId;
-        this.textPainter = bookView.text_painter;
+        this.textPainter = bookView.textPainter;
     }
     public void addView(int index) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
@@ -57,7 +57,7 @@ class AndroidPageView extends PageView {
             }
         }
         public void drawBackground(Canvas c) {
-            c.drawColor(((AndroidBookView) bookView).background_color);
+            c.drawColor(((AndroidBookView) bookView).BACKGROUND_COLOR);
         }
         private void justify(Canvas c, BookView bookView, int yCoordinate, String[] lines, int index) {
             float margin = bookView.getFormatting().getMarginWidth();

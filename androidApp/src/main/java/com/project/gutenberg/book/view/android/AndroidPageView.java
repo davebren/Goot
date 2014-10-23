@@ -43,7 +43,7 @@ class AndroidPageView extends PageView {
         public Page(Context context) {
             super(context);
         }
-        // TODO add basic kerning.
+
         public void onDraw(Canvas c) {
             drawBackground(c);
             String[] text = bookView.getPageLines(pageStackId + 1);
@@ -64,9 +64,9 @@ class AndroidPageView extends PageView {
             if (lines.length <= index+1 || lines[index+1].startsWith("  ") || lines[index+1].equals("")) {
                 c.drawText(lines[index],margin,yCoordinate, textPainter);
             } else {
-                float kernSpace = bookView.getFormatting().getLineWidth() - bookView.getLineMeasurer().measureWidth(lines[index]);
-                kernSpace = (float)Math.min(kernSpace, bookView.getFormatting().getLineWidth()*.25);
-                float kern_size = kernSpace/lines[index].length();
+                float freeSpace = bookView.getFormatting().getLineWidth() - bookView.getLineMeasurer().measureWidth(lines[index]);
+                freeSpace = (float)Math.min(freeSpace, bookView.getFormatting().getLineWidth()*.25);
+                float scaleFactor = freeSpace/lines[index].length();
                 float[] charWidths = bookView.getLineMeasurer().charWidths(lines[index]);
                 int kernsSkipped = 0;
                 for (int i=0; i < lines[index].length(); i++) {
@@ -76,7 +76,7 @@ class AndroidPageView extends PageView {
                 }
                 for (int i=kernsSkipped; i < lines[index].length();i++) {
                     char ch = lines[index].charAt(i);
-                    c.drawText("" + ch, margin + sumArray(charWidths, i) + (i-kernsSkipped)*kern_size, yCoordinate, textPainter);
+                    c.drawText("" + ch, margin + sumArray(charWidths, i) + (i-kernsSkipped)*scaleFactor, yCoordinate, textPainter);
                     if (ch == '?' || ch == '!' || ch == ',' || ch == '.' || ch == '"' || ch == '\'' || ch == ';' || ch == ':') {
                         kernsSkipped++;
                     }
@@ -84,9 +84,9 @@ class AndroidPageView extends PageView {
             }
         }
     }
-    private float sumArray(float[] arr, int end_index) {
+    private float sumArray(float[] arr, int endIndex) {
         float sum = 0;
-        for (int i=0; i < end_index; i++) {
+        for (int i=0; i < endIndex; i++) {
             sum += arr[i];
         }
         return sum;

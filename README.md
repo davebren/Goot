@@ -14,6 +14,8 @@ Since Goot is an open source project under the apache 2.0 license, there is no p
 License
 -------   
 
+[![Join the chat at https://gitter.im/eskimoapps/Goot](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/eskimoapps/Goot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Copyright 2014 David Breneisen
 
 Licensed under the Apache License, Version 2.0 (the "License");

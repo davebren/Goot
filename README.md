@@ -1,3 +1,5 @@
+Disclaimer: This isn't in active development, although there are plans for a rebuild in 2017.
+
 Goot: An Android E-Reader for Project Gutenberg
 
 [![Join the chat at https://gitter.im/eskimoapps/Goot](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/eskimoapps/Goot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
